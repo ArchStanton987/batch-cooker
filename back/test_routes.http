@@ -1,0 +1,31 @@
+### LOGIN
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+    "email": "yligotmi@msn.com",
+    "password": "pouet"
+}
+
+### LOGIN
+POST http://localhost:8000/api/login
+
+
+### REGISTER
+POST http://localhost:8000/api/register
+Content-Type: application/json
+
+{
+    "email": "azeblouse@msn.com",
+    "password": "pouet",
+    "username": "agathezeblouse"
+}
+
+### GET all users
+GET http://localhost:8000/api/users
+
+
+### GET one user
+GET http://localhost:8000/api/users/1
+
+
