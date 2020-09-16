@@ -1,5 +1,7 @@
-'use strict'
+const bcrypt = require('bcrypt')
+
 const { Model } = require('sequelize')
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -19,6 +21,12 @@ module.exports = (sequelize, DataTypes) => {
       isAdmin: DataTypes.BOOLEAN
     },
     {
+      hooks: {
+        beforeCreate: async function (user, options) {
+          const salt = await bcrypt.genSalt(12)
+          user.password = await bcrypt.hash(user.password, salt)
+        }
+      },
       sequelize,
       modelName: 'User'
     }

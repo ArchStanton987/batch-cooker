@@ -22,7 +22,10 @@ module.exports = {
         password: 'pouet',
         isAdmin: false
       }
-    ])
+    ], {
+      validate: true,
+      individualHooks: true
+    })
   },
 
   down: async (queryInterface, Sequelize) => {
