@@ -7,7 +7,6 @@ const connection = require('./conf.js')
 const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
-const bcrypt = require('bcrypt')
 
 const users = require('./routes/users')
 const accounts = require('./routes/accounts')
@@ -46,39 +45,39 @@ function verifyToken(req, res, next) {
 }
 
 app.post('/api/login', (req, res) => {
-  const userPassword = req.body.password
-  const userEmail = req.body.email
-  if ((typeof userEmail || typeof userPassword) !== 'string') {
-    res.status(401).send({ message: 'Invalid email or password' })
-    return
-  }
-  const sqlQuery = 'SELECT id, email, password FROM Users where Users.email = ?'
-  connection.query(sqlQuery, userEmail, (err, matchs) => {
-    if (err) {
-      console.log(err)
-      res.status(500).send({ message: 'Error retrieving user and password' })
-      return
-    }
-    const oneMatchFound = matchs.length === 1
-    if (!oneMatchFound || matchs[0].password !== userPassword) {
-      res.status(401).send({ message: 'Wrong email or password' })
-      return
-    } else {
-      jwt.sign(
-        { sub: matchs[0].id, iss: 'batch-cooker', scopes: ['admin', 'user'] },
-        process.env.JWT_SECRET_KEY,
-        { algorithm: 'HS256', expiresIn: '1h' },
-        (err, token) => {
-          if (err) {
-            console.log(err)
-            res.status(500).send({ message: 'Error signing token' })
-          }
-          res.cookie('access_token', token, { httpOnly: true, sameSite: true })
-          res.status(200).send({ message: 'Login suceeded' })
-        }
-      )
-    }
-  })
+  // const userPassword = req.body.password
+  // const userEmail = req.body.email
+  // if ((typeof userEmail || typeof userPassword) !== 'string') {
+  //   res.status(401).send({ message: 'Invalid email or password' })
+  //   return
+  // }
+  // const sqlQuery = 'SELECT id, email, password FROM Users where Users.email = ?'
+  // connection.query(sqlQuery, userEmail, (err, matchs) => {
+  //   if (err) {
+  //     console.log(err)
+  //     res.status(500).send({ message: 'Error retrieving user and password' })
+  //     return
+  //   }
+  //   const oneMatchFound = matchs.length === 1
+  //   if (!oneMatchFound || matchs[0].password !== userPassword) {
+  //     res.status(401).send({ message: 'Wrong email or password' })
+  //     return
+  //   } else {
+  //     jwt.sign(
+  //       { sub: matchs[0].id, iss: 'batch-cooker', scopes: ['admin', 'user'] },
+  //       process.env.JWT_SECRET_KEY,
+  //       { algorithm: 'HS256', expiresIn: '1h' },
+  //       (err, token) => {
+  //         if (err) {
+  //           console.log(err)
+  //           res.status(500).send({ message: 'Error signing token' })
+  //         }
+  //         res.cookie('access_token', token, { httpOnly: true, sameSite: true })
+  //         res.status(200).send({ message: 'Login suceeded' })
+  //       }
+  //     )
+  //   }
+  // })
 })
 
 app.post('/api/register', (req, res) => {
