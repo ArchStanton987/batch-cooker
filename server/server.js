@@ -10,8 +10,9 @@ const cookieParser = require('cookie-parser')
 const bcrypt = require('bcrypt')
 
 const users = require('./routes/users')
+const accounts = require('./routes/accounts')
 
-const models = require('./db/models')
+// const models = require('./db/models')
 
 const app = express()
 app.use(bodyParser.json())
@@ -20,6 +21,7 @@ app.use(cors())
 app.use(cookieParser())
 
 app.use('/api/users', users)
+app.use('/api/accounts', accounts)
 
 app.listen(process.env.SERVER_PORT, err => {
   if (err) {
@@ -80,15 +82,15 @@ app.post('/api/login', (req, res) => {
 })
 
 app.post('/api/register', (req, res) => {
-  const formData = {
-    email: req.body.email,
-    password: req.body.password,
-    username: req.body.username
-  }
+  // const formData = {
+  //   email: req.body.email,
+  //   password: req.body.password,
+  //   username: req.body.username
+  // }
 
-  models.User.create({ ...formData })
-    .then(res.status(201))
-    .catch(err => console.log(err))
+  // models.User.create({ ...formData })
+  //   .then(res.status(201))
+  //   .catch(err => console.log(err))
   // const sqlQuery = 'INSERT INTO Users SET ?'
   // connection.query(sqlQuery, formData, err => {
   //   if (err) {

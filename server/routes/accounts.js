@@ -1,14 +1,10 @@
-// routes/users.js
+// routes/accounts.js
 const express = require("express");
-
-const models = require('../models')
-
+const accountsCtrl = require('../controllers/account.controllers')
 
 const router = express.Router();
 
-//const connection = require("../conf");
-
-router.get("/", (req, res) => {
+router.post("/register", (req, res) => {
   // const sqlQuery = "SELECT user.email, user.username FROM user";
   // connection.query(sqlQuery, (err, results) => {
   //   if (err) {
@@ -18,12 +14,11 @@ router.get("/", (req, res) => {
   //   res.status(200).json(results);
   // });
 
-  
-
+  accountsCtrl.register(req)
 
 });
 
-router.get("/:userId", (req, res) => {
+router.get("/login", (req, res) => {
   // const userId = req.params.userId;
   // const sqlQuery =
   //   "SELECT user.email, user.username FROM user WHERE user.id = ?";
