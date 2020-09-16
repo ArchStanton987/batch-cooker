@@ -3,7 +3,7 @@ POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email": "yligotmi@msn.com",
+    "email": "miaou@msn",
     "password": "pouet"
 }
 
@@ -16,9 +16,9 @@ POST http://localhost:8000/api/register
 Content-Type: application/json
 
 {
-    "email": "azeblouse@msn.com",
+    "email": "miaou@msn.com",
     "password": "pouet",
-    "username": "agathezeblouse"
+    "username": "miaou"
 }
 
 ### GET all users

@@ -4,7 +4,7 @@ const Sequelize = require('sequelize')
 const basename = path.basename(__filename)
 require('dotenv').config({ path: path.resolve('../', '../', '.env') })
 const env = process.env.NODE_ENV || 'development'
-const config = require('../config/sequelize-config.js')[env]
+const config = require('../../config/sequelize-config.js')[env]
 const db = {}
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config)
