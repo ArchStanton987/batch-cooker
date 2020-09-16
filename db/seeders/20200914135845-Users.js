@@ -1,5 +1,3 @@
-'use strict'
-
 const models = require('../models')
 
 module.exports = {
@@ -13,19 +11,22 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await models.User.bulkCreate([
-      { email: 'yligotmi@msn.com', username: 'yligotmi', password: 'pouet', isAdmin: false },
-      { email: 'azeblouse@msn.com', username: 'azeblouse', password: 'pouet', isAdmin: false },
+    await models.User.bulkCreate(
+      [
+        { email: 'yligotmi@msn.com', username: 'yligotmi', password: 'pouet', isAdmin: false },
+        { email: 'azeblouse@msn.com', username: 'azeblouse', password: 'pouet', isAdmin: false },
+        {
+          email: 'ericantonnais@msn.com',
+          username: 'ericantonnais',
+          password: 'pouet',
+          isAdmin: false
+        }
+      ],
       {
-        email: 'ericantonnais@msn.com',
-        username: 'ericantonnais',
-        password: 'pouet',
-        isAdmin: false
+        validate: true,
+        individualHooks: true
       }
-    ], {
-      validate: true,
-      individualHooks: true
-    })
+    )
   },
 
   down: async (queryInterface, Sequelize) => {
