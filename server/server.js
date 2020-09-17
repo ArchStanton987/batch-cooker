@@ -3,15 +3,11 @@ const path = require('path')
 require('dotenv').config({ path: path.resolve('../', '.env') })
 const express = require('express')
 const cors = require('cors')
-const connection = require('./conf.js')
 const bodyParser = require('body-parser')
-const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 
 const users = require('./routes/users')
-const accounts = require('./routes/accounts')
-
-// const models = require('./db/models')
+const account = require('./routes/account')
 
 const app = express()
 app.use(bodyParser.json())
@@ -20,7 +16,7 @@ app.use(cors())
 app.use(cookieParser())
 
 app.use('/api/users', users)
-app.use('/api/accounts', accounts)
+app.use('/api/account', account)
 
 app.listen(process.env.SERVER_PORT, err => {
   if (err) {
@@ -29,20 +25,20 @@ app.listen(process.env.SERVER_PORT, err => {
   console.log(`Server is listening on ${process.env.SERVER_PORT}`)
 })
 
-function verifyToken(req, res, next) {
-  const bearerHeader = req.headers.authorization
-  if (typeof bearerHeader !== 'undefined') {
-    const bearer = bearerHeader.split(' ')
-    const bearerToken = bearer[1]
-    const authData = jwt.verify(bearerToken, process.env.JWT_SECRET_KEY, {
-      algorithms: ['HS256']
-    })
-    req.authData = authData
-    next()
-  } else {
-    res.sendStatus(403)
-  }
-}
+// function verifyToken(req, res, next) {
+//   const bearerHeader = req.headers.authorization
+//   if (typeof bearerHeader !== 'undefined') {
+//     const bearer = bearerHeader.split(' ')
+//     const bearerToken = bearer[1]
+//     const authData = jwt.verify(bearerToken, process.env.JWT_SECRET_KEY, {
+//       algorithms: ['HS256']
+//     })
+//     req.authData = authData
+//     next()
+//   } else {
+//     res.sendStatus(403)
+//   }
+// }
 
 app.post('/api/login', (req, res) => {
   // const userPassword = req.body.password
@@ -86,7 +82,6 @@ app.post('/api/register', (req, res) => {
   //   password: req.body.password,
   //   username: req.body.username
   // }
-
   // models.User.create({ ...formData })
   //   .then(res.status(201))
   //   .catch(err => console.log(err))
