@@ -20,12 +20,15 @@ module.exports = {
       return
     }
     try {
-      const newUser = await models.User.create({
-        email: email,
-        username: username,
-        password: password
-      })
-      res.status(200).json({ newUser })
+      const newUser = await models.User.create(
+        {
+          email: email,
+          username: username,
+          password: password
+        },
+        { fields: ['email', 'username', 'email'] }
+      )
+      res.status(200).json(newUser)
     } catch (err) {
       res.status(400).json({ error: err })
     }

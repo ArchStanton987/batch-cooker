@@ -1,13 +1,4 @@
 ### LOGIN
-POST http://localhost:8000/api/login
-Content-Type: application/json
-
-{
-    "email": "miaou@msn",
-    "password": "pouet"
-}
-
-### LOGIN
 POST http://localhost:8000/api/accounts/login
 Content-Type: application/json
 
@@ -15,7 +6,6 @@ Content-Type: application/json
     "email": "zdb@msn.com",
     "password": "pouet"
 }
-
 
 ### REGISTER
 POST http://localhost:8000/api/accounts/register
@@ -32,6 +22,6 @@ GET http://localhost:8000/api/users
 
 
 ### GET one user
-GET http://localhost:8000/api/users/1
+GET http://localhost:8000/api/users/19
 
 
