@@ -1,14 +1,10 @@
 // routes/users.js
-const express = require("express");
+const express = require('express')
+const usersCtrl = require('../controllers/users.controllers')
 
-const models = require('../models')
+const router = express.Router()
 
-
-const router = express.Router();
-
-//const connection = require("../conf");
-
-router.get("/", (req, res) => {
+  // router.get('/', (req, res) => {
   // const sqlQuery = "SELECT user.email, user.username FROM user";
   // connection.query(sqlQuery, (err, results) => {
   //   if (err) {
@@ -17,13 +13,15 @@ router.get("/", (req, res) => {
   //   }
   //   res.status(200).json(results);
   // });
+  // })
 
-  
+router.route('/').get(usersCtrl.getAllUsers)
+router.route('/').post(usersCtrl.createOneUser)
+router.route('/:id').get(usersCtrl.getOneUser)
+router.route('/:id').put(usersCtrl.updateOneUser)
+router.route('/:id').delete(usersCtrl.deleteOneUser)
 
-
-});
-
-router.get("/:userId", (req, res) => {
+  // router.get('/:userId', (req, res) => {
   // const userId = req.params.userId;
   // const sqlQuery =
   //   "SELECT user.email, user.username FROM user WHERE user.id = ?";
@@ -34,5 +32,5 @@ router.get("/:userId", (req, res) => {
   //   }
   //   res.status(200).json(result);
   // });
-});
-module.exports = router;
+  // })
+module.exports = router
