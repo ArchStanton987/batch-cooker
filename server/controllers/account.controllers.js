@@ -26,7 +26,7 @@ module.exports = {
           username: username,
           password: password
         },
-        { fields: ['email', 'username', 'email'] }
+        { fields: ['email', 'username', 'password'] }
       )
       res.status(200).json(newUser)
     } catch (err) {

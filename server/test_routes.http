@@ -1,5 +1,5 @@
 ### LOGIN
-POST http://localhost:8000/api/accounts/login
+POST http://localhost:8000/api/account/login
 Content-Type: application/json
 
 {
@@ -8,18 +8,19 @@ Content-Type: application/json
 }
 
 ### REGISTER
-POST http://localhost:8000/api/accounts/register
+POST http://localhost:8000/api/account/register
 Content-Type: application/json
 
 {
-    "email": "zdb@msn.com",
+    "email": "zdc@msn.com",
     "password": "pouet",
-    "username": "oiazero"
+    "username": "oiazeroi"
 }
 
 ### GET all users
 GET http://localhost:8000/api/users
 
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI2LCJpc3MiOiJiYXRjaC1jb29rZXIiLCJzY29wZXMiOlsiYWRtaW4iLCJ1c2VyIl0sImlhdCI6MTYwMDM0NjQ1NiwiZXhwIjoxNjAwMzUwMDU2fQ.ei6TZZWrgi9gIwzZvIEe28OGjkm6Os4gHerTu_ZkBQo
 
 ### GET one user
 GET http://localhost:8000/api/users/19
