@@ -37,11 +37,11 @@ module.exports = {
     const { email, password } = req.body
     const user = await models.User.findOne({ where: { email: email } })
     if (!user) {
-      res.status(400).json({ error: 'user not found' })
+      res.status(401).json({ error: 'Wrong email or password' })
     } else {
       const match = await bcrypt.compare(password, user.password)
       if (!match) {
-        res.status(403).json({ error: 'wrong password or username' })
+        res.status(401).json({ error: 'Wrong email or password' })
       } else {
         jwt.sign(
           { sub: user.id, iss: 'batch-cooker', scopes: ['admin', 'user'] },

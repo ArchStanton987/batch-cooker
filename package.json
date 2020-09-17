@@ -25,9 +25,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "eject": "react-scripts eject"
+    "test": "NODE_ENV=test jest ./tests",
+    "test:watch": "NODE_ENV=test jest ./tests --watchAll",
+    "eject": "react-scripts eject",
+    "server": "nodemon ./server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,5 +50,8 @@
     "eslint-config-prettier": "^6.11.0",
     "prettier": "^2.1.1",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["./jest.config.js"]
   }
 }
