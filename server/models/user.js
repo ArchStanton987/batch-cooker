@@ -15,14 +15,24 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      email: DataTypes.STRING,
-      username: DataTypes.STRING,
-      password: DataTypes.STRING,
-      isAdmin: DataTypes.BOOLEAN
+      email: {
+        type: DataTypes.STRING,
+        validate: { isEmail: true },
+        allowNull: false,
+        unique: true
+      },
+      username: {
+        type: DataTypes.STRING,
+        validate: { len: [4, 30] },
+        allowNull: false,
+        unique: true
+      },
+      password: { type: DataTypes.STRING, validate: { len: [6, 30] }, allowNull: false },
+      isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false }
     },
     {
       hooks: {
-        beforeCreate: async function (user, options) {
+        beforeSave: async function (user, options) {
           const salt = await bcrypt.genSalt(12)
           user.password = await bcrypt.hash(user.password, salt)
         }

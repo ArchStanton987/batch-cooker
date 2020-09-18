@@ -13,12 +13,17 @@ module.exports = {
      */
     await models.User.bulkCreate(
       [
-        { email: 'yligotmi@msn.com', username: 'yligotmi', password: 'pouet', isAdmin: false },
-        { email: 'azeblouse@msn.com', username: 'azeblouse', password: 'pouet', isAdmin: false },
+        { email: 'yligotmi@msn.com', username: 'yligotmi', password: 'pouetpouet', isAdmin: false },
+        {
+          email: 'azeblouse@msn.com',
+          username: 'azeblouse',
+          password: 'pouetpouet',
+          isAdmin: false
+        },
         {
           email: 'ericantonnais@msn.com',
           username: 'ericantonnais',
-          password: 'pouet',
+          password: 'pouetpouet',
           isAdmin: false
         }
       ],
