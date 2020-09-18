@@ -6,16 +6,20 @@ module.exports = {
       const users = await models.User.findAll({ attributes: ['id', 'username', 'email'] })
       res.status(200).json(users)
     } catch (err) {
-      res.status(500).send(err)
+      res.status(500).json({ error: err })
     }
   },
   getOneUserById: async (req, res) => {
     const userId = req.params.id
     try {
       const user = await models.User.findByPk(userId, { attributes: ['id', 'username', 'email'] })
-      res.status(200).json(user)
+      if (!user) {
+        res.status(404).json({ error: 'Unknown user' })
+      } else {
+        res.status(200).json(user)
+      }
     } catch (err) {
-      res.status(500).send(err)
+      res.status(500).json({ error: err })
     }
   },
   updateOneUser: async (req, res) => {
@@ -32,7 +36,9 @@ module.exports = {
           (user[attribute] = newUserAttributes[attribute])
       }
       await user.save({ fields: ['email', 'username', 'password'] })
-    } catch (err) {}
+    } catch (err) {
+      res.status(500).send(err)
+    }
   },
   deleteOneUser: async (req, res) => {
     const userId = req.body.id

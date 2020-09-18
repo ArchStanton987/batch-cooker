@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 module.exports = {
   verifyToken: (req, res, next) => {
-    const providedToken = req.cookie.access_token
+    const providedToken = req.cookies.access_token || false
     if (!providedToken) {
-      res.status(403).send('JWT is missing')
+      res.status(403).json({ error: 'JWT is missing' })
     } else {
       jwt.verify(
         providedToken,
@@ -12,7 +13,7 @@ module.exports = {
         { algorithms: ['HS256'], issuer: 'batch-cooker' },
         (err, decoded) => {
           if (err) {
-            res.status(403).send('Invalid JWT')
+            res.status(403).json({ error: 'Invalid JWT' })
           } else {
             next()
           }

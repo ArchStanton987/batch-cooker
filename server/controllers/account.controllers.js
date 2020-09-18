@@ -53,7 +53,7 @@ module.exports = {
               res.status(500).send({ message: 'Error signing token' })
             }
             res.cookie('access_token', token, { httpOnly: true, sameSite: true })
-            res.status(200).send({ message: 'Login suceeded' })
+            res.status(200).json({ message: 'Login succeeded' })
           }
         )
       }
