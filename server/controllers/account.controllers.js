@@ -11,6 +11,11 @@ module.exports = {
       res.status(400).json({ error: 'Email already existing' })
       return
     }
+    const existingUsername = await models.User.findOne({ where: { username: username } })
+    if (existingUsername) {
+      res.status(400).json({ error: 'Username already existing' })
+      return
+    }
     if (!validator.isLength(username, { min: 5, max: 20 })) {
       res.status(400).json({ error: 'Username must contain between 5 and 20 characters' })
       return

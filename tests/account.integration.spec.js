@@ -2,34 +2,12 @@
 
 const request = require('supertest')
 const app = require('../server/app')
+const models = require('../server/models')
 
 describe('ACCOUNT', () => {
-  let token = null
-  let userIdToDelete = null
-  beforeAll(() => {
-    return request(app)
-      .post('/api/account/login')
-      .send({
-        email: 'yligotmi@msn.com',
-        password: 'pouetpouet'
-      })
-      .then(res => {
-        const cookies = res.headers['set-cookie'][0].split(',').map(item => item.split(';')[0])
-        token = cookies.join(';').split('=')[1]
-      })
-  })
-  afterAll(() => {
-    request(app)
-      .get('/api/users/')
-      .set('cookie', [`access_token=${token}`])
-      .then(res => {
-        const lastId = res.length - 1
-        userIdToDelete = res[lastId].id
-        console.log('id : ' + userIdToDelete)
-        request(app)
-          .delete(`/api/users/${userIdToDelete}`)
-          .set('cookie', [`access_token=${token}`])
-      })
+  afterAll(async () => {
+    const userToDelete = await models.User.findOne({ where: { email: 'lauremipsoum@msn.com' } })
+    await userToDelete.destroy()
   })
   it('LOGIN - FAILURE : Unknown email', () => {
     return request(app)
@@ -41,8 +19,7 @@ describe('ACCOUNT', () => {
       .expect(401)
       .expect('Content-Type', /json/)
       .then(res => {
-        const expected = { error: 'Wrong email or password' }
-        expect(res.body).toEqual(expected)
+        expect(res.body).toEqual({ error: 'Wrong email or password' })
       })
   })
   it('LOGIN - FAILURE : Wrong password', () => {
@@ -55,8 +32,7 @@ describe('ACCOUNT', () => {
       .expect(401)
       .expect('Content-Type', /json/)
       .then(res => {
-        const expected = { error: 'Wrong email or password' }
-        expect(res.body).toEqual(expected)
+        expect(res.body).toEqual({ error: 'Wrong email or password' })
       })
   })
   it('LOGIN - SUCCESS', () => {
@@ -70,8 +46,7 @@ describe('ACCOUNT', () => {
       .expect('set-cookie', /access_token=/)
       .expect('Content-Type', /json/)
       .then(res => {
-        const expected = { message: 'Login succeeded' }
-        expect(res.body).toEqual(expected)
+        expect(res.body).toEqual({ message: 'Login succeeded' })
       })
   })
   it('REGISTER - FAILURE : existing email', () => {
@@ -87,22 +62,35 @@ describe('ACCOUNT', () => {
         expect(res.body).toEqual({ error: 'Email already existing' })
       })
   })
-  // it('REGISTER - SUCCESS : create account', () => {
-  //   const newUser = {
-  //     email: 'pierremoulin@hotmail.com',
-  //     password: 'pouetpouet',
-  //     username: 'ArchStanton'
-  //   }
-  //   return request(app)
-  //     .post('/api/account/register')
-  //     .send(newUser)
-  //     .expect(200)
-  //     .expect('Content-Type', /json/)
-  //     .then(res => {
-  //       expect(res.body).toHaveProperty('id')
-  //       expect(res.body).toHaveProperty('email')
-  //       expect(res.body).toHaveProperty('username')
-  //       expect(res.body).toHaveProperty('isAdmin')
-  //     })
-  // })
+  it('REGISTER - FAILURE : existing username', () => {
+    return request(app)
+      .post('/api/account/register')
+      .send({
+        email: 'helloworld@msn.com',
+        password: 'choucroute',
+        username: 'yligotmi'
+      })
+      .expect(400)
+      .then(res => {
+        expect(res.body).toEqual({ error: 'Username already existing' })
+      })
+  })
+  it('REGISTER - SUCCESS : create account', () => {
+    const newUser = {
+      email: 'lauremipsoum@msn.com',
+      password: 'pouetpouet',
+      username: 'lemipsoum'
+    }
+    return request(app)
+      .post('/api/account/register')
+      .send(newUser)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then(res => {
+        expect(res.body).toHaveProperty('id')
+        expect(res.body).toHaveProperty('email', 'lauremipsoum@msn.com')
+        expect(res.body).toHaveProperty('username', 'lemipsoum')
+        expect(res.body).toHaveProperty('isAdmin')
+      })
+  })
 })
