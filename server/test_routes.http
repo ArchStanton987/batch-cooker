@@ -3,8 +3,8 @@ POST http://localhost:8000/api/account/login
 Content-Type: application/json
 
 {
-    "email": "zdb@msn.com",
-    "password": "pouet"
+    "email": "yligotmi@msn.com",
+    "password": "pouetpouet"
 }
 
 ### REGISTER
@@ -12,18 +12,27 @@ POST http://localhost:8000/api/account/register
 Content-Type: application/json
 
 {
-    "email": "zdc@msn.com",
-    "password": "pouet",
-    "username": "oiazeroi"
+    "email": "pierremoulin@hotmail.com",
+      "password": "pouetpouet",
+      "username": "ArchStanton"
 }
 
 ### GET all users
 GET http://localhost:8000/api/users
 
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI2LCJpc3MiOiJiYXRjaC1jb29rZXIiLCJzY29wZXMiOlsiYWRtaW4iLCJ1c2VyIl0sImlhdCI6MTYwMDQxOTcxOCwiZXhwIjoxNjAwNDIzMzE4fQ.QrfXN4FF9ut4Znzy-8Deygg_HY6JrDnsXZE87yPOphw
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAwNDQ0MzQ2LCJleHAiOjE2MDA0NDc5NDZ9._y0xre9gHO5IuYYos2vBhJyR7s-vUpmOiVwFHfZfrjE
 
 ### GET one user
-GET http://localhost:8000/api/users/987
+GET http://localhost:8000/api/users/3
 Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI2LCJpc3MiOiJiYXRjaC1jb29rZXIiLCJzY29wZXMiOlsiYWRtaW4iLCJ1c2VyIl0sImlhdCI6MTYwMDQxOTcxOCwiZXhwIjoxNjAwNDIzMzE4fQ.QrfXN4FF9ut4Znzy-8Deygg_HY6JrDnsXZE87yPOphw
 
+### PUT Update one user
+PUT http://localhost:8000/api/users/2
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAwNDQ0MzQ2LCJleHAiOjE2MDA0NDc5NDZ9._y0xre9gHO5IuYYos2vBhJyR7s-vUpmOiVwFHfZfrjE
+Content-Type: application/json
 
+{
+    "email": "azeblouse@msn.com",
+    "password": "pouetpouet",
+    "username": "agathe"
+}

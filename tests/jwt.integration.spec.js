@@ -10,7 +10,7 @@ describe('JWT', () => {
       .post('/api/account/login')
       .send({
         email: 'yligotmi@msn.com',
-        password: 'pouet'
+        password: 'pouetpouet'
       })
       .then(res => {
         const cookies = res.headers['set-cookie'][0].split(',').map(item => item.split(';')[0])
