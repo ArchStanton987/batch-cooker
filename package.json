@@ -17,6 +17,8 @@
     "mysql2": "^2.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0",
@@ -52,6 +54,8 @@
     "supertest": "^4.0.2"
   },
   "jest": {
-    "setupFilesAfterEnv": ["./jest.config.js"]
+    "setupFilesAfterEnv": [
+      "./jest.config.js"
+    ]
   }
 }

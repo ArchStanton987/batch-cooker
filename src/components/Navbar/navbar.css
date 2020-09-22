@@ -1,0 +1,15 @@
+.navbar {
+  position: fixed;
+  bottom: 0px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background: #516f9b;
+}
+
+.navIcon {
+  margin: 0.5rem;
+  max-height: 3rem;
+  max-width: 3rem;
+}
