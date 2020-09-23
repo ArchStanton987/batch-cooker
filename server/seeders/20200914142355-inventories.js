@@ -11,14 +11,18 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await models.Inventory.bulkCreate([
-      { userId: 1, ingredientId: 1, quantity: 1 },
-      { userId: 1, ingredientId: 2, quantity: 1 },
-      { userId: 1, ingredientId: 3, quantity: 1 },
-      { userId: 2, ingredientId: 2, quantity: 1 },
-      { userId: 2, ingredientId: 4, quantity: 1 },
-      { userId: 3, ingredientId: 3, quantity: 1 }
-    ])
+    await queryInterface.bulkInsert(
+      'Inventories',
+      [
+        { userId: 1, ingredientId: 1, quantity: 1 },
+        { userId: 1, ingredientId: 2, quantity: 1 },
+        { userId: 1, ingredientId: 3, quantity: 1 },
+        { userId: 2, ingredientId: 2, quantity: 1 },
+        { userId: 2, ingredientId: 4, quantity: 1 },
+        { userId: 3, ingredientId: 3, quantity: 1 }
+      ],
+      {}
+    )
   },
 
   down: async (queryInterface, Sequelize) => {
