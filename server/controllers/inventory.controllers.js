@@ -1,5 +1,6 @@
 const models = require('../models')
 const { Op } = require('sequelize')
+const { isValidElement } = require('react')
 
 module.exports = {
   getUserInventory: async (req, res) => {
@@ -9,7 +10,11 @@ module.exports = {
       if (!user) {
         res.status(404).json({ error: 'Unknown user' })
       } else {
-        const inventory = await models.Inventory.findAll({ where: { userId: userId } })
+        const inventory = await models.Inventory.findAll({
+          where: { userId: userId },
+          attributes: ['quantity', 'ingredientId'],
+          include: [{ model: models.Ingredient, attributes: ['name'] }]
+        })
         res.status(200).json(inventory)
       }
     } catch (err) {

@@ -52,7 +52,6 @@ describe('INVENTORY', () => {
       .expect(200)
       .then(res => {
         expect(res.body.length).toEqual(3)
-        expect(res.body[0].userId).toEqual(1)
         expect(res.body[0].ingredientId).toEqual(1)
       })
   })

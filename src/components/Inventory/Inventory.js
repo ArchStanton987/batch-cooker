@@ -17,7 +17,7 @@ export default function Inventory() {
     <>
       <p>Hello from inventory !</p>
       {inventory &&
-        inventory.map(item => React.Children.toArray(<p>{item.ingredientId}</p>))}
+        inventory.map(item => React.Children.toArray(<p>{item.Ingredient.name}</p>))}
     </>
   )
 }

@@ -7,7 +7,7 @@ Content-Type: application/json
     "password": "pouetpouet"
 }
 
-### add to inventory
-POST http://localhost:8000/api/inventory/user/1/ingredients/4
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAwODQ0OTU2LCJleHAiOjE2MDA4NDg1NTZ9.DGrdHvW_7z_VyrOOrYwVs2c4OHuqSZzche_liORVAt4
+###
+GET http://localhost:8000/api/inventory/user/1
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAxMDMyNjU5LCJleHAiOjE2MDEwMzYyNTl9.Sl9cJ0yvGU1fVJD5gW0U0oIxKs-x5ZU6R-63_XhQL9A
 
