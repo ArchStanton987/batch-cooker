@@ -1,11 +1,12 @@
 import React from 'react'
-import './Main.css'
 import { Switch, Route } from 'react-router-dom'
-import Home from '../../components/Home/Home'
-import Calendar from '../../components/Calendar/Calendar'
-import Recipies from '../../components/Recipies/Recipies'
-import Inventory from '../../components/Inventory/Inventory'
-import Shoplist from '../../components/Shoplist/Shoplist'
+
+import Home from '../components/Home'
+import Calendar from '../components/Calendar'
+import Recipies from '../components/Recipies'
+import Inventory from '../components/Inventory'
+import Shoplist from '../components/Shoplist'
+import '../sass/layout/_Main.scss'
 
 export default function Main() {
   return (

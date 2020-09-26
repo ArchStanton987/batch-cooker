@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import SearchBox from '../../containers/SearchBox/SearchBox'
-import './Inventory.css'
+import SearchBox from '../containers/SearchBox'
+import '../sass/pages/_Inventory.scss'
 
 export default function Inventory() {
   const [inventory, setInventory] = useState([])

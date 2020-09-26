@@ -1,7 +1,7 @@
 import React from 'react'
 
-import './SearchBox.css'
-import magnifyingGlass from '../../assets/img/magnifying-glass.png'
+import '../sass/components/_SearchBox.scss'
+import magnifyingGlass from '../assets/img/magnifying-glass.png'
 
 export default function SearchBox() {
   return (

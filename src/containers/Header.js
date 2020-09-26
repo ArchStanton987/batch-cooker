@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import homeIcon from '../../assets/img/home-icon.png'
-import './Header.css'
+import homeIcon from '../assets/img/home-icon.png'
+import '../sass/layout/_Header.scss'
 
 export default function Header() {
   return (

@@ -1,8 +1,8 @@
 import React from 'react'
-import Header from '../Header/Header'
-import Navbar from '../Navbar/Navbar'
-import Main from '../Main/Main'
-import './Layout.css'
+import Header from './Header'
+import Navbar from './Navbar'
+import Main from './Main'
+import '../sass/layout/_Layout.scss'
 
 export default function Layout() {
   return (
