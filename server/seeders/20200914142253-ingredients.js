@@ -12,17 +12,17 @@ module.exports = {
      * }], {});
      */
     await models.Ingredient.bulkCreate([
-      { name: 'poivre', category: 'assaisonnements' },
-      { name: 'sel', category: 'assaisonnements' },
+      { name: 'poivre', category: 'assaisonnements et condiments' },
+      { name: 'sel', category: 'assaisonnements et condiments' },
       { name: 'magret de canard', category: 'viandes et poissons' },
       { name: 'truite fumée', category: 'viandes et poissons' },
       { name: 'crème fraiche', category: 'produits laitiers' },
-      { name: 'beurre salé', category: 'corps gras' },
-      { name: 'mangue', category: 'fruits' },
-      { name: 'quinoa', category: 'céréales et féculants' },
+      { name: 'beurre salé', category: 'produits laitiers' },
+      { name: 'mangue', category: 'fruits et légumes' },
+      { name: 'quinoa', category: 'céréales et féculents' },
       { name: 'miel', category: 'sucrés' },
-      { name: 'ketchup', category: 'sauces et liquides' },
-      { name: 'rhum', category: 'sauces et liquides' },
+      { name: 'ketchup', category: 'assaisonnements et condiments' },
+      { name: 'rhum', category: 'autres' },
       { name: 'champignons de Paris', category: 'autres' }
     ])
   },

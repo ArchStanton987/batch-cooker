@@ -5,14 +5,6 @@ import Ingredient from '../containers/Ingredient'
 import SearchBox from '../containers/SearchBox'
 import '../sass/pages/_Inventory.scss'
 
-// fruits et légumes
-// viandes et poissons
-// produits laitiers
-// assaisonnements, condiments
-// céréales et féculents
-// sucrés
-// autres
-
 export default function Inventory() {
   const [inventory, setInventory] = useState([])
 
@@ -31,15 +23,12 @@ export default function Inventory() {
       <div className="inventory-category h3-container">
         <h3>Catégories</h3>
         <ul className="inventory-category-list">
-          <li><button className="inventory-category-name">assaisonnements</button></li>
-          <li><button className="inventory-category-name">viandes et poissons</button></li>
+          <li><button className="inventory-category-name-inactive">assaisonnements / condiments</button></li>
           <li><button className="inventory-category-name">produits laitiers</button></li>
-          <li><button className="inventory-category-name-inactive">corps gras</button></li>
-          <li><button className="inventory-category-name">fruits</button></li>
-          <li><button className="inventory-category-name-inactive">légumes</button></li>
-          <li><button className="inventory-category-name">céréales et féculants</button></li>
+          <li><button className="inventory-category-name">viandes / poissons</button></li>
+          <li><button className="inventory-category-name">céréales / féculents</button></li>
+          <li><button className="inventory-category-name-inactive">fruits / légumes</button></li>
           <li><button className="inventory-category-name">sucrés</button></li>
-          <li><button className="inventory-category-name-inactive">sauces et liquides</button></li>
           <li><button className="inventory-category-name">autres</button></li>
         </ul>
       </div>

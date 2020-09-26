@@ -149,4 +149,9 @@ h1 {
   flex: 1;
 }
 
+.inventory-ingredients-add-button {
+  margin: 0.2rem auto;
+  padding: 0.7rem;
+}
+
 /*# sourceMappingURL=main.css.map */

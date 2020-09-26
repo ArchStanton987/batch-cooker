@@ -8,22 +8,12 @@
 }
 
 .inventory-category-name {
-  // font-weight: bold;
-  // background-color: v.$prim-color;
-  // color: v.$sec-color;
-  // padding: 0.4rem;
-  // margin: 0.2rem;
-  // border-radius: 5px;
-  // border: v.$ter-color 1px solid;
 }
 
 .inventory-category-name-inactive {
   background-color: v.$sec-color;
   border: v.$ter-color 1px solid;
   color: v.$prim-color;
-  // border-radius: 5px;
-  // padding: 0.4rem;
-  // margin: 0.2rem;
 }
 
 .inventory-ingredients {
@@ -35,11 +25,6 @@
 }
 
 .inventory-ingredients-add-button {
-  // background-color: v.$prim-color;
-  // border: solid 3px v.$ter-color;
-  // border-radius: 10px;
-  // box-shadow: black 5px 5px;
-  // color: v.$sec-color;
-  // margin: 0.5rem auto;
-  // padding: 0.5rem;
+  margin: 0.2rem auto;
+  padding: 0.7rem;
 }

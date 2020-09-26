@@ -14,15 +14,12 @@ module.exports = {
       },
       category: {
         type: Sequelize.ENUM([
-          'assaisonnements',
+          'fruits et légumes',
           'viandes et poissons',
           'produits laitiers',
-          'corps gras',
-          'fruits',
-          'légumes',
-          'céréales et féculants',
+          'assaisonnements et condiments',
+          'céréales et féculents',
           'sucrés',
-          'sauces et liquides',
           'autres'
         ]),
         allowNull: false,
