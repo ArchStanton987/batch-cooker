@@ -66,6 +66,7 @@ describe('INVENTORY', () => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.ingredientId).toEqual(4)
         expect(res.body.quantity).toEqual(20)
+        // expect(res.body.category).toEqual('viandes et poissons')
       })
   })
   it('addToInventory - SUCCESS : item already in inventory', () => {
@@ -78,6 +79,7 @@ describe('INVENTORY', () => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.ingredientId).toEqual(1)
         expect(res.body.quantity).toEqual(21)
+        // expect(res.body.category).toEqual('assaisonnements')
       })
   })
   it('updateFromInventory - SUCCESS', () => {
@@ -90,6 +92,7 @@ describe('INVENTORY', () => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.ingredientId).toEqual(1)
         expect(res.body.quantity).toEqual(31)
+        // expect(res.body.category).toEqual('assaisonnements')
       })
   })
   it('deleteFromInventory - SUCCESS', () => {

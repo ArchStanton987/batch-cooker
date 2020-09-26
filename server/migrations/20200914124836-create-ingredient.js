@@ -12,6 +12,22 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      category: {
+        type: Sequelize.ENUM([
+          'assaisonnements',
+          'viandes et poissons',
+          'produits laitiers',
+          'corps gras',
+          'fruits',
+          'légumes',
+          'céréales et féculants',
+          'sucrés',
+          'sauces et liquides',
+          'autres'
+        ]),
+        allowNull: false,
+        default: 'autres'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

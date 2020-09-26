@@ -13,7 +13,7 @@ module.exports = {
         const inventory = await models.Inventory.findAll({
           where: { userId: userId },
           attributes: ['quantity', 'ingredientId'],
-          include: [{ model: models.Ingredient, attributes: ['name'] }]
+          include: [{ model: models.Ingredient, attributes: ['name', 'category'] }]
         })
         res.status(200).json(inventory)
       }

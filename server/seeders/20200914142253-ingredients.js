@@ -12,10 +12,18 @@ module.exports = {
      * }], {});
      */
     await models.Ingredient.bulkCreate([
-      { name: 'poivre' },
-      { name: 'sel' },
-      { name: 'magret de canard' },
-      { name: 'vinaigre balsamique' }
+      { name: 'poivre', category: 'assaisonnements' },
+      { name: 'sel', category: 'assaisonnements' },
+      { name: 'magret de canard', category: 'viandes et poissons' },
+      { name: 'truite fumée', category: 'viandes et poissons' },
+      { name: 'crème fraiche', category: 'produits laitiers' },
+      { name: 'beurre salé', category: 'corps gras' },
+      { name: 'mangue', category: 'fruits' },
+      { name: 'quinoa', category: 'céréales et féculants' },
+      { name: 'miel', category: 'sucrés' },
+      { name: 'ketchup', category: 'sauces et liquides' },
+      { name: 'rhum', category: 'sauces et liquides' },
+      { name: 'champignons de Paris', category: 'autres' }
     ])
   },
 

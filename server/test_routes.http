@@ -9,5 +9,5 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8000/api/inventory/user/1
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAxMDMyNjU5LCJleHAiOjE2MDEwMzYyNTl9.Sl9cJ0yvGU1fVJD5gW0U0oIxKs-x5ZU6R-63_XhQL9A
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAxMDk5NjA3LCJleHAiOjE2MDExMDMyMDd9.jVrxX7FdK_GFfByqr4cWZTKpOi8_jCmOYuhxNYtFm1Q
 

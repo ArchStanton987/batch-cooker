@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Ingredient.init(
     {
-      name: DataTypes.STRING
+      name: DataTypes.STRING,
+      category: DataTypes.STRING
     },
     {
       sequelize,
