@@ -7,9 +7,52 @@
 }
 
 h1 {
-  font-family: v.$title-font;
+  font-family: v.$h1-font;
+  font-weight: normal;
+  color: v.$sec-color;
+}
+
+h2 {
+  font-family: v.$h2-font;
   font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
-  padding: 1rem;
+  text-align: center;
+  font-weight: lighter;
+  color: v.$prim-color;
+  background-color: v.$ter-color;
+  margin: 0.5rem 0;
+  border-radius: 5px;
+}
+
+h3 {
+  font-family: v.$h3-font;
+  color: v.$prim-color;
+  background-color: v.$ter-color;
+  padding: 0.2rem;
+}
+
+p {
+  font-family: v.$p-font;
+}
+
+.h3-container {
+  margin: 0.5rem 0;
+  border: solid 2px v.$ter-color;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  border: 0;
+  border-radius: 5px;
+  background: v.$prim-color;
+  color: v.$sec-color;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 0.4rem;
+  margin: 0.2rem;
+  cursor: pointer;
 }

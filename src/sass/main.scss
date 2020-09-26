@@ -1,2 +1,8 @@
-@use "scss_partials/variables" as v;
-@use "../containers/Header/Header";
+@use "variables" as v;
+@use "./components/SearchBox";
+@use "./layout/Global";
+@use "./layout/Header";
+@use "./layout/Layout";
+@use "./layout/Main";
+@use "./layout/Navbar";
+@use "./pages/Inventory";

@@ -1,24 +1,45 @@
-.ingredient-category-list {
+@use '../variables' as v;
+
+.inventory-category-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   list-style: none;
 }
 
-.ingredient-category-name {
-  font-weight: bold;
-  background-color: #516f9b;
-  color: white;
-  padding: 0.4rem;
-  margin: 0.2rem;
-  border-radius: 5px;
-  border: #516f9b 1px solid;
+.inventory-category-name {
+  // font-weight: bold;
+  // background-color: v.$prim-color;
+  // color: v.$sec-color;
+  // padding: 0.4rem;
+  // margin: 0.2rem;
+  // border-radius: 5px;
+  // border: v.$ter-color 1px solid;
 }
 
-.ingredient-category-name-inactive {
-  border: #516f9b 1px solid;
-  border-radius: 5px;
-  color: #516f9b;
-  padding: 0.4rem;
-  margin: 0.2rem;
+.inventory-category-name-inactive {
+  background-color: v.$sec-color;
+  border: v.$ter-color 1px solid;
+  color: v.$prim-color;
+  // border-radius: 5px;
+  // padding: 0.4rem;
+  // margin: 0.2rem;
+}
+
+.inventory-ingredients {
+  flex: 1;
+}
+
+.inventory-ingredients-list {
+  flex: 1;
+}
+
+.inventory-ingredients-add-button {
+  // background-color: v.$prim-color;
+  // border: solid 3px v.$ter-color;
+  // border-radius: 10px;
+  // box-shadow: black 5px 5px;
+  // color: v.$sec-color;
+  // margin: 0.5rem auto;
+  // padding: 0.5rem;
 }

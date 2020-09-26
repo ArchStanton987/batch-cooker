@@ -1,5 +1,9 @@
 import React from 'react'
 
 export default function Shoplist() {
-  return <>Hello from shoplist !</>
+  return (
+    <>
+      <h2>Liste de courses</h2>
+    </>
+  )
 }

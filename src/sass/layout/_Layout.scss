@@ -1,4 +1,10 @@
 .global-layout {
-  display: flex;
-  flex-direction: column;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: min-content auto min-content;
+  grid-template-areas:
+    'header'
+    'main-layout'
+    'navbar';
 }

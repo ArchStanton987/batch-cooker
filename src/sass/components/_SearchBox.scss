@@ -1,9 +1,21 @@
-.searchbox-container {
+@use '../variables' as v;
 
+.searchbox-container {
+  background-color: v.$prim-color;
+  padding: 2px;
+  display: flex;
+  border-radius: 5px;
+}
+
+.searchbox-input {
+  border: v.$prim-color 2px solid;
+  border-radius: 5px;
+  flex: 1;
 }
 
 .search-icon {
-  background-color: #516f9b;
-  max-height: 3rem;
-  max-width: 3rem;
+  background-color: v.$prim-color;
+  max-height: 3.5rem;
+  max-width: 3.5rem;
+  padding: 8px;
 }

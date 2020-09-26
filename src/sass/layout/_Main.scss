@@ -1,6 +1,6 @@
 .main-layout {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
+  grid-area: main-layout;
 }

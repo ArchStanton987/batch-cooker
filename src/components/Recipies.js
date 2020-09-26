@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default function Recipies() {
-  return <>Hello from recipies !</>
+  return <><h2>Recettes</h2></>
 }

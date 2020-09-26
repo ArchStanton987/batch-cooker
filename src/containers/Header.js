@@ -5,8 +5,8 @@ import '../sass/layout/_Header.scss'
 
 export default function Header() {
   return (
-    <header>
-      <Link to="/">
+    <header className="header">
+      <Link id="homeIcon-link" to="/">
         <img id="homeIcon" src={homeIcon} alt="home" />
       </Link>
       <h1>BatchCooker</h1>

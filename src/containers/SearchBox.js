@@ -7,7 +7,7 @@ export default function SearchBox() {
   return (
     <div className='searchbox-container'>
       <label className='searchbox-label'></label>
-      <textarea className='searchbox-input'></textarea>
+      <input className='searchbox-input'></input>
       <img className='search-icon' src={magnifyingGlass} alt='loupe'/>
     </div>
   )

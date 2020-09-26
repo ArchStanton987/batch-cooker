@@ -1,0 +1,152 @@
+.searchbox-container {
+  background-color: #516f9b;
+  padding: 2px;
+  display: flex;
+  border-radius: 5px;
+}
+
+.searchbox-input {
+  border: #516f9b 2px solid;
+  border-radius: 5px;
+  flex: 1;
+}
+
+.search-icon {
+  background-color: #516f9b;
+  max-height: 3.5rem;
+  max-width: 3.5rem;
+  padding: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-family: "Rouge Script", cursive;
+  font-weight: normal;
+  color: #fff;
+}
+
+h2 {
+  font-family: "Norican", cursive;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: lighter;
+  color: #516f9b;
+  background-color: #bacdeb;
+  margin: 0.5rem 0;
+  border-radius: 5px;
+}
+
+h3 {
+  font-family: "Lato", sans-serif;
+  color: #516f9b;
+  background-color: #bacdeb;
+  padding: 0.2rem;
+}
+
+p {
+  font-family: "Lato", sans-serif;
+}
+
+.h3-container {
+  margin: 0.5rem 0;
+  border: solid 2px #bacdeb;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  border: 0;
+  border-radius: 5px;
+  background: #516f9b;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 0.4rem;
+  margin: 0.2rem;
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #516f9b;
+  grid-area: header;
+  padding: 0 1rem;
+}
+
+#homeIcon-link {
+  margin-right: auto;
+}
+
+#homeIcon {
+  max-height: 2.5rem;
+  max-width: 2.5rem;
+}
+
+h1 {
+  margin: auto;
+  padding: 0.3rem;
+  font-size: 3rem;
+}
+
+.global-layout {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: min-content auto min-content;
+  grid-template-areas: "header" "main-layout" "navbar";
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+  grid-area: main-layout;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background: #516f9b;
+  grid-area: navbar;
+}
+
+.navIcon {
+  margin: 0.5rem;
+  max-height: 2.5rem;
+  max-width: 2.5rem;
+}
+
+.inventory-category-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  list-style: none;
+}
+
+.inventory-category-name-inactive {
+  background-color: #fff;
+  border: #bacdeb 1px solid;
+  color: #516f9b;
+}
+
+.inventory-ingredients {
+  flex: 1;
+}
+
+.inventory-ingredients-list {
+  flex: 1;
+}
+
+/*# sourceMappingURL=main.css.map */

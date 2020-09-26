@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
+import Ingredient from '../containers/Ingredient'
 import SearchBox from '../containers/SearchBox'
 import '../sass/pages/_Inventory.scss'
+
+// fruits et légumes
+// viandes et poissons
+// produits laitiers
+// assaisonnements, condiments
+// céréales et féculents
+// sucrés
+// autres
 
 export default function Inventory() {
   const [inventory, setInventory] = useState([])
@@ -19,23 +28,28 @@ export default function Inventory() {
   return (
     <>
       <h2>Inventaire</h2>
-      <div>
-        <h3>Catégories d'ingrédients :</h3>
-        <ul className='ingredient-category-list'>
-          <li><button className='ingredient-category-name'>assaisonnements</button></li>
-          <li><button className='ingredient-category-name'>viandes et poissons</button></li>
-          <li><button className='ingredient-category-name'>produits laitiers</button></li>
-          <li><button className='ingredient-category-name-inactive'>corps gras</button></li>
-          <li><button className='ingredient-category-name'>fruits</button></li>
-          <li><button className='ingredient-category-name-inactive'>légumes</button></li>
-          <li><button className='ingredient-category-name'>céréales et féculants</button></li>
-          <li><button className='ingredient-category-name'>sucrés</button></li>
-          <li><button className='ingredient-category-name-inactive'>sauces et liquides</button></li>
-          <li><button className='ingredient-category-name'>autres</button></li>
+      <div className="inventory-category h3-container">
+        <h3>Catégories</h3>
+        <ul className="inventory-category-list">
+          <li><button className="inventory-category-name">assaisonnements</button></li>
+          <li><button className="inventory-category-name">viandes et poissons</button></li>
+          <li><button className="inventory-category-name">produits laitiers</button></li>
+          <li><button className="inventory-category-name-inactive">corps gras</button></li>
+          <li><button className="inventory-category-name">fruits</button></li>
+          <li><button className="inventory-category-name-inactive">légumes</button></li>
+          <li><button className="inventory-category-name">céréales et féculants</button></li>
+          <li><button className="inventory-category-name">sucrés</button></li>
+          <li><button className="inventory-category-name-inactive">sauces et liquides</button></li>
+          <li><button className="inventory-category-name">autres</button></li>
         </ul>
       </div>
-      <div className="ingredient-list">
-        {inventory && inventory.map(item => React.Children.toArray(<p>{item.Ingredient.name}</p>))}
+      <div className="inventory-ingredients h3-container">
+        <h3>Ingrédients</h3>
+        <ul className="inventory-ingredients-list">
+          {inventory &&
+            inventory.map(item => React.Children.toArray(<Ingredient ingredient={item} />))}
+        </ul>
+        <button className='inventory-ingredients-add-button button'>Ajouter</button>
       </div>
       <SearchBox />
     </>

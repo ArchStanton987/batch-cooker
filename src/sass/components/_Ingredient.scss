@@ -1,0 +1,31 @@
+@use '../variables' as v;
+
+.ingredient-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.ingredient-item:nth-child(even) {
+  background-color: v.$quad-color;
+}
+
+.ingredient-item-name {
+  font-size: 20px;
+  flex: 6;
+  margin: 0.2rem;
+  border: solid red 1px;
+}
+
+.ingredient-item-quantity {
+  flex: 1;
+  margin: 0.2rem;
+  border: solid red 1px;
+  text-align: center;
+}
+
+.ingredient-item-unity {
+  flex: 1;
+  margin: 0.2rem;
+  border: solid red 1px;
+  text-align: center;
+}

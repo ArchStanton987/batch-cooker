@@ -4,11 +4,22 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
   background-color: v.$prim-color;
+  grid-area: header;
+  padding: 0 1rem;
+}
+
+#homeIcon-link {
+  margin-right: auto;
 }
 
 #homeIcon {
-  max-height: 3rem;
-  max-width: 3rem;
+  max-height: 2.5rem;
+  max-width: 2.5rem;
+}
+
+h1 {
+  margin: auto;
+  padding: 0.3rem;
+  font-size: 3rem;
 }
