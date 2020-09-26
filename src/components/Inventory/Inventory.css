@@ -1,0 +1,24 @@
+.ingredient-category-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  list-style: none;
+}
+
+.ingredient-category-name {
+  font-weight: bold;
+  background-color: #516f9b;
+  color: white;
+  padding: 0.4rem;
+  margin: 0.2rem;
+  border-radius: 5px;
+  border: #516f9b 1px solid;
+}
+
+.ingredient-category-name-inactive {
+  border: #516f9b 1px solid;
+  border-radius: 5px;
+  color: #516f9b;
+  padding: 0.4rem;
+  margin: 0.2rem;
+}
