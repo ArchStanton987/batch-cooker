@@ -28,3 +28,9 @@
   margin: 0.2rem auto;
   padding: 0.7rem;
 }
+
+.retracted {
+  display: none;
+  transition: display 0.5 ease-out;
+}
+

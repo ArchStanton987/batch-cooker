@@ -154,4 +154,9 @@ h1 {
   padding: 0.7rem;
 }
 
+.retracted {
+  display: none;
+  transition: display 0.5 ease-out;
+}
+
 /*# sourceMappingURL=main.css.map */

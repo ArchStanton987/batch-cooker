@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const users = require('./routes/users')
 const account = require('./routes/account')
 const inventory = require('./routes/inventory')
+// const ingredients = require('./routes/ingredients')
 
 const app = express()
 
@@ -15,6 +16,7 @@ app.use(cookieParser())
 app.use('/api/users', users)
 app.use('/api/account', account)
 app.use('/api/inventory', inventory)
+// app.use('./api.ingredients', ingredients)
 
 // POST /api/account/register
 // POST /api/account/login

@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Inventory.init(
     {
-      quantity: DataTypes.INTEGER
+      quantity: DataTypes.INTEGER,
+      unity: DataTypes.STRING
     },
     {
       sequelize,

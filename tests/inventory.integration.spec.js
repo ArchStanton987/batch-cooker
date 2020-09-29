@@ -21,9 +21,9 @@ describe('INVENTORY', () => {
   })
 
   beforeAll(async () => {
-    const newInvItem = { userId: 3, ingredientId: 1, quantity: 5 }
+    const newInvItem = { userId: 3, ingredientId: 1, quantity: 5, unity: 'g' }
     await models.Inventory.create(newInvItem, {
-      fields: ['userId', 'ingredientId', 'quantity']
+      fields: ['userId', 'ingredientId', 'quantity', 'unity']
     })
   })
 
@@ -32,6 +32,13 @@ describe('INVENTORY', () => {
       where: { userId: 1, ingredientId: 4 }
     })
     await invToDelete.destroy()
+
+    const ingredientToDelete = await models.Ingredient.findOne({ where: { name: 'melfort' } })
+    const invToDelete2 = await models.Inventory.findOne({
+      where: { ingredientId: ingredientToDelete.id }
+    })
+    await invToDelete2.destroy()
+    await ingredientToDelete.destroy()
 
     const invToReset = await models.Inventory.findOne({ where: { userId: 1, ingredientId: 1 } })
     invToReset.quantity = 1
@@ -56,43 +63,69 @@ describe('INVENTORY', () => {
       })
   })
 
-  it('addToInventory - SUCCESS : item not in inventory', () => {
+  it('addToInventory - SUCCESS : non-existing ingredient, not in inventory', () => {
     return request(app)
-      .post('/api/inventory/user/1/ingredients/4')
+      .post('/api/inventory/user/1/ingredients')
       .set('cookie', [`access_token=${token}`])
-      .send({ quantity: 20 })
+      .send({
+        ingredientName: 'melfort',
+        category: 'assaisonnements et condiments',
+        quantity: 2,
+        unity: 'l'
+      })
+      .expect(200)
+      .then(res => {
+        expect(res.body.userId).toEqual(1)
+        expect(res.body.quantity).toEqual(2)
+        expect(res.body.unity).toEqual('l')
+      })
+  })
+  it('addToInventory - SUCCESS : existing ingredient, not in inventory', () => {
+    return request(app)
+      .post('/api/inventory/user/1/ingredients')
+      .set('cookie', [`access_token=${token}`])
+      .send({
+        ingredientName: 'truite fumée',
+        category: 'viandes et poissons',
+        quantity: 150,
+        unity: 'g'
+      })
       .expect(200)
       .then(res => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.ingredientId).toEqual(4)
-        expect(res.body.quantity).toEqual(20)
-        // expect(res.body.category).toEqual('viandes et poissons')
+        expect(res.body.quantity).toEqual(150)
+        expect(res.body.unity).toEqual('g')
       })
   })
-  it('addToInventory - SUCCESS : item already in inventory', () => {
+  it('addToInventory - SUCCESS : existing ingredient, in inventory', () => {
     return request(app)
-      .post('/api/inventory/user/1/ingredients/1')
+      .post('/api/inventory/user/1/ingredients')
       .set('cookie', [`access_token=${token}`])
-      .send({ quantity: 20 })
+      .send({
+        ingredientName: 'truite fumée',
+        category: 'viandes et poissons',
+        quantity: 150,
+        unity: 'g'
+      })
       .expect(200)
       .then(res => {
         expect(res.body.userId).toEqual(1)
-        expect(res.body.ingredientId).toEqual(1)
-        expect(res.body.quantity).toEqual(21)
-        // expect(res.body.category).toEqual('assaisonnements')
+        expect(res.body.ingredientId).toEqual(4)
+        expect(res.body.quantity).toEqual(300)
+        expect(res.body.unity).toEqual('g')
       })
   })
   it('updateFromInventory - SUCCESS', () => {
     return request(app)
-      .post('/api/inventory/user/1/ingredients/1')
+      .put('/api/inventory/user/1/ingredients/1')
       .set('cookie', [`access_token=${token}`])
       .send({ quantity: 10 })
       .expect(200)
       .then(res => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.ingredientId).toEqual(1)
-        expect(res.body.quantity).toEqual(31)
-        // expect(res.body.category).toEqual('assaisonnements')
+        expect(res.body.quantity).toEqual(11)
       })
   })
   it('deleteFromInventory - SUCCESS', () => {

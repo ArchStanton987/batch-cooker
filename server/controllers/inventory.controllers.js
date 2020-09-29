@@ -1,6 +1,5 @@
 const models = require('../models')
 const { Op } = require('sequelize')
-const { isValidElement } = require('react')
 
 module.exports = {
   getUserInventory: async (req, res) => {
@@ -12,7 +11,7 @@ module.exports = {
       } else {
         const inventory = await models.Inventory.findAll({
           where: { userId: userId },
-          attributes: ['quantity', 'ingredientId'],
+          attributes: ['quantity', 'ingredientId', 'unity'],
           include: [{ model: models.Ingredient, attributes: ['name', 'category'] }]
         })
         res.status(200).json(inventory)
@@ -21,38 +20,55 @@ module.exports = {
       res.status(500).json({ error: err })
     }
   },
+
   addToInventory: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
-    const ingredientId = parseInt(req.params.ingredientId, 10)
-    const quantity = req.body.quantity
-    let ingredient = { userId: userId, ingredientId: ingredientId, quantity: quantity }
+    let { ingredientName, category, quantity, unity } = req.body
+    let { userId } = req.params
+    let newIngredient = { name: ingredientName, category: category }
 
     const user = await models.User.findByPk(userId)
     if (!user) {
       res.status(404).json({ error: 'Unknown user' })
       return
     }
-    const ingredientInInventory = await models.Inventory.findOne({
-      where: { [Op.and]: [{ userId: userId }, { ingredientId: ingredientId }] }
+
+    let newInvItem = {
+      userId: parseInt(userId, 10),
+      quantity: quantity || 0,
+      unity: unity || 'g'
+    }
+
+    const ingredientExists = await models.Ingredient.findOne({
+      where: { name: ingredientName, category: category }
+    })
+    if (!ingredientExists) {
+      let createdIngredient = await models.Ingredient.create(newIngredient)
+      newInvItem.ingredientId = createdIngredient.id
+    }
+    if (ingredientExists) {
+      newInvItem.ingredientId = ingredientExists.id
+    }
+
+    let ingredientInInventory = await models.Inventory.findOne({
+      where: { [Op.and]: [{ userId: userId }, { ingredientId: newInvItem.ingredientId }] }
     })
     try {
       if (!ingredientInInventory) {
-        let newIngredient = await models.Inventory.create(ingredient, {
-          fields: ['userId', 'ingredientId', 'quantity']
+        await models.Inventory.create(newInvItem, {
+          fields: ['userId', 'ingredientId', 'quantity', 'unity']
         })
-        res.status(200).json(newIngredient)
-        return
+        res.status(200).json(newInvItem)
       }
       if (ingredientInInventory) {
         ingredientInInventory.quantity += quantity
         await ingredientInInventory.save()
         res.status(200).json(ingredientInInventory)
-        return
       }
     } catch (err) {
       res.status(500).send({ error: err })
     }
   },
+
   updateFromInventory: async (req, res) => {
     const userId = req.params.userId
     const ingredientId = req.params.ingredientId
