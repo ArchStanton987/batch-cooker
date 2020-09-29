@@ -1,10 +1,50 @@
 @use '../variables' as v;
 
+.inventory-category {
+  position: relative;
+}
+
+.inventory-category-circle {
+  position: absolute;
+  right: 1rem;
+  height: 24px;
+  width: 24px;
+  border-radius: 100%;
+  background-color: transparent;
+  border: 2px v.$prim-color solid;
+}
+
+.inventory-category-arrow {
+  position: absolute;
+  top: 6px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid v.$prim-color;
+  transform: rotateZ(0deg);
+  transition: transform 0.4s ease-out;
+}
+
+.rotated {
+  transform: rotateZ(180deg);
+  transition: transform 0.4s ease-out;
+}
+
 .inventory-category-list {
   display: flex;
   flex-wrap: wrap;
+  overflow: hidden;
   justify-content: space-evenly;
   list-style: none;
+  max-height: 160px;
+  transition: max-height 0.4s ease-in-out;
+}
+
+.retracted {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease-in-out;
 }
 
 .inventory-category-name {
@@ -28,9 +68,3 @@
   margin: 0.2rem auto;
   padding: 0.7rem;
 }
-
-.retracted {
-  display: none;
-  transition: display 0.5 ease-out;
-}
-

@@ -26,6 +26,11 @@ export default function Inventory() {
     <>
       <h2>Inventaire</h2>
       <div className="inventory-category h3-container">
+        <div className="inventory-category-circle">
+          <div
+            className={isExpended ? 'inventory-category-arrow' : 'inventory-category-arrow rotated'}
+          ></div>
+        </div>
         <h3 onClick={drawer}>Catégories</h3>
         <ul
           className={isExpended ? 'inventory-category-list' : 'inventory-category-list retracted'}
