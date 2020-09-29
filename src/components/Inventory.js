@@ -72,6 +72,12 @@ export default function Inventory() {
       })
   }
 
+  const handleDeleteIngredient = id => {
+    axios
+      .delete(`http://localhost:8000/api/inventory/user/1/ingredients/${id}`)
+      .then(() => getInventory())
+  }
+
   useEffect(() => {
     getInventory()
   }, [])
@@ -198,7 +204,13 @@ export default function Inventory() {
         <ul className="inventory-ingredients-list">
           {inventory &&
             inventory.map(item =>
-              React.Children.toArray(<Ingredient key={item.ingredientId} ingredient={item} />)
+              React.Children.toArray(
+                <Ingredient
+                  handleDeleteIngredient={handleDeleteIngredient}
+                  key={item.ingredientId}
+                  ingredient={item}
+                />
+              )
             )}
         </ul>
         <button onClick={toggleModal} className="inventory-ingredients-add-button button">
