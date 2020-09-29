@@ -4,6 +4,7 @@ import axios from 'axios'
 import Ingredient from '../containers/Ingredient'
 import SearchBox from '../containers/SearchBox'
 import '../sass/pages/_Inventory.scss'
+import InventoryModal from '../containers/InventoryModal'
 
 export default function Inventory() {
   let includeCategories = {
@@ -18,18 +19,20 @@ export default function Inventory() {
 
   const [activeCategories, setActiveCategories] = useState(includeCategories)
   const [inventory, setInventory] = useState([])
-  const [isExpended, setIsExpended] = useState(true)
+  const [isExpended, toggleExpended] = useState(true)
+  const [isModalActive, toggleIngredientModal] = useState(false)
+  const [newIngredient, setNewIngredient] = useState({})
 
   const getInventory = () => {
     const url = 'http://localhost:8000/api/inventory/user/1'
     axios.get(url).then(res => setInventory(res.data))
   }
 
-  const drawer = () => {
-    isExpended ? setIsExpended(false) : setIsExpended(true)
+  const toggleDrawer = () => {
+    isExpended ? toggleExpended(false) : toggleExpended(true)
   }
 
-  const setActiveCategory = e => {
+  const handleSwitchFilter = e => {
     let categoryName = e.target.name
     activeCategories[categoryName] = !activeCategories[categoryName]
     let updatedValues = activeCategories.categoryName
@@ -38,16 +41,54 @@ export default function Inventory() {
     })
   }
 
+  const toggleModal = () => {
+    toggleIngredientModal(prevState => {
+      return !prevState
+    })
+    isModalActive && setNewIngredient({})
+  }
+
+  const handleNewIngredient = e => {
+    setNewIngredient({
+      ...newIngredient,
+      [e.currentTarget.name]: e.currentTarget.value
+    })
+  }
+
+  const handleSubmitIngredient = e => {
+    e.preventDefault()
+    const newIng = {
+      ingredientName: newIngredient.name,
+      category: newIngredient.category,
+      quantity: newIngredient.quantity,
+      unity: newIngredient.unity
+    }
+    axios
+      .post('http://localhost:8000/api/inventory/user/1/ingredients', newIng)
+      .then(res => console.log(res.data))
+      .then(() => {
+        toggleModal()
+        getInventory()
+      })
+  }
+
   useEffect(() => {
     getInventory()
   }, [])
 
   return (
     <>
+      {isModalActive && (
+        <InventoryModal
+          handleSubmitIngredient={handleSubmitIngredient}
+          handleNewIngredient={handleNewIngredient}
+          toggleModal={toggleModal}
+        />
+      )}
       <h2>Inventaire</h2>
       <div className="inventory-category h3-container">
-        <div onClick={drawer} className="drawer-container">
-          <div className="inventory-category-circle">
+        <div onClick={toggleDrawer} className="drawer-container">
+          <div className="inventory-category-arrow-container">
             <div
               className={
                 isExpended ? 'inventory-category-arrow' : 'inventory-category-arrow rotated'
@@ -62,7 +103,7 @@ export default function Inventory() {
           <li>
             <button
               name="spices"
-              onClick={setActiveCategory}
+              onClick={handleSwitchFilter}
               className={
                 activeCategories.spices
                   ? 'inventory-category-name'
@@ -75,7 +116,7 @@ export default function Inventory() {
           <li>
             <button
               name="dairy"
-              onClick={setActiveCategory}
+              onClick={handleSwitchFilter}
               className={
                 activeCategories.dairy
                   ? 'inventory-category-name'
@@ -88,7 +129,7 @@ export default function Inventory() {
           <li>
             <button
               name="meat"
-              onClick={setActiveCategory}
+              onClick={handleSwitchFilter}
               className={
                 activeCategories.meat
                   ? 'inventory-category-name'
@@ -101,7 +142,7 @@ export default function Inventory() {
           <li>
             <button
               name="cereal"
-              onClick={setActiveCategory}
+              onClick={handleSwitchFilter}
               className={
                 activeCategories.cereal
                   ? 'inventory-category-name'
@@ -114,7 +155,7 @@ export default function Inventory() {
           <li>
             <button
               name="fruits"
-              onClick={setActiveCategory}
+              onClick={handleSwitchFilter}
               className={
                 activeCategories.fruits
                   ? 'inventory-category-name'
@@ -127,7 +168,7 @@ export default function Inventory() {
           <li>
             <button
               name="sweet"
-              onClick={setActiveCategory}
+              onClick={handleSwitchFilter}
               className={
                 activeCategories.sweet
                   ? 'inventory-category-name'
@@ -140,7 +181,7 @@ export default function Inventory() {
           <li>
             <button
               name="other"
-              onClick={setActiveCategory}
+              onClick={handleSwitchFilter}
               className={
                 activeCategories.other
                   ? 'inventory-category-name'
@@ -156,9 +197,13 @@ export default function Inventory() {
         <h3>Ingrédients</h3>
         <ul className="inventory-ingredients-list">
           {inventory &&
-            inventory.map(item => React.Children.toArray(<Ingredient ingredient={item} />))}
+            inventory.map(item =>
+              React.Children.toArray(<Ingredient key={item.ingredientId} ingredient={item} />)
+            )}
         </ul>
-        <button className="inventory-ingredients-add-button button">Ajouter</button>
+        <button onClick={toggleModal} className="inventory-ingredients-add-button button">
+          Ajouter
+        </button>
       </div>
       <SearchBox />
     </>

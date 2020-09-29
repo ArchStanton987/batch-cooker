@@ -7,6 +7,7 @@ export default function Ingredient({ ingredient }) {
       <p className='ingredient-item-name'>{ingredient.Ingredient.name}</p>
       <p className='ingredient-item-quantity'>{ingredient.quantity}</p>
       <p className='ingredient-item-unity'>g</p>
+      <span>&#10005;</span>
     </li>
   )
 }

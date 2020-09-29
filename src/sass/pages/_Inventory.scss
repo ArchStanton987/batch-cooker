@@ -1,14 +1,14 @@
 @use '../variables' as v;
 
 .inventory-category {
-  // position: relative;
 }
 
 .drawer-container {
+  cursor: pointer;
   position: relative;
 }
 
-.inventory-category-circle {
+.inventory-category-arrow-container {
   position: absolute;
   right: 1rem;
   height: 24px;
