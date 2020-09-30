@@ -125,7 +125,7 @@ describe('INVENTORY', () => {
       .then(res => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.ingredientId).toEqual(1)
-        expect(res.body.quantity).toEqual(11)
+        expect(res.body.quantity).toEqual(10)
       })
   })
   it('deleteFromInventory - SUCCESS', () => {
