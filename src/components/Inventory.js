@@ -8,13 +8,13 @@ import chevron from './../assets/img/chevron.svg'
 
 export default function Inventory() {
   let includeCategories = {
-    spices: true,
-    dairy: true,
-    meat: true,
-    cereal: true,
-    fruits: true,
-    sweet: true,
-    other: true
+    spices: { active: true, fullname: 'assaisonnements et condiments' },
+    dairy: { active: true, fullname: 'produits laitiers' },
+    meat: { active: true, fullname: 'viandes et poissons' },
+    cereal: { active: true, fullname: 'céréales et féculents' },
+    fruits: { active: true, fullname: 'fruits et légumes' },
+    sweet: { active: true, fullname: 'sucrés' },
+    other: { active: true, fullname: 'autres' }
   }
 
   const [activeCategories, setActiveCategories] = useState(includeCategories)
@@ -22,6 +22,8 @@ export default function Inventory() {
   const [isExpended, toggleExpended] = useState(true)
   const [isModalActive, toggleIngredientModal] = useState(false)
   const [newIngredient, setNewIngredient] = useState(null)
+
+  let categories = Object.entries(activeCategories)
 
   const getInventory = () => {
     const url = 'http://localhost:8000/api/inventory/user/1'
@@ -52,7 +54,7 @@ export default function Inventory() {
   }
   const toggleCategoryFilter = e => {
     let categoryName = e.target.name
-    activeCategories[categoryName] = !activeCategories[categoryName]
+    activeCategories[categoryName].active = !activeCategories[categoryName].active
     let updatedValues = activeCategories.categoryName
     setActiveCategories(prevState => {
       return { ...prevState, ...updatedValues }
@@ -135,116 +137,54 @@ export default function Inventory() {
         <ul
           className={isExpended ? 'inventory-category-list' : 'inventory-category-list retracted'}
         >
-          <li>
-            <button
-              name="spices"
-              onClick={toggleCategoryFilter}
-              className={
-                activeCategories.spices
-                  ? 'inventory-category-name'
-                  : 'inventory-category-name-inactive'
-              }
-            >
-              assaisonnements / condiments
-            </button>
-          </li>
-          <li>
-            <button
-              name="dairy"
-              onClick={toggleCategoryFilter}
-              className={
-                activeCategories.dairy
-                  ? 'inventory-category-name'
-                  : 'inventory-category-name-inactive'
-              }
-            >
-              produits laitiers
-            </button>
-          </li>
-          <li>
-            <button
-              name="meat"
-              onClick={toggleCategoryFilter}
-              className={
-                activeCategories.meat
-                  ? 'inventory-category-name'
-                  : 'inventory-category-name-inactive'
-              }
-            >
-              viandes / poissons
-            </button>
-          </li>
-          <li>
-            <button
-              name="cereal"
-              onClick={toggleCategoryFilter}
-              className={
-                activeCategories.cereal
-                  ? 'inventory-category-name'
-                  : 'inventory-category-name-inactive'
-              }
-            >
-              céréales / féculents
-            </button>
-          </li>
-          <li>
-            <button
-              name="fruits"
-              onClick={toggleCategoryFilter}
-              className={
-                activeCategories.fruits
-                  ? 'inventory-category-name'
-                  : 'inventory-category-name-inactive'
-              }
-            >
-              fruits / légumes
-            </button>
-          </li>
-          <li>
-            <button
-              name="sweet"
-              onClick={toggleCategoryFilter}
-              className={
-                activeCategories.sweet
-                  ? 'inventory-category-name'
-                  : 'inventory-category-name-inactive'
-              }
-            >
-              sucrés
-            </button>
-          </li>
-          <li>
-            <button
-              name="other"
-              onClick={toggleCategoryFilter}
-              className={
-                activeCategories.other
-                  ? 'inventory-category-name'
-                  : 'inventory-category-name-inactive'
-              }
-            >
-              autres
-            </button>
-          </li>
+          {categories.map(category => {
+            return (
+              <li key={`category-${category[0]}`}>
+                <button
+                  name={category[0]}
+                  onClick={toggleCategoryFilter}
+                  className={
+                    category[1].active === true
+                      ? 'inventory-category-name'
+                      : 'inventory-category-name-inactive'
+                  }
+                >
+                  {category[1].fullname}
+                </button>
+              </li>
+            )
+          })}
         </ul>
       </div>
       <div className="inventory-ingredients h3-container">
         <h3>Ingrédients</h3>
         <ul className="inventory-ingredients-list">
           {inventory &&
-            inventory.map(item =>
-              React.Children.toArray(
-                <Ingredient
-                  handleEditIngredient={handleEditIngredient}
-                  handleDeleteIngredient={handleDeleteIngredient}
-                  key={item.ingredientId}
-                  name={item.name}
-                  quantity={item.quantity}
-                  ingredientId={item.ingredientId}
-                  unity={item.unity}
-                />
-              )
-            )}
+            inventory
+              .filter(item => {
+                const keys = Object.keys(activeCategories)
+                let match = keys.some(key => {
+                  return (
+                    activeCategories[key].fullname === item.category &&
+                    activeCategories[key].active &&
+                    true
+                  )
+                })
+                return match
+              })
+              .map(item =>
+                React.Children.toArray(
+                  <Ingredient
+                    handleEditIngredient={handleEditIngredient}
+                    handleDeleteIngredient={handleDeleteIngredient}
+                    key={item.ingredientId}
+                    name={item.name}
+                    quantity={item.quantity}
+                    ingredientId={item.ingredientId}
+                    unity={item.unity}
+                  />
+                )
+              )}
         </ul>
       </div>
       <button onClick={toggleModal} className="inventory-ingredients-add-button button">
