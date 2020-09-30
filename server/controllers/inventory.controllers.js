@@ -34,8 +34,8 @@ module.exports = {
 
     let newInvItem = {
       userId: parseInt(userId, 10),
-      quantity: quantity || 0,
-      unity: unity || 'g'
+      quantity: parseInt(quantity, 10) || 0,
+      unity: unity
     }
 
     const ingredientExists = await models.Ingredient.findOne({
@@ -60,7 +60,8 @@ module.exports = {
         res.status(200).json(newInvItem)
       }
       if (ingredientInInventory) {
-        ingredientInInventory.quantity += quantity
+        ingredientInInventory.quantity =
+          parseInt(ingredientInInventory.quantity, 10) + newInvItem.quantity
         await ingredientInInventory.save()
         res.status(200).json(ingredientInInventory)
       }
@@ -72,7 +73,8 @@ module.exports = {
   updateFromInventory: async (req, res) => {
     const userId = req.params.userId
     const ingredientId = req.params.ingredientId
-    const quantity = req.body.quantity
+    const quantity = parseInt(req.body.quantity, 10)
+    const { unity } = req.body
     try {
       const user = await models.User.findByPk(userId)
       if (!user) {
@@ -82,7 +84,8 @@ module.exports = {
       const inventory = await models.Inventory.findOne({
         where: { [Op.and]: [{ userId: userId }, { ingredientId: ingredientId }] }
       })
-      inventory.quantity += quantity
+      inventory.quantity = quantity
+      inventory.unity = unity
       await inventory.save()
       res.status(200).json(inventory)
     } catch (err) {

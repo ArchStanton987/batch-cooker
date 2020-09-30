@@ -5,8 +5,10 @@ import '../sass/components/_InventoryModal.scss'
 export default function InventoryModal({
   toggleModal,
   handleNewIngredient,
-  handleSubmitIngredient
+  handleSubmitIngredient,
+  ...props
 }) {
+  const { ingredientId, name, category, quantity, unity } = props
   return (
     <>
       <div className="inventory-modal-overlay">
@@ -18,14 +20,21 @@ export default function InventoryModal({
             <h4>Ajouter / modifier un ingrédient</h4>
             <label htmlFor="name">Nom :</label>
             <input
-              onChange={e => handleNewIngredient(e)}
               id="name"
               name="name"
               type="text"
+              defaultValue={name}
+              onChange={e => handleNewIngredient(e)}
               required
             ></input>
             <label htmlFor="category">Catégorie :</label>
-            <select onChange={e => handleNewIngredient(e)} id="category" name="category" required>
+            <select
+              defaultValue={category}
+              onChange={e => handleNewIngredient(e)}
+              id="category"
+              name="category"
+              required
+            >
               <option value="">Choisissez la catégorie</option>
               <option value="fruits et légumes">fruits et légumes</option>
               <option value="viandes et poissons">viandes et poissons</option>
@@ -33,7 +42,7 @@ export default function InventoryModal({
               <option value="assaisonnements et condiments">assaisonnements et condiments</option>
               <option value="céréales et féculents">céréales et féculents</option>
               <option value="sucrés">sucrés</option>
-              <option value="autre">autre</option>
+              <option value="autres">autres</option>
             </select>
             <label htmlFor="quantity">Quantité :</label>
             <input
@@ -41,19 +50,29 @@ export default function InventoryModal({
               id="quantity"
               name="quantity"
               type="number"
+              defaultValue={quantity}
             ></input>
             <label htmlFor="unity">Unité :</label>
             <input
+              placeholder="ex : g, kg, cl, l, part"
               onChange={e => handleNewIngredient(e)}
               id="unity"
               name="unity"
               type="text"
+              defaultValue={unity}
             ></input>
             <div className="flexRow spaceBetween">
               <button onClick={toggleModal} id="cancel-submit-ingredient">
                 Annuler
               </button>
-              <button onClick={(e) => handleSubmitIngredient(e)} id="submit-ingredient" type="submit">
+              <button
+                autoFocus={true}
+                onClick={e => {
+                  ingredientId ? handleSubmitIngredient(e, true) : handleSubmitIngredient(e, false)
+                }}
+                id="submit-ingredient"
+                type="submit"
+              >
                 Enregistrer
               </button>
             </div>

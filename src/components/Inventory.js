@@ -21,18 +21,36 @@ export default function Inventory() {
   const [inventory, setInventory] = useState([])
   const [isExpended, toggleExpended] = useState(true)
   const [isModalActive, toggleIngredientModal] = useState(false)
-  const [newIngredient, setNewIngredient] = useState({})
+  const [newIngredient, setNewIngredient] = useState(null)
 
   const getInventory = () => {
     const url = 'http://localhost:8000/api/inventory/user/1'
-    axios.get(url).then(res => setInventory(res.data))
+    axios.get(url).then(res => {
+      let inventory = []
+      res.data.forEach(item => {
+        let newItem = {
+          ingredientId: item.ingredientId,
+          name: item.Ingredient.name,
+          category: item.Ingredient.category,
+          quantity: item.quantity,
+          unity: item.unity
+        }
+        inventory.push(newItem)
+      })
+      setInventory(inventory)
+    })
   }
 
+  const toggleModal = () => {
+    toggleIngredientModal(prevState => {
+      return !prevState
+    })
+    isModalActive && setNewIngredient(null)
+  }
   const toggleDrawer = () => {
     isExpended ? toggleExpended(false) : toggleExpended(true)
   }
-
-  const handleSwitchFilter = e => {
+  const toggleCategoryFilter = e => {
     let categoryName = e.target.name
     activeCategories[categoryName] = !activeCategories[categoryName]
     let updatedValues = activeCategories.categoryName
@@ -41,12 +59,6 @@ export default function Inventory() {
     })
   }
 
-  const toggleModal = () => {
-    toggleIngredientModal(prevState => {
-      return !prevState
-    })
-    isModalActive && setNewIngredient({})
-  }
 
   const handleNewIngredient = e => {
     setNewIngredient({
@@ -55,27 +67,42 @@ export default function Inventory() {
     })
   }
 
-  const handleSubmitIngredient = e => {
-    e.preventDefault()
-    const newIng = {
-      ingredientName: newIngredient.name,
-      category: newIngredient.category,
-      quantity: newIngredient.quantity,
-      unity: newIngredient.unity
-    }
-    axios
-      .post('http://localhost:8000/api/inventory/user/1/ingredients', newIng)
-      .then(res => console.log(res.data))
-      .then(() => {
-        toggleModal()
-        getInventory()
-      })
+  const handleEditIngredient = id => {
+    let ingredientData = inventory.filter(ingredient => ingredient.ingredientId === id)
+    setNewIngredient(ingredientData[0])
+    toggleModal()
   }
 
   const handleDeleteIngredient = id => {
     axios
       .delete(`http://localhost:8000/api/inventory/user/1/ingredients/${id}`)
       .then(() => getInventory())
+  }
+
+  const handleAddToInventory = newIng => {    
+    axios.post('http://localhost:8000/api/inventory/user/1/ingredients', newIng).then(() => {
+      toggleModal()
+      getInventory()
+    })
+  }
+  const handleUpdateFromInventory = newIng => {   
+    axios
+      .put(`http://localhost:8000/api/inventory/user/1/ingredients/${newIng.ingredientId}`, newIng)
+      .then(() => {
+        toggleModal()
+        getInventory()
+      })
+  }
+  const handleSubmitIngredient = (e, isEditing) => {
+    e.preventDefault()
+    const newIng = {
+      ingredientId: newIngredient.ingredientId || null,
+      ingredientName: newIngredient.name,
+      category: newIngredient.category,
+      quantity: newIngredient.quantity,
+      unity: newIngredient.unity
+    }
+    isEditing ? handleUpdateFromInventory(newIng) : handleAddToInventory(newIng)
   }
 
   useEffect(() => {
@@ -89,6 +116,11 @@ export default function Inventory() {
           handleSubmitIngredient={handleSubmitIngredient}
           handleNewIngredient={handleNewIngredient}
           toggleModal={toggleModal}
+          name={newIngredient ? newIngredient.name : ''}
+          category={newIngredient ? newIngredient.category : ''}
+          ingredientId={newIngredient ? newIngredient.ingredientId : ''}
+          quantity={newIngredient ? newIngredient.quantity : ''}
+          unity={newIngredient ? newIngredient.unity : ''}
         />
       )}
       <h2>Inventaire</h2>
@@ -109,7 +141,7 @@ export default function Inventory() {
           <li>
             <button
               name="spices"
-              onClick={handleSwitchFilter}
+              onClick={toggleCategoryFilter}
               className={
                 activeCategories.spices
                   ? 'inventory-category-name'
@@ -122,7 +154,7 @@ export default function Inventory() {
           <li>
             <button
               name="dairy"
-              onClick={handleSwitchFilter}
+              onClick={toggleCategoryFilter}
               className={
                 activeCategories.dairy
                   ? 'inventory-category-name'
@@ -135,7 +167,7 @@ export default function Inventory() {
           <li>
             <button
               name="meat"
-              onClick={handleSwitchFilter}
+              onClick={toggleCategoryFilter}
               className={
                 activeCategories.meat
                   ? 'inventory-category-name'
@@ -148,7 +180,7 @@ export default function Inventory() {
           <li>
             <button
               name="cereal"
-              onClick={handleSwitchFilter}
+              onClick={toggleCategoryFilter}
               className={
                 activeCategories.cereal
                   ? 'inventory-category-name'
@@ -161,7 +193,7 @@ export default function Inventory() {
           <li>
             <button
               name="fruits"
-              onClick={handleSwitchFilter}
+              onClick={toggleCategoryFilter}
               className={
                 activeCategories.fruits
                   ? 'inventory-category-name'
@@ -174,7 +206,7 @@ export default function Inventory() {
           <li>
             <button
               name="sweet"
-              onClick={handleSwitchFilter}
+              onClick={toggleCategoryFilter}
               className={
                 activeCategories.sweet
                   ? 'inventory-category-name'
@@ -187,7 +219,7 @@ export default function Inventory() {
           <li>
             <button
               name="other"
-              onClick={handleSwitchFilter}
+              onClick={toggleCategoryFilter}
               className={
                 activeCategories.other
                   ? 'inventory-category-name'
@@ -206,9 +238,13 @@ export default function Inventory() {
             inventory.map(item =>
               React.Children.toArray(
                 <Ingredient
+                  handleEditIngredient={handleEditIngredient}
                   handleDeleteIngredient={handleDeleteIngredient}
                   key={item.ingredientId}
-                  ingredient={item}
+                  name={item.name}
+                  quantity={item.quantity}
+                  ingredientId={item.ingredientId}
+                  unity={item.unity}
                 />
               )
             )}

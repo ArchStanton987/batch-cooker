@@ -29,7 +29,7 @@ module.exports = {
       },
       unity: {
         type: Sequelize.STRING,
-        defaultValue: "g"
+        defaultValue: ""
       },
       createdAt: {
         allowNull: false,
