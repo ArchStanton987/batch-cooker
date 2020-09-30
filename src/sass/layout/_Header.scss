@@ -2,7 +2,7 @@
 
 header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: v.$prim-color;
   grid-area: header;
@@ -10,7 +10,6 @@ header {
 }
 
 #homeIcon-link {
-  margin-right: auto;
 }
 
 #homeIcon {
@@ -19,7 +18,11 @@ header {
 }
 
 h1 {
-  margin: auto;
   padding: 0.3rem;
   font-size: 3rem;
+}
+
+.searchIcon {
+  max-height: 2.5rem;
+  max-width: 2.5rem;
 }

@@ -5,27 +5,17 @@
 
 .drawer-container {
   cursor: pointer;
-  position: relative;
-}
-
-.inventory-category-arrow-container {
-  position: absolute;
-  right: 1rem;
-  height: 24px;
-  width: 24px;
-  border-radius: 5px;
-  background-color: transparent;
-  border: 2px v.$prim-color solid;
+  display: flex;
+  align-items: center;
+  background-color: v.$ter-color;
+  margin: 0;
+  padding: 0;
 }
 
 .inventory-category-arrow {
-  position: absolute;
-  top: 3px;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid v.$prim-color;
+  margin-left: auto;
+  max-height: 1.5rem;
+  max-width: 1.5rem;
   transform: rotateZ(0deg);
   transition: transform 0.4s ease-out;
 }

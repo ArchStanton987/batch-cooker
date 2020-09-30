@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import Ingredient from '../containers/Ingredient'
-import SearchBox from '../containers/SearchBox'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
+import chevron from './../assets/img/chevron.svg'
 
 export default function Inventory() {
   let includeCategories = {
@@ -59,7 +59,6 @@ export default function Inventory() {
     })
   }
 
-
   const handleNewIngredient = e => {
     setNewIngredient({
       ...newIngredient,
@@ -79,13 +78,13 @@ export default function Inventory() {
       .then(() => getInventory())
   }
 
-  const handleAddToInventory = newIng => {    
+  const handleAddToInventory = newIng => {
     axios.post('http://localhost:8000/api/inventory/user/1/ingredients', newIng).then(() => {
       toggleModal()
       getInventory()
     })
   }
-  const handleUpdateFromInventory = newIng => {   
+  const handleUpdateFromInventory = newIng => {
     axios
       .put(`http://localhost:8000/api/inventory/user/1/ingredients/${newIng.ingredientId}`, newIng)
       .then(() => {
@@ -126,14 +125,12 @@ export default function Inventory() {
       <h2>Inventaire</h2>
       <div className="inventory-category h3-container">
         <div onClick={toggleDrawer} className="drawer-container">
-          <div className="inventory-category-arrow-container">
-            <div
-              className={
-                isExpended ? 'inventory-category-arrow' : 'inventory-category-arrow rotated'
-              }
-            ></div>
-          </div>
           <h3>Catégories</h3>
+          <img
+            alt="reveal categories"
+            src={chevron}
+            className={isExpended ? 'inventory-category-arrow' : 'inventory-category-arrow rotated'}
+          />
         </div>
         <ul
           className={isExpended ? 'inventory-category-list' : 'inventory-category-list retracted'}
@@ -253,7 +250,6 @@ export default function Inventory() {
           Ajouter
         </button>
       </div>
-      <SearchBox />
     </>
   )
 }
