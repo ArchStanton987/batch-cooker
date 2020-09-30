@@ -53,10 +53,12 @@
 
 .inventory-ingredients {
   flex: 1;
+  overflow: auto;
 }
 
 .inventory-ingredients-list {
   flex: 1;
+  overflow: auto;
 }
 
 .inventory-ingredients-add-button {

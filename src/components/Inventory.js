@@ -246,10 +246,10 @@ export default function Inventory() {
               )
             )}
         </ul>
-        <button onClick={toggleModal} className="inventory-ingredients-add-button button">
-          Ajouter
-        </button>
       </div>
+      <button onClick={toggleModal} className="inventory-ingredients-add-button button">
+        Ajouter
+      </button>
     </>
   )
 }
