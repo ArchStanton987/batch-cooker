@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import Ingredient from '../containers/Ingredient'
+import SearchBox from '../containers/SearchBox'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
 import chevron from './../assets/img/chevron.svg'
 
-export default function Inventory() {
+export default function Inventory({ isSearchBoxActive }) {
   let includeCategories = {
     spices: { active: true, fullname: 'assaisonnements et condiments' },
     dairy: { active: true, fullname: 'produits laitiers' },
@@ -22,6 +23,7 @@ export default function Inventory() {
   const [isExpended, toggleExpended] = useState(true)
   const [isModalActive, toggleIngredientModal] = useState(false)
   const [newIngredient, setNewIngredient] = useState(null)
+  const [searchInput, setSearchInput] = useState('')
 
   let categories = Object.entries(activeCategories)
 
@@ -68,6 +70,16 @@ export default function Inventory() {
     })
   }
 
+  const handleSearchInput = e => {
+    setSearchInput(e.currentTarget.value)
+  }
+
+  const handleResetSearchInput = () => {
+    const input = document.getElementById('searchboxInput')
+    input.value = ''
+    setSearchInput('')
+  }
+
   const handleEditIngredient = id => {
     let ingredientData = inventory.filter(ingredient => ingredient.ingredientId === id)
     setNewIngredient(ingredientData[0])
@@ -94,7 +106,7 @@ export default function Inventory() {
         getInventory()
       })
   }
-  const handleSubmitIngredient = (e, isEditing) => {
+  const handleSubmitIngredient = (e, isUpdating) => {
     e.preventDefault()
     const newIng = {
       ingredientId: newIngredient.ingredientId || null,
@@ -103,7 +115,7 @@ export default function Inventory() {
       quantity: newIngredient.quantity,
       unity: newIngredient.unity
     }
-    isEditing ? handleUpdateFromInventory(newIng) : handleAddToInventory(newIng)
+    isUpdating ? handleUpdateFromInventory(newIng) : handleAddToInventory(newIng)
   }
 
   useEffect(() => {
@@ -122,6 +134,12 @@ export default function Inventory() {
           ingredientId={newIngredient ? newIngredient.ingredientId : ''}
           quantity={newIngredient ? newIngredient.quantity : ''}
           unity={newIngredient ? newIngredient.unity : ''}
+        />
+      )}
+      {isSearchBoxActive && (
+        <SearchBox
+          handleSearchInput={handleSearchInput}
+          handleResetSearchInput={handleResetSearchInput}
         />
       )}
       <h2>Inventaire</h2>
@@ -161,6 +179,9 @@ export default function Inventory() {
         <ul className="inventory-ingredients-list">
           {inventory &&
             inventory
+              .filter(item => {
+                return item.name.includes(searchInput.toLowerCase())
+              })
               .filter(item => {
                 const keys = Object.keys(activeCategories)
                 let match = keys.some(key => {

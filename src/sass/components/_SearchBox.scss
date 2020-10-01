@@ -1,21 +1,38 @@
 @use '../variables' as v;
 
 .searchbox-container {
-  background-color: v.$prim-color;
   padding: 2px;
   display: flex;
   border-radius: 5px;
 }
 
 .searchbox-input {
-  border: v.$prim-color 2px solid;
-  border-radius: 5px;
+  border: v.$ter-color 2px solid;
+  border-left: none;
+  border-right: none;
   flex: 1;
+  color: v.$prim-color;
+  background-color: v.$quad-color;
+  font-size: 1rem;
+  padding-left: 0.5rem;
 }
 
-.search-icon {
-  background-color: v.$prim-color;
-  max-height: 3.5rem;
-  max-width: 3.5rem;
+.searchbox-icon {
+  background-color: v.$ter-color;
+  max-height: 2.5rem;
+  max-width: 2.5rem;
   padding: 8px;
+  border-radius: 5px 0 0 5px;
+}
+
+.searchbox__deleteIcon {
+  cursor: pointer;
+  max-height: 2.5rem;
+  max-width: 2.5rem;
+  padding: 0.5rem;
+  color: v.$prim-color;
+  background-color: v.$quad-color;
+  border: v.$ter-color 2px solid;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
 }

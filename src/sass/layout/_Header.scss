@@ -23,6 +23,15 @@ h1 {
 }
 
 .searchIcon {
+  cursor: pointer;
   max-height: 2.5rem;
   max-width: 2.5rem;
 }
+
+// .searchIcon__active {
+//   cursor: pointer;
+//   max-height: 2.5rem;
+//   max-width: 2.5rem;
+//   border: solid 2px v.$sec-color;
+//   border-radius: 5px;
+// }

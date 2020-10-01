@@ -8,15 +8,18 @@ import Inventory from '../components/Inventory'
 import Shoplist from '../components/Shoplist'
 import '../sass/layout/_Main.scss'
 
-export default function Main() {
+export default function Main({ isSearchBoxActive }) {
   return (
     <main className="main-layout">
       <Switch>
-        <Route exact path="/" render={() => <Home />} />
-        <Route path="/inventory" render={() => <Inventory />} />
-        <Route path="/recipies" render={() => <Recipies />} />
-        <Route path="/shoplist" render={() => <Shoplist />} />
-        <Route path="/calendar" render={() => <Calendar />} />
+        <Route exact path="/" render={() => <Home isSearchBoxActive={isSearchBoxActive} />} />
+        <Route
+          path="/inventory"
+          render={() => <Inventory isSearchBoxActive={isSearchBoxActive} />}
+        />
+        <Route path="/recipies" render={() => <Recipies isSearchBoxActive={isSearchBoxActive} />} />
+        <Route path="/shoplist" render={() => <Shoplist isSearchBoxActive={isSearchBoxActive} />} />
+        <Route path="/calendar" render={() => <Calendar isSearchBoxActive={isSearchBoxActive} />} />
       </Switch>
     </main>
   )

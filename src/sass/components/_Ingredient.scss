@@ -6,11 +6,6 @@
   align-items: center;
 }
 
-.ingredient-item:hover {
-  cursor: pointer;
-  background-color: black;
-}
-
 .ingredient-item:nth-child(even) {
   background-color: v.$quad-color;
 }
@@ -39,4 +34,13 @@
   color: v.$prim-color;
   font-weight: bold;
   padding: 8px;
+}
+
+.ingredient-item:hover {
+  cursor: pointer;
+  background-color: v.$prim-color;
+  color: v.$sec-color;
+  .ingredient-item-delete {
+    color: v.$sec-color;
+  }
 }
