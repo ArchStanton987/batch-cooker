@@ -5,7 +5,9 @@ import Ingredient from '../containers/Ingredient'
 import SearchBox from '../containers/SearchBox'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
-import chevron from './../assets/img/chevron.svg'
+import chevron from '../assets/img/chevron.svg'
+import searchIcon from '../assets/img/search.svg'
+import cross from '../assets/img/x.svg'
 
 export default function Inventory({ isSearchBoxActive }) {
   let includeCategories = {
@@ -18,10 +20,12 @@ export default function Inventory({ isSearchBoxActive }) {
     other: { active: true, fullname: 'autres' }
   }
 
-  const [activeCategories, setActiveCategories] = useState(includeCategories)
-  const [inventory, setInventory] = useState([])
   const [isExpended, toggleExpended] = useState(true)
   const [isModalActive, toggleIngredientModal] = useState(false)
+  const [isToolboxActive, setToolbox] = useState(false)
+
+  const [activeCategories, setActiveCategories] = useState(includeCategories)
+  const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
   const [searchInput, setSearchInput] = useState('')
 
@@ -62,6 +66,9 @@ export default function Inventory({ isSearchBoxActive }) {
       return { ...prevState, ...updatedValues }
     })
   }
+  const toggleToolbox = () => {
+    setToolbox(prevState => !prevState)
+  }
 
   const handleNewIngredient = e => {
     setNewIngredient({
@@ -75,8 +82,10 @@ export default function Inventory({ isSearchBoxActive }) {
   }
 
   const handleResetSearchInput = () => {
-    const input = document.getElementById('searchboxInput')
-    input.value = ''
+    const navSearch = document.getElementById('searchboxInput') || {}
+    const toolboxSearch = document.getElementById('inventory_toolbow_search') || {}
+    navSearch.value = ''
+    toolboxSearch.value = ''
     setSearchInput('')
   }
 
@@ -208,9 +217,31 @@ export default function Inventory({ isSearchBoxActive }) {
               )}
         </ul>
       </div>
-      <button onClick={toggleModal} className="inventory-ingredients-add-button button">
-        Ajouter
-      </button>
+      <div className="inventory__toolbox">
+        <img
+          onClick={toggleToolbox}
+          src={searchIcon}
+          alt="search"
+          className="inventory__toolbox__searchIcon"
+        />
+        <input
+          id="inventory_toolbow_search"
+          onChange={handleSearchInput}
+          className={isToolboxActive ? 'inventory__toolbox__input' : 'inventory__toolbox__input__inactive'}
+          disabled={isToolboxActive && false}
+        />
+        <img
+          onClick={handleResetSearchInput}
+          className={
+            isToolboxActive ? 'inventory__toolbox__deleteIcon' : 'inventory__toolbox__deleteIcon__inactive'
+          }
+          alt="delete search"
+          src={cross}
+        />
+        <button onClick={toggleModal} className="inventory-ingredients-add-button button">
+          Ajouter
+        </button>
+      </div>
     </>
   )
 }
