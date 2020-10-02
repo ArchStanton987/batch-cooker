@@ -20,7 +20,7 @@ export default function Inventory({ isSearchBoxActive }) {
     other: { active: true, fullname: 'autres' }
   }
 
-  const [isExpended, toggleExpended] = useState(true)
+  const [isExpended, toggleExpended] = useState(false)
   const [isModalActive, toggleIngredientModal] = useState(false)
   const [isToolboxActive, setToolbox] = useState(false)
 

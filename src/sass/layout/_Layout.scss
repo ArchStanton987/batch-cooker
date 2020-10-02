@@ -1,5 +1,26 @@
+// body {
+//   min-height: 100vh;
+//   /* mobile viewport bug fix */
+//   // min-height: -webkit-fill-available;
+//   height: -moz-available; /* WebKit-based browsers will ignore this. */
+//   height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+//   height: stretch;
+// }
+
+html {
+  height: -webkit-fill-available;
+}
+
+
 .global-layout {
   height: 100vh;
+
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+
+
+
+  // height: 100vh;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: min-content auto min-content;
