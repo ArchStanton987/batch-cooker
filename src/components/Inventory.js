@@ -32,7 +32,7 @@ export default function Inventory({ isSearchBoxActive }) {
   let categories = Object.entries(activeCategories)
 
   const getInventory = () => {
-    const url = 'http://localhost:8000/api/inventory/user/1'
+    const url = 'http://192.168.1.27:8000/api/inventory/user/1'
     axios.get(url).then(res => {
       let inventory = []
       res.data.forEach(item => {
@@ -97,19 +97,19 @@ export default function Inventory({ isSearchBoxActive }) {
 
   const handleDeleteIngredient = id => {
     axios
-      .delete(`http://localhost:8000/api/inventory/user/1/ingredients/${id}`)
+      .delete(`http://192.168.1.27:8000/api/inventory/user/1/ingredients/${id}`)
       .then(() => getInventory())
   }
 
   const handleAddToInventory = newIng => {
-    axios.post('http://localhost:8000/api/inventory/user/1/ingredients', newIng).then(() => {
+    axios.post('http://192.168.1.27:8000/api/inventory/user/1/ingredients', newIng).then(() => {
       toggleModal()
       getInventory()
     })
   }
   const handleUpdateFromInventory = newIng => {
     axios
-      .put(`http://localhost:8000/api/inventory/user/1/ingredients/${newIng.ingredientId}`, newIng)
+      .put(`http://192.168.1.27:8000/api/inventory/user/1/ingredients/${newIng.ingredientId}`, newIng)
       .then(() => {
         toggleModal()
         getInventory()
