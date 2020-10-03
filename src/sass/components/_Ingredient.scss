@@ -7,7 +7,7 @@
 }
 
 .ingredient-item:nth-child(even) {
-  background-color: v.$quad-color;
+  background-color: v.$color4;
 }
 
 .ingredient-item-name {
@@ -31,16 +31,16 @@
 .ingredient-item-delete {
   cursor: pointer;
   margin: 0 0.5rem;
-  color: v.$prim-color;
+  color: v.$color1;
   font-weight: bold;
   padding: 8px;
 }
 
 .ingredient-item:hover {
   cursor: pointer;
-  background-color: v.$prim-color;
-  color: v.$sec-color;
+  background-color: v.$color1;
+  color: v.$color2;
   .ingredient-item-delete {
-    color: v.$sec-color;
+    color: v.$color2;
   }
 }

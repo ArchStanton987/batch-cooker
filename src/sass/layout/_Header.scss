@@ -4,12 +4,9 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: v.$prim-color;
+  background-color: v.$color1;
   grid-area: header;
   padding: 0 1rem;
-}
-
-#homeIcon-link {
 }
 
 #homeIcon {
@@ -28,10 +25,8 @@ h1 {
   max-width: 2.5rem;
 }
 
-// .searchIcon__active {
-//   cursor: pointer;
-//   max-height: 2.5rem;
-//   max-width: 2.5rem;
-//   border: solid 2px v.$sec-color;
-//   border-radius: 5px;
-// }
+.headerIcon {
+  cursor: pointer;
+  max-height: 2.5rem;
+  max-width: 2.5rem;
+}

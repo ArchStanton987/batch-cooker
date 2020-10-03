@@ -9,7 +9,7 @@
 h1 {
   font-family: v.$h1-font;
   font-weight: normal;
-  color: v.$sec-color;
+  color: v.$color2;
 }
 
 h2 {
@@ -17,22 +17,22 @@ h2 {
   font-size: 2rem;
   text-align: center;
   font-weight: lighter;
-  color: v.$prim-color;
-  background-color: v.$ter-color;
+  color: v.$color1;
+  background-color: v.$color3;
   margin: 0.5rem 0;
   border-radius: 5px;
 }
 
 h3 {
   font-family: v.$h3-font;
-  color: v.$prim-color;
-  background-color: v.$ter-color;
+  color: v.$color1;
+  background-color: v.$color3;
   padding: 0.2rem;
 }
 
 h4 {
   font-family: v.$h4-font;
-  color: v.$prim-color;
+  color: v.$color1;
   font-size: 1.2rem;
   padding: 0.2rem;
 }
@@ -43,7 +43,7 @@ p {
 
 .h3-container {
   margin: 0.5rem 0;
-  border: solid 2px v.$ter-color;
+  border: solid 2px v.$color3;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -53,16 +53,16 @@ p {
   margin: 0.5rem;
   max-height: 2.5rem;
   max-width: 2.5rem;
-  background-color: v.$sec-color;
-  color: v.$prim-color;
+  background-color: v.$color2;
+  color: v.$color1;
   border-radius: 8px;
 }
 
 button {
   border: 0;
   border-radius: 5px;
-  background: v.$prim-color;
-  color: v.$sec-color;
+  background: v.$color1;
+  color: v.$color2;
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.2;

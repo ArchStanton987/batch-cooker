@@ -18,7 +18,7 @@ form {
 
 .ingredient-box {
   position: relative;
-  background-color: v.$sec-color;
+  background-color: v.$color2;
   display: flex;
   flex-direction: column;
   padding: 5rem 1.5rem 1.5rem;
@@ -30,9 +30,9 @@ form {
   right: 5px;
   cursor: pointer;
   font-size: 1.5rem;
-  color: v.$sec-color;
+  color: v.$color2;
   font-weight: bolder;
-  background-color: v.$prim-color;
+  background-color: v.$color1;
   margin-left: auto;
   margin-bottom: 1rem;
   padding: 0.5rem;
@@ -49,7 +49,7 @@ label {
 
 #cancel-submit-ingredient {
   margin-top: 2rem;
-  background-color: v.$sec-color;
-  border: v.$ter-color 1px solid;
-  color: v.$prim-color;
+  background-color: v.$color2;
+  border: v.$color3 1px solid;
+  color: v.$color1;
 }

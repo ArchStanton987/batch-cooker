@@ -50,9 +50,7 @@ export default function Inventory({ isSearchBoxActive }) {
   }
 
   const toggleModal = () => {
-    toggleIngredientModal(prevState => {
-      return !prevState
-    })
+    toggleIngredientModal(prevState => !prevState)
     isModalActive && setNewIngredient(null)
   }
   const toggleDrawer = () => {
@@ -109,7 +107,10 @@ export default function Inventory({ isSearchBoxActive }) {
   }
   const handleUpdateFromInventory = newIng => {
     axios
-      .put(`http://192.168.1.27:8000/api/inventory/user/1/ingredients/${newIng.ingredientId}`, newIng)
+      .put(
+        `http://192.168.1.27:8000/api/inventory/user/1/ingredients/${newIng.ingredientId}`,
+        newIng
+      )
       .then(() => {
         toggleModal()
         getInventory()
@@ -225,15 +226,20 @@ export default function Inventory({ isSearchBoxActive }) {
           className="inventory__toolbox__searchIcon"
         />
         <input
+          type="text"
           id="inventory_toolbow_search"
           onChange={handleSearchInput}
-          className={isToolboxActive ? 'inventory__toolbox__input' : 'inventory__toolbox__input__inactive'}
+          className={
+            isToolboxActive ? 'inventory__toolbox__input' : 'inventory__toolbox__input__inactive'
+          }
           disabled={isToolboxActive && false}
         />
         <img
           onClick={handleResetSearchInput}
           className={
-            isToolboxActive ? 'inventory__toolbox__deleteIcon' : 'inventory__toolbox__deleteIcon__inactive'
+            isToolboxActive
+              ? 'inventory__toolbox__deleteIcon'
+              : 'inventory__toolbox__deleteIcon__inactive'
           }
           alt="delete search"
           src={cross}

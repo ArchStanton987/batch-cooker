@@ -7,18 +7,18 @@
 }
 
 .searchbox-input {
-  border: v.$ter-color 2px solid;
+  border: v.$color3 2px solid;
   border-left: none;
   border-right: none;
   flex: 1;
-  color: v.$prim-color;
-  background-color: v.$quad-color;
+  color: v.$color1;
+  background-color: v.$color4;
   font-size: 1rem;
   padding-left: 0.5rem;
 }
 
 .searchbox-icon {
-  background-color: v.$ter-color;
+  background-color: v.$color3;
   max-height: 2.5rem;
   max-width: 2.5rem;
   padding: 8px;
@@ -30,9 +30,9 @@
   max-height: 2.5rem;
   max-width: 2.5rem;
   padding: 0.5rem;
-  color: v.$prim-color;
-  background-color: v.$quad-color;
-  border: v.$ter-color 2px solid;
+  color: v.$color1;
+  background-color: v.$color4;
+  border: v.$color3 2px solid;
   border-left: none;
   border-radius: 0 5px 5px 0;
 }
