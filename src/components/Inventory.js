@@ -20,10 +20,9 @@ export default function Inventory({ isSearchBoxActive }) {
     other: { active: true, fullname: 'autres' }
   }
 
-  const [isExpended, toggleExpended] = useState(false)
-  const [isModalActive, toggleIngredientModal] = useState(false)
+  const [isExpended, setDrawer] = useState(false)
+  const [isModalActive, setIngredientModal] = useState(false)
   const [isToolboxActive, setToolbox] = useState(false)
-
   const [activeCategories, setActiveCategories] = useState(includeCategories)
   const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
@@ -50,11 +49,11 @@ export default function Inventory({ isSearchBoxActive }) {
   }
 
   const toggleModal = () => {
-    toggleIngredientModal(prevState => !prevState)
+    setIngredientModal(prevState => !prevState)
     isModalActive && setNewIngredient(null)
   }
   const toggleDrawer = () => {
-    isExpended ? toggleExpended(false) : toggleExpended(true)
+    setDrawer(prevState => !prevState)
   }
   const toggleCategoryFilter = e => {
     let categoryName = e.target.name
@@ -74,11 +73,9 @@ export default function Inventory({ isSearchBoxActive }) {
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
-
   const handleSearchInput = e => {
     setSearchInput(e.currentTarget.value)
   }
-
   const handleResetSearchInput = () => {
     const navSearch = document.getElementById('searchboxInput') || {}
     const toolboxSearch = document.getElementById('inventory_toolbow_search') || {}
@@ -86,7 +83,6 @@ export default function Inventory({ isSearchBoxActive }) {
     toolboxSearch.value = ''
     setSearchInput('')
   }
-
   const handleEditIngredient = id => {
     let ingredientData = inventory.filter(ingredient => ingredient.ingredientId === id)
     setNewIngredient(ingredientData[0])
@@ -163,7 +159,7 @@ export default function Inventory({ isSearchBoxActive }) {
           />
         </div>
         <ul
-          className={isExpended ? 'inventory-category-list' : 'inventory-category-list retracted'}
+          className={isExpended ? 'inventory-category_list' : 'inventory-category_list retracted'}
         >
           {categories.map(category => {
             return (
@@ -173,8 +169,8 @@ export default function Inventory({ isSearchBoxActive }) {
                   onClick={toggleCategoryFilter}
                   className={
                     category[1].active === true
-                      ? 'inventory-category-name'
-                      : 'inventory-category-name-inactive'
+                      ? 'inventory-category_name'
+                      : 'inventory-category_name inactive'
                   }
                 >
                   {category[1].fullname}
@@ -186,7 +182,7 @@ export default function Inventory({ isSearchBoxActive }) {
       </div>
       <div className="inventory-ingredients h3-container">
         <h3>Ingrédients</h3>
-        <ul className="inventory-ingredients-list">
+        <ul className="inventory-ingredients_list">
           {inventory &&
             inventory
               .filter(item => {
@@ -218,19 +214,19 @@ export default function Inventory({ isSearchBoxActive }) {
               )}
         </ul>
       </div>
-      <div className="inventory__toolbox">
+      <div className="inventory-toolbox">
         <img
           onClick={toggleToolbox}
           src={searchIcon}
           alt="search"
-          className="inventory__toolbox__searchIcon"
+          className="inventory-toolbox_searchIcon"
         />
         <input
           type="text"
-          id="inventory_toolbow_search"
+          id="inventory-toolbox_search"
           onChange={handleSearchInput}
           className={
-            isToolboxActive ? 'inventory__toolbox__input' : 'inventory__toolbox__input__inactive'
+            isToolboxActive ? 'inventory-toolbox_input' : 'inventory-toolbox_input inactive'
           }
           disabled={isToolboxActive && false}
         />
@@ -238,13 +234,13 @@ export default function Inventory({ isSearchBoxActive }) {
           onClick={handleResetSearchInput}
           className={
             isToolboxActive
-              ? 'inventory__toolbox__deleteIcon'
-              : 'inventory__toolbox__deleteIcon__inactive'
+              ? 'inventory-toolbox_deleteIcon'
+              : 'inventory-toolbox_deleteIcon inactive'
           }
           alt="delete search"
           src={cross}
         />
-        <button onClick={toggleModal} className="inventory-ingredients-add-button button">
+        <button onClick={toggleModal} className="inventory-ingredients_add-button">
           Ajouter
         </button>
       </div>

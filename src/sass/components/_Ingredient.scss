@@ -4,43 +4,43 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-}
 
-.ingredient-item:nth-child(even) {
-  background-color: v.$color4;
-}
+  &:nth-child(even) {
+    background-color: v.$color4;
+  }
 
-.ingredient-item-name {
-  font-size: 20px;
-  flex: 6;
-  margin: 0.2rem;
-}
+  & .name {
+    font-size: 20px;
+    flex: 6;
+    margin: 0.2rem;
+  }
 
-.ingredient-item-quantity {
-  flex: 1;
-  margin: 0.2rem;
-  text-align: center;
-}
+  & .quantity {
+    flex: 1;
+    margin: 0.2rem;
+    text-align: center;
+  }
 
-.ingredient-item-unity {
-  flex: 1;
-  margin: 0.2rem;
-  text-align: center;
-}
+  & .unity {
+    flex: 1;
+    margin: 0.2rem;
+    text-align: center;
+  }
 
-.ingredient-item-delete {
-  cursor: pointer;
-  margin: 0 0.5rem;
-  color: v.$color1;
-  font-weight: bold;
-  padding: 8px;
-}
+  & .delete {
+    cursor: pointer;
+    margin: 0 0.5rem;
+    color: v.$color1;
+    font-weight: bold;
+    padding: 8px;
+  }
 
-.ingredient-item:hover {
-  cursor: pointer;
-  background-color: v.$color1;
-  color: v.$color2;
-  .ingredient-item-delete {
+  &:hover {
+    cursor: pointer;
+    background-color: v.$color1;
     color: v.$color2;
+    .-delete {
+      color: v.$color2;
+    }
   }
 }

@@ -1,10 +1,10 @@
-.searchbox-container {
+.searchbox {
   padding: 2px;
   display: flex;
   border-radius: 5px;
 }
 
-.searchbox-input {
+.input {
   border: #bacdeb 2px solid;
   border-left: none;
   border-right: none;
@@ -15,7 +15,7 @@
   padding-left: 0.5rem;
 }
 
-.searchbox-icon {
+.icon {
   background-color: #bacdeb;
   max-height: 2.5rem;
   max-width: 2.5rem;
@@ -23,7 +23,7 @@
   border-radius: 5px 0 0 5px;
 }
 
-.searchbox__deleteIcon {
+.deleteIcon {
   cursor: pointer;
   max-height: 2.5rem;
   max-width: 2.5rem;
@@ -45,6 +45,8 @@ h1 {
   font-family: "Rouge Script", cursive;
   font-weight: normal;
   color: #e3e3e3;
+  padding: 0.3rem;
+  font-size: 3rem;
 }
 
 h2 {
@@ -139,23 +141,7 @@ header {
   padding: 0 1rem;
 }
 
-#homeIcon {
-  max-height: 2.5rem;
-  max-width: 2.5rem;
-}
-
-h1 {
-  padding: 0.3rem;
-  font-size: 3rem;
-}
-
-.searchIcon {
-  cursor: pointer;
-  max-height: 2.5rem;
-  max-width: 2.5rem;
-}
-
-.headerIcon {
+.header_icon {
   cursor: pointer;
   max-height: 2.5rem;
   max-width: 2.5rem;
@@ -207,13 +193,12 @@ h1 {
   transform: rotateZ(0deg);
   transition: transform 0.4s ease-out;
 }
-
-.rotated {
+.inventory-category-arrow.rotated {
   transform: rotateZ(180deg);
   transition: transform 0.4s ease-out;
 }
 
-.inventory-category-list {
+.inventory-category_list {
   display: flex;
   flex-wrap: wrap;
   overflow: hidden;
@@ -222,19 +207,15 @@ h1 {
   max-height: 160px;
   transition: max-height 0.4s ease-in-out;
 }
-
-.retracted {
-  overflow: hidden;
+.inventory-category_list.retracted {
   max-height: 0;
-  transition: max-height 0.4s ease-in-out;
 }
 
-.inventory-category-name {
+.inventory-category_name {
   border: #bacdeb 1px solid;
 }
-
-.inventory-category-name-inactive {
-  background-color: #e3e3e3;
+.inventory-category_name.inactive {
+  background-color: #fff;
   border: #bacdeb 1px solid;
   color: #516f9b;
 }
@@ -242,20 +223,26 @@ h1 {
 .inventory-ingredients {
   flex: 1;
   overflow: auto;
+  z-index: -1;
 }
 
-.inventory-ingredients-list {
+.inventory-ingredients::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+.inventory-ingredients_list {
   flex: 1;
   overflow: auto;
 }
 
-.inventory__toolbox {
+.inventory-toolbox {
   display: flex;
   margin: 0.2rem 0;
   align-items: center;
 }
 
-.inventory__toolbox__searchIcon {
+.inventory-toolbox_searchIcon {
   background-color: #516f9b;
   border-radius: 8px;
   max-height: 3rem;
@@ -264,11 +251,11 @@ h1 {
   z-index: 1;
 }
 
-.inventory__toolbox__searchIcon:hover {
+.inventory-toolbox_searchIcon:hover {
   cursor: pointer;
 }
 
-.inventory__toolbox__input {
+.inventory-toolbox_input {
   height: 100%;
   min-width: 3rem;
   max-width: 100%;
@@ -282,21 +269,15 @@ h1 {
   padding-left: 0.5rem;
   transition: max-width 400ms ease-in-out;
 }
-
-.inventory__toolbox__input__inactive {
-  height: 100%;
+.inventory-toolbox_input.inactive {
   min-width: 0rem;
   max-width: 0rem;
-  margin-left: -0.2rem;
+  margin-left: -1rem;
   border: #bacdeb 0px solid;
-  flex: 1;
-  color: #516f9b;
-  background-color: rgba(170, 205, 250, 0.3);
-  font-size: 1rem;
   transition: max-width 400ms linear, border 0.1s linear 600ms;
 }
 
-.inventory__toolbox__deleteIcon {
+.inventory-toolbox_deleteIcon {
   padding: 0.5rem;
   max-height: 3rem;
   max-width: 3rem;
@@ -307,26 +288,16 @@ h1 {
   margin-right: 1rem;
   transition: margin-right 4ms ease-in-out, margin-left 400ms ease-in-out;
 }
-
-.inventory__toolbox__deleteIcon__inactive {
-  padding: 0.5rem;
-  max-height: 3rem;
-  max-width: 3rem;
-  background-color: rgba(170, 205, 250, 0.3);
-  border: #bacdeb 2px solid;
-  border-left: none;
-  border-radius: 0 8px 8px 0;
-  margin-right: 1rem;
+.inventory-toolbox_deleteIcon.inactive {
   margin-left: -2.5rem;
   opacity: 0;
   transition: margin-left 200ms ease-in-out 400ms, opacity 100ms linear 600ms;
 }
-
-.inventory__toolbox__deleteIcon:hover {
+.inventory-toolbox_deleteIcon:hover {
   cursor: pointer;
 }
 
-.inventory-ingredients-add-button {
+.inventory-ingredients_add-button {
   margin-left: auto;
   padding: 0.7rem;
 }

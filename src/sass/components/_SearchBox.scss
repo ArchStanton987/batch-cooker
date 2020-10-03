@@ -1,12 +1,12 @@
 @use '../variables' as v;
 
-.searchbox-container {
+.searchbox {
   padding: 2px;
   display: flex;
   border-radius: 5px;
 }
 
-.searchbox-input {
+.input {
   border: v.$color3 2px solid;
   border-left: none;
   border-right: none;
@@ -17,7 +17,7 @@
   padding-left: 0.5rem;
 }
 
-.searchbox-icon {
+.icon {
   background-color: v.$color3;
   max-height: 2.5rem;
   max-width: 2.5rem;
@@ -25,7 +25,7 @@
   border-radius: 5px 0 0 5px;
 }
 
-.searchbox__deleteIcon {
+.deleteIcon {
   cursor: pointer;
   max-height: 2.5rem;
   max-width: 2.5rem;

@@ -6,12 +6,12 @@ import cross from '../assets/img/x.svg'
 
 export default function SearchBox({ handleResetSearchInput, handleSearchInput }) {
   return (
-    <div className="searchbox-container">
-      <img className="searchbox-icon" src={magnifyingGlass} alt="loupe" />
-      <input id="searchboxInput" onChange={handleSearchInput} className="searchbox-input"></input>
+    <div className="searchbox">
+      <img className="icon" src={magnifyingGlass} alt="loupe" />
+      <input id="searchboxInput" onChange={handleSearchInput} className="input"></input>
       <img
         onClick={handleResetSearchInput}
-        className="searchbox__deleteIcon"
+        className="deleteIcon"
         alt="delete search"
         src={cross}
       />

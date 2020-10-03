@@ -9,17 +9,17 @@ export default function Header({ toggleFunction, setMenu, setSearchBox }) {
   return (
     <header className="header">
       <Link id="homeIcon-link" to="/">
-        <img id="homeIcon" src={homeIcon} alt="home" />
+        <img className="header_icon" src={homeIcon} alt="home" />
       </Link>
       <h1>BatchCooker</h1>
       <img
         onClick={() => toggleFunction(setSearchBox)}
-        className="searchIcon"
+        className="header_icon"
         src={searchIcon}
         alt="search"
       />
       <img
-        className="headerIcon"
+        className="header_icon"
         src={menuIcon}
         alt="menu"
         onClick={() => toggleFunction(setMenu)}

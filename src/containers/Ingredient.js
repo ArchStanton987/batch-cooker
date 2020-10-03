@@ -5,16 +5,16 @@ export default function Ingredient({ handleEditIngredient, handleDeleteIngredien
   const { ingredientId, name, quantity, unity } = props
   return (
     <li className="ingredient-item">
-      <p onClick={() => handleEditIngredient(ingredientId)} className="ingredient-item-name">
+      <p onClick={() => handleEditIngredient(ingredientId)} className="name">
         {name}
       </p>
-      <p onClick={() => handleEditIngredient(ingredientId)} className="ingredient-item-quantity">
+      <p onClick={() => handleEditIngredient(ingredientId)} className="quantity">
         {quantity}
       </p>
-      <p onClick={() => handleEditIngredient(ingredientId)} className="ingredient-item-unity">
+      <p onClick={() => handleEditIngredient(ingredientId)} className="unity">
         {unity}
       </p>
-      <span onClick={() => handleDeleteIngredient(ingredientId)} className="ingredient-item-delete">
+      <span onClick={() => handleDeleteIngredient(ingredientId)} className="delete">
         &#10005;
       </span>
     </li>
