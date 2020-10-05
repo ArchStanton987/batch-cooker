@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Div100vh from 'react-div-100vh'
 
 import Header from './Header'
 import Main from './Main'
@@ -11,10 +12,16 @@ export default function Layout() {
   const toggleFunction = setHook => setHook(prevState => !prevState)
 
   return (
-    <div className="global-layout">
-      <Header toggleFunction={toggleFunction} setMenu={setMenu} />
-      <Menu toggleFunction={toggleFunction} setMenu={setMenu} isSideMenuActive={isSideMenuActive} />
-      <Main />
-    </div>
+    <Div100vh>
+      <div className="global-layout">
+        <Header toggleFunction={toggleFunction} setMenu={setMenu} />
+        <Menu
+          toggleFunction={toggleFunction}
+          setMenu={setMenu}
+          isSideMenuActive={isSideMenuActive}
+        />
+        <Main />
+      </div>
+    </Div100vh>
   )
 }

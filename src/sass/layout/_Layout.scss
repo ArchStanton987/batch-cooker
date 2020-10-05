@@ -1,5 +1,6 @@
 .global-layout {
-  height: 100vh;
+  min-height: var(--initialHeight);
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
