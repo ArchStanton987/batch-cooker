@@ -66,7 +66,6 @@ export default function InventoryModal({
                 Annuler
               </button>
               <button
-                autoFocus={true}
                 onClick={e => {
                   ingredientId ? handleSubmitIngredient(e, true) : handleSubmitIngredient(e, false)
                 }}

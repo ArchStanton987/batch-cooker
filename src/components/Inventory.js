@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import Ingredient from '../containers/Ingredient'
-import SearchBox from '../containers/SearchBox'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
 import chevron from '../assets/img/chevron.svg'
@@ -77,9 +76,7 @@ export default function Inventory({ isSearchBoxActive }) {
     setSearchInput(e.currentTarget.value)
   }
   const handleResetSearchInput = () => {
-    const navSearch = document.getElementById('searchboxInput') || {}
-    const toolboxSearch = document.getElementById('inventory_toolbow_search') || {}
-    navSearch.value = ''
+    const toolboxSearch = document.getElementById('inventory-toolbox_search') || {}
     toolboxSearch.value = ''
     setSearchInput('')
   }
@@ -142,12 +139,6 @@ export default function Inventory({ isSearchBoxActive }) {
           unity={newIngredient ? newIngredient.unity : ''}
         />
       )}
-      {isSearchBoxActive && (
-        <SearchBox
-          handleSearchInput={handleSearchInput}
-          handleResetSearchInput={handleResetSearchInput}
-        />
-      )}
       <h2>Inventaire</h2>
       <div className="inventory-category h3-container">
         <div onClick={toggleDrawer} className="drawer-container">
@@ -186,7 +177,7 @@ export default function Inventory({ isSearchBoxActive }) {
           {inventory &&
             inventory
               .filter(item => {
-                return item.name.includes(searchInput.toLowerCase())
+                return item.name.toLowerCase().includes(searchInput.toLowerCase())
               })
               .filter(item => {
                 const keys = Object.keys(activeCategories)

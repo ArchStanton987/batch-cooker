@@ -28,7 +28,7 @@
   overflow: hidden;
   justify-content: space-evenly;
   list-style: none;
-  max-height: 160px;
+  max-height: 200px;
   transition: max-height 0.4s ease-in-out;
 
   &.retracted {
@@ -53,12 +53,7 @@
 .inventory-ingredients {
   flex: 1;
   overflow: auto;
-  z-index: -1;
-}
-
-.inventory-ingredients::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 7px;
+  z-index: 1;
 }
 
 .inventory-ingredients_list {
@@ -78,7 +73,7 @@
   max-height: 3rem;
   max-width: 3rem;
   padding: 0.5rem;
-  z-index: 1;
+  z-index: 2;
 }
 
 .inventory-toolbox_searchIcon:hover {
@@ -89,7 +84,7 @@
   height: 3rem;
   min-width: 0rem;
   max-width: 100%;
-  margin-left: -0.2rem;
+  margin-left: -1rem;
   margin-right: -3rem;
   border: v.$color3 2px solid;
   border-radius: 0 8px 8px 0;
@@ -97,7 +92,7 @@
   color: v.$color1;
   background-color: v.$color4;
   font-size: 1rem;
-  padding-left: 0.5rem;
+  padding-left: 1.5rem;
   padding-right: 3rem;
   transition: max-width 400ms ease-in-out, padding-left 100ms 400ms, padding-right 100ms 400ms,
     margin-left 100ms 400ms, margin-right 100ms 400ms;
@@ -105,7 +100,7 @@
   &.inactive {
     min-width: 0rem;
     max-width: 0rem;
-    margin-left: -1rem;
+    margin-left: -2rem;
     padding-right: 0rem;
     border: v.$color3 0px solid;
     transition: max-width 200ms ease-in-out 200ms, border 200ms ease-in-out 200ms;
@@ -117,6 +112,7 @@
 }
 
 .inventory-toolbox_deleteIcon {
+  z-index: 1;
   padding: 0.5rem;
   max-height: 3rem;
   max-width: 3rem;

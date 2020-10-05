@@ -1,7 +1,7 @@
 @use '../variables' as v;
 
 .inventory-modal-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 10;
@@ -10,11 +10,7 @@
   background-color: rgba(0, 0, 0, 0.6);
   padding: 1rem;
   transition: background-color 1s linear;
-
-  form {
-    z-index: 99;
-  }
-
+  
   .ingredient-box {
     position: relative;
     background-color: v.$color2;
