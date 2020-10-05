@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 
 import Ingredient from '../containers/Ingredient'
@@ -28,6 +28,10 @@ export default function Inventory({ isSearchBoxActive }) {
   const [searchInput, setSearchInput] = useState('')
 
   let categories = Object.entries(activeCategories)
+
+  const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)
+
+  const ingredientTop = useRef(null)
 
   const getInventory = () => {
     const url = 'http://192.168.1.27:8000/api/inventory/user/1'
@@ -171,7 +175,7 @@ export default function Inventory({ isSearchBoxActive }) {
           })}
         </ul>
       </div>
-      <div className="inventory-ingredients h3-container">
+      <div ref={ingredientTop} className="inventory-ingredients h3-container">
         <h3>Ingrédients</h3>
         <ul className="inventory-ingredients_list">
           {inventory &&
@@ -215,7 +219,11 @@ export default function Inventory({ isSearchBoxActive }) {
         <input
           type="text"
           id="inventory-toolbox_search"
-          onChange={handleSearchInput}
+          onChange={e => {
+            handleSearchInput(e)
+            scrollToRef(ingredientTop)
+          }}
+          onFocus={() => setTimeout(() => scrollToRef(ingredientTop), 500)}
           className={
             isToolboxActive ? 'inventory-toolbox_input' : 'inventory-toolbox_input inactive'
           }
