@@ -12,12 +12,12 @@ h1 {
   font-weight: normal;
   color: v.$color2;
   padding: 0.3rem;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 h2 {
   font-family: v.$h2-font;
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   font-weight: lighter;
   color: v.$color1;
@@ -31,17 +31,19 @@ h3 {
   color: v.$color1;
   background-color: v.$color3;
   padding: 0.2rem;
+  font-size: 1rem;
 }
 
 h4 {
   font-family: v.$h4-font;
   color: v.$color1;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 0.2rem;
 }
 
 p {
   font-family: v.$p-font;
+  font-size: 1rem;
 }
 
 .h3-container {
@@ -50,15 +52,6 @@ p {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-}
-
-.navIcon__active {
-  margin: 0.5rem;
-  max-height: 2.5rem;
-  max-width: 2.5rem;
-  background-color: v.$color2;
-  color: v.$color1;
-  border-radius: 8px;
 }
 
 button {
