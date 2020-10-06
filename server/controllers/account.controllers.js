@@ -6,8 +6,8 @@ const jwt = require('jsonwebtoken')
 module.exports = {
   register: async (req, res) => {
     const { email, username, password } = req.body
-    const existingUser = await models.User.findOne({ where: { email: email } })
-    if (existingUser) {
+    const existingEmail = await models.User.findOne({ where: { email: email } })
+    if (existingEmail) {
       res.status(400).json({ error: 'Email already existing' })
       return
     }

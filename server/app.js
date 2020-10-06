@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser')
 const users = require('./routes/users')
 const account = require('./routes/account')
 const inventory = require('./routes/inventory')
-// const ingredients = require('./routes/ingredients')
+const recipes = require('./routes/recipes')
 
 const app = express()
 
@@ -16,7 +16,7 @@ app.use(cookieParser())
 app.use('/api/users', users)
 app.use('/api/account', account)
 app.use('/api/inventory', inventory)
-// app.use('./api.ingredients', ingredients)
+app.use('/api/recipes', recipes)
 
 // POST /api/account/register
 // POST /api/account/login
@@ -31,11 +31,12 @@ app.use('/api/inventory', inventory)
 // PUT  /api/inventory/user/:userId/ingredients/:ingId     update one ingredient
 // DELETE /api/inventory/users/:userId/ingredients/:ingId  delete one ingredient
 //
-// GET /api/recipies                                       get all recipies
-// POST /api/recipies                                      add a new recipie
-// GET /api/recipies/:recipieId                            get one recipie
-// PUT /api/recipies/:recipieId                            update one recipie
-// DELETE /api/recipies/:recipieId                         delete one recipie
+// GET /api/recipes                                       get all recipes
+// POST /api/recipes                                      add a new recipie// 
+// GET /api/recipes/:recipieId                            get one recipie
+// PUT /api/recipes/:recipieId                            update one recipie
+// DELETE /api/recipes/:recipieId                         delete one recipie
 //
+// GET /api/recipes/:userId                               get all recipes from a user
 
 module.exports = app

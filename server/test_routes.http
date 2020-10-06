@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8000/api/inventory/user/1/ingredients
+GET http://localhost:8000/api/recipes
 Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAxMDk5NjA3LCJleHAiOjE2MDExMDMyMDd9.jVrxX7FdK_GFfByqr4cWZTKpOi8_jCmOYuhxNYtFm1Q
 Content-Type: application/json
 
@@ -18,3 +18,87 @@ Content-Type: application/json
     "category": "assaisonnements et condiments",
     "unity": "cl"
 }
+
+###
+GET http://localhost:8000/api/recipes/1
+
+###
+POST http://localhost:8000/api/recipes
+Content-Type: application/json
+
+{
+    "creatorId": 2,
+    "name": "test",
+    "image": null,
+    "url": null,
+    "content": "Recette pour tester ",
+    "ingredients":
+    [
+        {
+            "ingredientId": 5,
+            "quantity": 600,
+            "unity": "g"
+        },
+        {
+            "ingredientId": 6,
+            "quantity": 20,
+            "unity": "ml"
+        },
+        {
+            "ingredientId": 7,
+            "quantity": 600,
+            "unity": "g"
+        },
+        {
+            "ingredientId": 8,
+            "quantity": 600,
+            "unity": "g"
+        }
+    ]
+}
+###
+
+PUT http://localhost:8000/api/recipes/8
+Content-Type: application/json
+
+{
+    "creatorId": 2,
+    "name": "test le retour de l'update !",
+    "image": null,
+    "url": null,
+    "content": "Recette pour tester l'update ",
+    "ingredients":
+    [
+        {
+            "recipeIng": 25,
+            "ingredientId": 11,
+            "quantity": 500,
+            "unity": "g"
+        },
+        {
+            "recipeIng": 26,
+            "ingredientId": 6,
+            "quantity": 10,
+            "unity": "ml"
+        },
+        {
+            "recipeIng": 27,
+            "ingredientId": 7,
+            "quantity": 200,
+            "unity": "g"
+        },
+        {
+            "recipeIng": 28,
+            "ingredientId": 8,
+            "quantity": 100,
+            "unity": "g"
+        },
+        {
+            "recipeIng": null,
+            "ingredientId": 1,
+            "quantity": 1,
+            "unity": "g"
+        }
+    ]
+}
+###

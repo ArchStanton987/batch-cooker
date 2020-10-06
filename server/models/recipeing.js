@@ -1,19 +1,19 @@
 'use strict'
-const { ForeignKeyConstraintError } = require('sequelize')
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class RecipeIng extends Model {
     static associate(models) {
-      RecipeIng.belongsTo(models.Ingredient)
-      RecipeIng.belongsTo(models.Recipe)
+      RecipeIng.belongsTo(models.Ingredient, { foreignKey: 'ingredientId' })
+      RecipeIng.belongsTo(models.Recipe, { foreignKey: 'recipeId' })
     }
   }
   RecipeIng.init(
     {
+      id: { type: DataTypes.INTEGER, primaryKey: true },
       ingredientId: DataTypes.INTEGER,
       recipeId: DataTypes.INTEGER,
       quantity: DataTypes.INTEGER,
-      unity: DataTypes.STRING
+      unity: DataTypes.INTEGER
     },
     {
       sequelize,
