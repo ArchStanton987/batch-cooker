@@ -57,7 +57,7 @@ h2 {
   font-weight: lighter;
   color: #516f9b;
   background-color: #bacdeb;
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
   border-radius: 5px;
 }
 
@@ -82,7 +82,7 @@ p {
 }
 
 .h3-container {
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
   border: solid 2px #bacdeb;
   border-radius: 5px;
   display: flex;
