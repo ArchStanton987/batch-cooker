@@ -20,7 +20,8 @@ module.exports = {
         references: {
           model: 'Recipes',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       quantity: { type: Sequelize.INTEGER, allowNull: true },
       unity: { type: Sequelize.STRING, allowNull: true },

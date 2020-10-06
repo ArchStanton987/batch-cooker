@@ -72,6 +72,7 @@ module.exports = {
       await recipe.save()
     } catch (err) {
       res.status(500).json({ error: err + ' ; error when updating recipe data' })
+      return
     }
     try {
       const previousIngredients = await models.RecipeIng.findAll({
@@ -95,7 +96,7 @@ module.exports = {
         if (!ingredient.hasOwnProperty('updated')) {
           await models.RecipeIng.create({
             ingredientId: ingredient.ingredientId,
-            recipeId: ingredient.recipeId,
+            recipeId: recipeId,
             quantity: ingredient.quantity,
             unity: ingredient.unity
           })
@@ -106,6 +107,27 @@ module.exports = {
       res.status(500).json({ error: err + ' ; error when associating ingredients to recipe' })
     }
   },
-  deleteOneRecipe: async (req, res) => {},
-  getRecipesOfUser: async (req, res) => {}
+  deleteOneRecipe: async (req, res) => {
+    const recipeId = req.params.recipeId
+    try {
+      const recipeToDelete = await models.Recipe.findByPk(recipeId)
+      await recipeToDelete.destroy()
+      res.status(200).json({ message: 'Recipe successfully deleted' })
+    } catch (err) {
+      res.status(500).json({ error: err })
+    }
+  },
+  getRecipesOfUser: async (req, res) => {
+    const userId = req.params.userId
+    try {
+      const recipies = await models.Recipe.findAll({
+        where: {
+          creatorId: userId
+        }
+      })
+      res.status(200).json({ recipies })
+    } catch (err) {
+      res.status(500).json({ error: err })
+    }
+  }
 }
