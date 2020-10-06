@@ -39,6 +39,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 h1 {
@@ -46,12 +47,12 @@ h1 {
   font-weight: normal;
   color: #e3e3e3;
   padding: 0.3rem;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 h2 {
   font-family: "Norican", cursive;
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   font-weight: lighter;
   color: #516f9b;
@@ -65,17 +66,19 @@ h3 {
   color: #516f9b;
   background-color: #bacdeb;
   padding: 0.2rem;
+  font-size: 1rem;
 }
 
 h4 {
   font-family: "Lato", sans-serif;
   color: #516f9b;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 0.2rem;
 }
 
 p {
   font-family: "Lato", sans-serif;
+  font-size: 1rem;
 }
 
 .h3-container {
@@ -86,13 +89,8 @@ p {
   flex-direction: column;
 }
 
-.navIcon__active {
-  margin: 0.5rem;
-  max-height: 2.5rem;
-  max-width: 2.5rem;
-  background-color: #e3e3e3;
-  color: #516f9b;
-  border-radius: 8px;
+input:focus {
+  box-shadow: 0px 0px 8px 1px rgba(85, 85, 85, 0.281);
 }
 
 button {
@@ -143,12 +141,13 @@ header {
 
 .header_icon {
   cursor: pointer;
-  max-height: 2.5rem;
-  max-width: 2.5rem;
+  max-height: 2rem;
+  max-width: 2rem;
 }
 
 .global-layout {
-  height: 100vh;
+  min-height: 450px;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -159,6 +158,7 @@ header {
   padding: 0.5rem 1rem;
   flex: 1;
   overflow: auto;
+  z-index: 1;
 }
 
 .navbar {
@@ -204,7 +204,7 @@ header {
   overflow: hidden;
   justify-content: space-evenly;
   list-style: none;
-  max-height: 160px;
+  max-height: 200px;
   transition: max-height 0.4s ease-in-out;
 }
 .inventory-category_list.retracted {
@@ -226,12 +226,7 @@ header {
 .inventory-ingredients {
   flex: 1;
   overflow: auto;
-  z-index: -1;
-}
-
-.inventory-ingredients::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 7px;
+  z-index: 1;
 }
 
 .inventory-ingredients_list {
@@ -248,10 +243,10 @@ header {
 .inventory-toolbox_searchIcon {
   background-color: #516f9b;
   border-radius: 8px;
-  max-height: 3rem;
-  max-width: 3rem;
+  max-height: 2.5rem;
+  max-width: 2.5rem;
   padding: 0.5rem;
-  z-index: 1;
+  z-index: 2;
 }
 
 .inventory-toolbox_searchIcon:hover {
@@ -259,39 +254,40 @@ header {
 }
 
 .inventory-toolbox_input {
-  height: 3rem;
-  min-width: 3rem;
+  height: 2.5rem;
+  min-width: 0rem;
   max-width: 100%;
-  margin-left: -0.2rem;
-  margin-right: -3rem;
+  margin-left: -1rem;
+  margin-right: -2rem;
   border: #bacdeb 2px solid;
   border-radius: 0 8px 8px 0;
   flex: 1;
   color: #516f9b;
   background-color: rgba(170, 205, 250, 0.3);
   font-size: 1rem;
-  padding-left: 0.5rem;
+  padding-left: 1.5rem;
   padding-right: 3rem;
-  transition: max-width 400ms ease-in-out 400ms, min-width 400ms;
+  transition: max-width 400ms ease-in-out, padding-left 100ms 400ms, padding-right 100ms 400ms, margin-left 100ms 400ms, margin-right 100ms 400ms;
 }
 .inventory-toolbox_input.inactive {
   min-width: 0rem;
   max-width: 0rem;
-  margin-left: -1rem;
+  margin-left: -2rem;
   padding-right: 0rem;
   border: #bacdeb 0px solid;
-  transition: margin-right 200ms, max-width 200ms ease-in-out 200ms, border 200ms ease-in-out 200ms;
+  transition: max-width 200ms ease-in-out 200ms, border 200ms ease-in-out 200ms;
 }
 .inventory-toolbox_input:focus {
   outline: none;
 }
 
 .inventory-toolbox_deleteIcon {
+  z-index: 1;
   padding: 0.5rem;
-  max-height: 3rem;
-  max-width: 3rem;
+  max-height: 2rem;
+  max-width: 2rem;
   margin-right: 1rem;
-  transition: max-width 200ms ease-in-out 1000ms, max-height 200ms ease-in-out 1000ms, opacity 200ms ease-in-out 1000ms;
+  transition: max-width 200ms ease-in-out 300ms, max-height 200ms ease-in-out 300ms, opacity 200ms ease-in-out 300ms;
 }
 .inventory-toolbox_deleteIcon.inactive {
   opacity: 0;

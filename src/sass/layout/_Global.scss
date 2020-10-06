@@ -54,6 +54,10 @@ p {
   flex-direction: column;
 }
 
+input:focus {
+  box-shadow: 0px 0px 8px 1px rgba(85, 85, 85, 0.281);
+}
+
 button {
   border: 0;
   border-radius: 5px;

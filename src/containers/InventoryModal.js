@@ -18,16 +18,21 @@ export default function InventoryModal({
               &#10005;
             </span>
             <h4>Ajouter / modifier un ingrédient</h4>
-            <label htmlFor="name">Nom :</label>
+            <label htmlFor="name">
+              <p>Nom</p>
+            </label>
             <input
               id="name"
               name="name"
               type="text"
               defaultValue={name}
               onChange={e => handleNewIngredient(e)}
+              autoFocus
               required
             ></input>
-            <label htmlFor="category">Catégorie :</label>
+            <label htmlFor="category">
+              <p>Catégorie</p>
+            </label>
             <select
               defaultValue={category}
               onChange={e => handleNewIngredient(e)}
@@ -44,36 +49,47 @@ export default function InventoryModal({
               <option value="sucrés">sucrés</option>
               <option value="autres">autres</option>
             </select>
-            <label htmlFor="quantity">Quantité :</label>
-            <input
-              onChange={e => handleNewIngredient(e)}
-              id="quantity"
-              name="quantity"
-              type="number"
-              defaultValue={quantity}
-            ></input>
-            <label htmlFor="unity">Unité :</label>
-            <input
-              placeholder="ex : g, kg, cl, l, part"
-              onChange={e => handleNewIngredient(e)}
-              id="unity"
-              name="unity"
-              type="text"
-              defaultValue={unity}
-            ></input>
+            <div className="flexRow spaceBetween">
+              <div className="small-input_container">
+                <label htmlFor="quantity">
+                  <p>Quantité</p>
+                </label>
+                <input
+                  className="small-input"
+                  onChange={e => handleNewIngredient(e)}
+                  id="quantity"
+                  name="quantity"
+                  type="number"
+                  defaultValue={quantity}
+                />
+              </div>
+              <div className="small-input_container">
+                <label htmlFor="unity">
+                  <p>Unité</p>
+                </label>
+                <input
+                  className="small-input"
+                  placeholder="ex : g, kg, cl, l, part"
+                  onChange={e => handleNewIngredient(e)}
+                  id="unity"
+                  name="unity"
+                  type="text"
+                  defaultValue={unity}
+                />
+              </div>
+            </div>
             <div className="flexRow spaceBetween">
               <button onClick={toggleModal} id="cancel-submit-ingredient">
                 Annuler
               </button>
-              <button
+              <input
                 onClick={e => {
                   ingredientId ? handleSubmitIngredient(e, true) : handleSubmitIngredient(e, false)
                 }}
                 id="submit-ingredient"
                 type="submit"
-              >
-                Enregistrer
-              </button>
+                value="Enregistrer"
+              />
             </div>
           </div>
         </form>
