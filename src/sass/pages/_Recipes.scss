@@ -1,3 +1,13 @@
-.recipes-list {
+@use '../variables' as v;
+
+.recipes {
+  flex: 1;
+  overflow: auto;
+  background-color: v.$color6;
+}
+
+.recipies-list {
   list-style: none;
+  flex: 1;
+  overflow: auto;
 }
