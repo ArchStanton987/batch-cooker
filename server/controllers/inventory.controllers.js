@@ -24,7 +24,7 @@ module.exports = {
   addToInventory: async (req, res) => {
     let { ingredientName, category, quantity, unity } = req.body
     let { userId } = req.params
-    let newIngredient = { name: ingredientName, category: category }
+    let newIngredient = { name: ingredientName.toLowerCase(), category: category }
 
     const user = await models.User.findByPk(userId)
     if (!user) {

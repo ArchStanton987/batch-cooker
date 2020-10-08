@@ -194,6 +194,7 @@ export default function Inventory({ isSearchBoxActive }) {
                 })
                 return match
               })
+              .sort((a, b) => a.name.localeCompare(b.name))
               .map(item =>
                 React.Children.toArray(
                   <Ingredient
