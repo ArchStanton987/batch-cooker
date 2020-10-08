@@ -37,6 +37,9 @@ app.use('/api/recipes', recipes)
 // PUT /api/recipes/:recipieId                            update one recipie
 // DELETE /api/recipes/:recipieId                         delete one recipie
 //
-// GET /api/recipes/:userId                               get all recipes from a user
+// GET /api/recipes/users/:userId                         get all recipes from a user
+
+// POST /api/recipes/:recipeId/ingredients
+// PUT /api/recipes/:recipeId/ingredients/:ingredientId
 
 module.exports = app

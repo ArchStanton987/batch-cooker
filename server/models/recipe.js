@@ -3,7 +3,7 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Recipe extends Model {
     static associate(models) {
-      Recipe.belongsToMany(models.Ingredient, { through: models.RecipeIng, foreignKey: 'recipeId' })
+      Recipe.belongsToMany(models.Ingredient, { through: models.RecipeIng })
       Recipe.belongsTo(models.User, { foreignKey: 'creatorId' })
       Recipe.hasMany(models.RecipeIng, { onDelete: 'CASCADE' })
     }

@@ -1,5 +1,4 @@
 const models = require('../models')
-const { Op } = require('sequelize')
 
 module.exports = {
   getAllUsers: async (req, res) => {
@@ -25,42 +24,39 @@ module.exports = {
   },
   updateOneUser: async (req, res) => {
     const userId = req.params.id
-    const newUserAttributes = {
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password
-    }
+    const { email, username, password } = req.body
     let user = await models.User.findByPk(userId)
 
-    // Checks for existing email
-    const existingEmail = await models.User.findOne({
-      where: {
-        [Op.and]: [{ email: { [Op.not]: user.email } }, { email: newUserAttributes.email }]
+    // Checks for existing username
+    if (user.username !== username) {
+      const existingUsername = await models.User.findOne({
+        where: {
+          username: username
+        }
+      })
+      if (existingUsername) {
+        res.status(400).json({ error: 'Username already existing' })
+        return
       }
-    })
-    if (existingEmail) {
-      res.status(400).json({ error: 'Email already existing' })
-      return
     }
 
-    // Checks for existing username
-    const existingUsername = await models.User.findOne({
-      where: {
-        [Op.and]: [
-          { username: { [Op.not]: user.username } },
-          { username: newUserAttributes.username }
-        ]
+    // Checks for existing email
+    if (user.email !== email) {
+      const existingEmail = await models.User.findOne({
+        where: {
+          email: email
+        }
+      })
+      if (existingEmail) {
+        res.status(400).json({ error: 'Email already existing' })
+        return
       }
-    })
-    if (existingUsername) {
-      res.status(400).json({ error: 'Username already existing' })
-      return
     }
 
     // Assign new values
-    user.email = newUserAttributes.email
-    user.username = newUserAttributes.username
-    user.password = newUserAttributes.password
+    user.email = email
+    user.username = username
+    user.password = password
 
     try {
       await user.save()

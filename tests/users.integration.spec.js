@@ -67,15 +67,15 @@ describe('USERS', () => {
 
   it('getOneUserById - SUCCESS : id, email, username', () => {
     return request(app)
-      .get('/api/users/2')
+      .get('/api/users/1')
       .set('cookie', [`access_token=${token}`])
       .expect(200)
       .expect('Content-Type', /json/)
       .then(res => {
         const result = res.body
-        expect(result).toHaveProperty('id', 2)
-        expect(result).toHaveProperty('email', 'azeblouse@msn.com')
-        expect(result).toHaveProperty('username', 'azeblouse')
+        expect(result).toHaveProperty('id', 1)
+        expect(result).toHaveProperty('email', 'yligotmi@msn.com')
+        expect(result).toHaveProperty('username', 'yligotmi')
       })
   })
 
