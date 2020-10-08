@@ -1,0 +1,9 @@
+@use '../variables' as v;
+
+.recipe-list-item {
+  padding: 0.25rem 0;
+
+  &:nth-child(even) {
+    background-color: v.$color4;
+  }
+}
