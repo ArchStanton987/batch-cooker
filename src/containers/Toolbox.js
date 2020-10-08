@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import '../sass/components/_Toolbox.scss'
 import searchIcon from '../assets/img/search.svg'
 import cross from '../assets/img/x.svg'
 
 export default function Toolbox({
-  toggleToolbox,
-  isToolboxActive,
   handleResetSearchInput,
-  toggleModal,
-  scrollToRef,
   handleSearchInput,
-  scrollableRef
+  scrollableRef,
+  toggleModal,
+  parentName
 }) {
+  const [isToolboxActive, setToolbox] = useState(false)
+
+  const toggleToolbox = () => setToolbox(prevState => !prevState)
+
+  const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)
+
   return (
     <>
       <div className="inventory-toolbox">
@@ -24,7 +28,7 @@ export default function Toolbox({
         />
         <input
           type="text"
-          id="inventory-toolbox_search"
+          id={`${parentName}-toolbox_search`}
           onChange={e => {
             handleSearchInput(e)
             scrollToRef(scrollableRef)

@@ -20,7 +20,7 @@ export default function Inventory({ isSearchBoxActive }) {
 
   const [isExpended, setDrawer] = useState(false)
   const [isModalActive, setIngredientModal] = useState(false)
-  const [isToolboxActive, setToolbox] = useState(false)
+  // const [isToolboxActive, setToolbox] = useState(false)
   const [activeCategories, setActiveCategories] = useState(includeCategories)
   const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
@@ -28,7 +28,7 @@ export default function Inventory({ isSearchBoxActive }) {
 
   let categories = Object.entries(activeCategories)
 
-  const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)
+  // const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)
 
   const scrollableRef = useRef(null)
 
@@ -64,9 +64,6 @@ export default function Inventory({ isSearchBoxActive }) {
     setActiveCategories(prevState => {
       return { ...prevState, ...updatedValues }
     })
-  }
-  const toggleToolbox = () => {
-    setToolbox(prevState => !prevState)
   }
 
   const handleNewIngredient = e => {
@@ -211,13 +208,11 @@ export default function Inventory({ isSearchBoxActive }) {
         </ul>
       </div>
       <Toolbox
-        toggleToolbox={toggleToolbox}
-        isToolboxActive={isToolboxActive}
-        handleResetSearchInput={handleResetSearchInput}
         toggleModal={toggleModal}
-        scrollToRef={scrollToRef}
-        handleSearchInput={handleSearchInput}
         scrollableRef={scrollableRef}
+        handleResetSearchInput={handleResetSearchInput}
+        handleSearchInput={handleSearchInput}
+        parentName={"inventory"}
       />
     </>
   )

@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 
 import Recipe from '../containers/Recipe'
 import '../sass/pages/_Recipes.scss'
+import Toolbox from '../containers/Toolbox'
 
 export default function Recipes() {
   const [userRecipes, setUserRecipes] = useState([])
+  const [isModalActive, setRecipeModal] = useState(false)
+  const [newRecipe, setNewRecipe] = useState(null)
+  const [searchInput, setSearchInput] = useState('')
+
+  const scrollableRef = useRef(null)
 
   const getUserRecipes = () => {
     const url = 'http://192.168.1.27:8000/api/recipes/users/1'
@@ -28,6 +34,25 @@ export default function Recipes() {
     })
   }
 
+  const toggleModal = () => {
+    setRecipeModal(prevState => !prevState)
+    isModalActive && setNewRecipe(null)
+  }
+
+  const handleSearchInput = e => {
+    setSearchInput(e.currentTarget.value)
+  }
+  const handleResetSearchInput = () => {
+    const toolboxSearch = document.getElementById('recipes-toolbox_search') || {}
+    toolboxSearch.value = ''
+    setSearchInput('')
+  }
+  // const handleEditRecipe = id => {
+  //   let ingredientData = inventory.filter(ingredient => ingredient.ingredientId === id)
+  //   setNewIngredient(ingredientData[0])
+  //   toggleModal()
+  // }
+
   useEffect(() => {
     getUserRecipes()
   }, [])
@@ -35,16 +60,24 @@ export default function Recipes() {
   return (
     <>
       <h2>Recettes</h2>
-      <div className="recipes h3-container">
+      <div ref={scrollableRef} className="recipes h3-container">
         <h3>Mes recettes</h3>
         <ul className="recipes-list">
           {userRecipes
+            .filter(recipe => recipe.name.toLowerCase().includes(searchInput.toLowerCase()))
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(recipe => {
-              return <Recipe recipe={recipe} />
+              return <Recipe key={`user-recipe-${recipe.id}`} recipe={recipe} />
             })}
         </ul>
       </div>
+      <Toolbox
+        toggleModal={toggleModal}
+        scrollableRef={scrollableRef}
+        handleResetSearchInput={handleResetSearchInput}
+        handleSearchInput={handleSearchInput}
+        parentName={'recipes'}
+      />
     </>
   )
 }
