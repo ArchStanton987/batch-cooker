@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import homeIcon from '../assets/img/home-icon.png'
-import menuIcon from '../assets/img/burger.svg'
+import homeIcon from '../assets/icons/home-icon.png'
+import menuIcon from '../assets/icons/burger.svg'
 import '../sass/layout/_Header.scss'
 
 export default function Header({ toggleFunction, setMenu }) {

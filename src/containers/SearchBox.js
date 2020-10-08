@@ -1,8 +1,8 @@
 import React from 'react'
 
 import '../sass/components/_SearchBox.scss'
-import magnifyingGlass from '../assets/img/magnifying-glass.png'
-import cross from '../assets/img/x.svg'
+import magnifyingGlass from '../assets/icons/magnifying-glass.png'
+import cross from '../assets/icons/x.svg'
 
 export default function SearchBox({ handleResetSearchInput, handleSearchInput }) {
   return (

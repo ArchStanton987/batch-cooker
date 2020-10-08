@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import homeIcon from '../assets/img/home-icon.png'
-import recipiesIcon from '../assets/img/recipiesIcon.png'
-import calendarIcon from '../assets/img/calendarIcon.png'
-import inventoryIcon from '../assets/img/shelf.png'
-import shoplistIcon from '../assets/img/shop-listIcon.png'
-import closeIcon from '../assets/img/x-white.svg'
+import homeIcon from '../assets/icons/home-icon.png'
+import recipiesIcon from '../assets/icons/recipiesIcon.png'
+import calendarIcon from '../assets/icons/calendarIcon.png'
+import inventoryIcon from '../assets/icons/shelf.png'
+import shoplistIcon from '../assets/icons/shop-listIcon.png'
+import closeIcon from '../assets/icons/x-white.svg'
 import '../sass/layout/_Menu.scss'
 
 export default function Menu({ toggleFunction, setMenu, isSideMenuActive }) {

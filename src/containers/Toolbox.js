@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 import '../sass/components/_Toolbox.scss'
-import searchIcon from '../assets/img/search.svg'
-import cross from '../assets/img/x.svg'
+import searchIcon from '../assets/icons/search.svg'
+import cross from '../assets/icons/x.svg'
 
 export default function Toolbox({
   handleResetSearchInput,

@@ -5,7 +5,7 @@ import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
 import Toolbox from '../containers/Toolbox'
-import chevron from '../assets/img/chevron.svg'
+import chevron from '../assets/icons/chevron.svg'
 
 export default function Inventory({ isSearchBoxActive }) {
   let includeCategories = {

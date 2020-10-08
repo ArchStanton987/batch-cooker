@@ -36,7 +36,6 @@ export default function Recipes() {
 
   const toggleModal = () => {
     setRecipeModal(prevState => !prevState)
-    isModalActive && setNewRecipe(null)
   }
 
   const handleSearchInput = e => {

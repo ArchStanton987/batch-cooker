@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import recipiesIcon from '../assets/img/recipiesIcon.png'
-import calendarIcon from '../assets/img/calendarIcon.png'
-import inventoryIcon from '../assets/img/shelf.png'
-import shoplistIcon from '../assets/img/shop-listIcon.png'
+import recipiesIcon from '../assets/icons/recipiesIcon.png'
+import calendarIcon from '../assets/icons/calendarIcon.png'
+import inventoryIcon from '../assets/icons/shelf.png'
+import shoplistIcon from '../assets/icons/shop-listIcon.png'
 import '../sass/layout/_Navbar.scss'
 
 export default function Navbar({ handleChangeTab }) {
