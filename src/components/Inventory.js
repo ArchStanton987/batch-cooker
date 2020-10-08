@@ -4,9 +4,8 @@ import axios from 'axios'
 import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
+import Toolbox from '../containers/Toolbox'
 import chevron from '../assets/img/chevron.svg'
-import searchIcon from '../assets/img/search.svg'
-import cross from '../assets/img/x.svg'
 
 export default function Inventory({ isSearchBoxActive }) {
   let includeCategories = {
@@ -31,7 +30,7 @@ export default function Inventory({ isSearchBoxActive }) {
 
   const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)
 
-  const ingredientTop = useRef(null)
+  const scrollableRef = useRef(null)
 
   const getInventory = () => {
     const url = 'http://192.168.1.27:8000/api/inventory/user/1'
@@ -175,7 +174,7 @@ export default function Inventory({ isSearchBoxActive }) {
           })}
         </ul>
       </div>
-      <div ref={ingredientTop} className="inventory-ingredients h3-container">
+      <div ref={scrollableRef} className="inventory-ingredients h3-container">
         <h3>Ingrédients</h3>
         <ul className="inventory-ingredients_list">
           {inventory &&
@@ -205,45 +204,21 @@ export default function Inventory({ isSearchBoxActive }) {
                     quantity={item.quantity}
                     ingredientId={item.ingredientId}
                     unity={item.unity}
+                    scrollableRef={scrollableRef}
                   />
                 )
               )}
         </ul>
       </div>
-      <div className="inventory-toolbox">
-        <img
-          onClick={toggleToolbox}
-          src={searchIcon}
-          alt="search"
-          className="inventory-toolbox_searchIcon"
-        />
-        <input
-          type="text"
-          id="inventory-toolbox_search"
-          onChange={e => {
-            handleSearchInput(e)
-            scrollToRef(ingredientTop)
-          }}
-          onFocus={() => setTimeout(() => scrollToRef(ingredientTop), 500)}
-          className={
-            isToolboxActive ? 'inventory-toolbox_input' : 'inventory-toolbox_input inactive'
-          }
-          disabled={isToolboxActive && false}
-        />
-        <img
-          onClick={handleResetSearchInput}
-          className={
-            isToolboxActive
-              ? 'inventory-toolbox_deleteIcon'
-              : 'inventory-toolbox_deleteIcon inactive'
-          }
-          alt="delete search"
-          src={cross}
-        />
-        <button onClick={toggleModal} className="inventory-ingredients_add-button">
-          Ajouter
-        </button>
-      </div>
+      <Toolbox
+        toggleToolbox={toggleToolbox}
+        isToolboxActive={isToolboxActive}
+        handleResetSearchInput={handleResetSearchInput}
+        toggleModal={toggleModal}
+        scrollToRef={scrollToRef}
+        handleSearchInput={handleSearchInput}
+        scrollableRef={scrollableRef}
+      />
     </>
   )
 }
