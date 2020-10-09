@@ -1,0 +1,25 @@
+@use '../variables' as v;
+
+.recipe-ingredient-list {
+  list-style: none;
+}
+
+.recipe-preparation {
+  margin: 0.5rem;
+  text-align: justify;
+  line-height: 1.2rem;
+}
+
+.recipe-taglist {
+  list-style: none;
+  color: v.$color1;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: auto;
+
+  li p {
+    font-size: 1.2rem;
+    font-weight: bolder;
+    padding: 0.5rem;
+  }
+}

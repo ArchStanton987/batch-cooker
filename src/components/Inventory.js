@@ -7,7 +7,7 @@ import InventoryModal from '../containers/InventoryModal'
 import Toolbox from '../containers/Toolbox'
 import chevron from '../assets/icons/chevron.svg'
 
-export default function Inventory({ isSearchBoxActive }) {
+export default function Inventory() {
   let includeCategories = {
     spices: { active: true, fullname: 'assaisonnements et condiments' },
     dairy: { active: true, fullname: 'produits laitiers' },
@@ -20,7 +20,6 @@ export default function Inventory({ isSearchBoxActive }) {
 
   const [isExpended, setDrawer] = useState(false)
   const [isModalActive, setIngredientModal] = useState(false)
-  // const [isToolboxActive, setToolbox] = useState(false)
   const [activeCategories, setActiveCategories] = useState(includeCategories)
   const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
@@ -28,12 +27,12 @@ export default function Inventory({ isSearchBoxActive }) {
 
   let categories = Object.entries(activeCategories)
 
-  // const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)
-
   const scrollableRef = useRef(null)
 
-  const getInventory = () => {
-    const url = 'http://192.168.1.27:8000/api/inventory/user/1'
+  const userId = 1
+
+  const getInventory = userId => {
+    const url = `http://192.168.1.27:8000/api/inventory/user/${userId}`
     axios.get(url).then(res => {
       let inventory = []
       res.data.forEach(item => {
@@ -89,13 +88,13 @@ export default function Inventory({ isSearchBoxActive }) {
   const handleDeleteIngredient = id => {
     axios
       .delete(`http://192.168.1.27:8000/api/inventory/user/1/ingredients/${id}`)
-      .then(() => getInventory())
+      .then(() => getInventory(userId))
   }
 
   const handleAddToInventory = newIng => {
     axios.post('http://192.168.1.27:8000/api/inventory/user/1/ingredients', newIng).then(() => {
       toggleModal()
-      getInventory()
+      getInventory(userId)
     })
   }
   const handleUpdateFromInventory = newIng => {
@@ -106,7 +105,7 @@ export default function Inventory({ isSearchBoxActive }) {
       )
       .then(() => {
         toggleModal()
-        getInventory()
+        getInventory(userId)
       })
   }
   const handleSubmitIngredient = (e, isUpdating) => {
@@ -122,11 +121,11 @@ export default function Inventory({ isSearchBoxActive }) {
   }
 
   useEffect(() => {
-    getInventory()
+    getInventory(userId)
   }, [])
 
   return (
-    <>
+    <>    
       {isModalActive && (
         <InventoryModal
           handleSubmitIngredient={handleSubmitIngredient}
