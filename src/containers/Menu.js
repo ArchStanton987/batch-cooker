@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import homeIcon from '../assets/icons/home-icon.png'
-import recipiesIcon from '../assets/icons/recipiesIcon.png'
+import recipesIcon from '../assets/icons/recipesIcon.png'
 import calendarIcon from '../assets/icons/calendarIcon.png'
 import inventoryIcon from '../assets/icons/shelf.png'
 import shoplistIcon from '../assets/icons/shop-listIcon.png'
@@ -31,9 +31,9 @@ export default function Menu({ toggleFunction, setMenu, isSideMenuActive }) {
             Calendrier
           </li>
         </Link>
-        <Link onClick={() => toggleFunction(setMenu)} to="/recipies">
+        <Link onClick={() => toggleFunction(setMenu)} to="/recipes">
           <li>
-            <img className="sidemenu_icon" src={recipiesIcon} alt="recipies" />
+            <img className="sidemenu_icon" src={recipesIcon} alt="recipes" />
             Recettes
           </li>
         </Link>

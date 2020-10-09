@@ -79,13 +79,13 @@ module.exports = {
   getRecipesOfUser: async (req, res) => {
     const userId = req.params.userId
     try {
-      const recipies = await models.Recipe.findAll({
+      const recipes = await models.Recipe.findAll({
         where: {
           creatorId: userId
         },
         include: [{ model: models.Ingredient, attributes: ['name'] }]
       })
-      res.status(200).json(recipies)
+      res.status(200).json(recipes)
     } catch (err) {
       res.status(500).json({ error: err })
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import recipiesIcon from '../assets/icons/recipiesIcon.png'
+import recipesIcon from '../assets/icons/recipesIcon.png'
 import calendarIcon from '../assets/icons/calendarIcon.png'
 import inventoryIcon from '../assets/icons/shelf.png'
 import shoplistIcon from '../assets/icons/shop-listIcon.png'
@@ -20,13 +20,13 @@ export default function Navbar({ handleChangeTab }) {
         />
       </Link>
 
-      <Link to="/recipies">
+      <Link to="/recipes">
         <img
           onClick={handleChangeTab}
-          name="recipies"
+          name="recipes"
           className="navIcon"
-          src={recipiesIcon}
-          alt="recipies"
+          src={recipesIcon}
+          alt="recipes"
         />
       </Link>
 

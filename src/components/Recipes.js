@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 
-import Recipe from '../containers/Recipe'
+import Recipe from '../containers/RecipeCard'
 import '../sass/pages/_Recipes.scss'
 import Toolbox from '../containers/Toolbox'
 

@@ -1,5 +1,9 @@
 @use '../variables' as v;
 
+.recipe-link {
+  text-decoration: none;
+}
+
 .recipe-card {
   display: flex;
   justify-content: space-between;
