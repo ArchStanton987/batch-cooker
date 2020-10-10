@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import Recipe from '../containers/RecipeCard'
 import '../sass/pages/_Recipes.scss'
-import Toolbox from '../containers/Toolbox'
+import Searchbox from '../containers/Searchbox'
 
 export default function Recipes() {
   const [userRecipes, setUserRecipes] = useState([])
@@ -42,8 +42,8 @@ export default function Recipes() {
     setSearchInput(e.currentTarget.value)
   }
   const handleResetSearchInput = () => {
-    const toolboxSearch = document.getElementById('recipes-toolbox_search') || {}
-    toolboxSearch.value = ''
+    const searchboxSearch = document.getElementById('recipes-searchbox_search') || {}
+    searchboxSearch.value = ''
     setSearchInput('')
   }
   // const handleEditRecipe = id => {
@@ -70,7 +70,7 @@ export default function Recipes() {
             })}
         </ul>
       </div>
-      <Toolbox
+      <Searchbox
         toggleModal={toggleModal}
         scrollableRef={scrollableRef}
         handleResetSearchInput={handleResetSearchInput}

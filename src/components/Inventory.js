@@ -4,7 +4,7 @@ import axios from 'axios'
 import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
-import Toolbox from '../containers/Toolbox'
+import Searchbox from '../containers/Searchbox'
 import chevron from '../assets/icons/chevron.svg'
 
 export default function Inventory() {
@@ -75,8 +75,8 @@ export default function Inventory() {
     setSearchInput(e.currentTarget.value)
   }
   const handleResetSearchInput = () => {
-    const toolboxSearch = document.getElementById('inventory-toolbox_search') || {}
-    toolboxSearch.value = ''
+    const searchboxSearch = document.getElementById('inventory-searchbox_search') || {}
+    searchboxSearch.value = ''
     setSearchInput('')
   }
   const handleEditIngredient = id => {
@@ -206,7 +206,7 @@ export default function Inventory() {
               )}
         </ul>
       </div>
-      <Toolbox
+      <Searchbox
         toggleModal={toggleModal}
         scrollableRef={scrollableRef}
         handleResetSearchInput={handleResetSearchInput}

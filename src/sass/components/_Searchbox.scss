@@ -1,12 +1,12 @@
 @use '../variables' as v;
 
-.inventory-toolbox {
+.inventory-searchbox {
   display: flex;
   margin: 0.2rem 0;
   align-items: center;
 }
 
-.inventory-toolbox_searchIcon {
+.inventory-searchbox_searchIcon {
   background-color: v.$color1;
   border-radius: 8px;
   max-height: 2.5rem;
@@ -15,11 +15,11 @@
   z-index: 2;
 }
 
-.inventory-toolbox_searchIcon:hover {
+.inventory-searchbox_searchIcon:hover {
   cursor: pointer;
 }
 
-.inventory-toolbox_input {
+.inventory-searchbox_input {
   height: 2.5rem;
   min-width: 0rem;
   max-width: 100%;
@@ -50,7 +50,7 @@
   }
 }
 
-.inventory-toolbox_deleteIcon {
+.inventory-searchbox_deleteIcon {
   z-index: 1;
   padding: 0.5rem;
   max-height: 2rem;

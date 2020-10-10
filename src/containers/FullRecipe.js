@@ -93,6 +93,9 @@ export default function FullRecipe(props) {
           <p className="recipe-text">Il n'y a aucun avis sur cette recette pour le moment.</p>
         </div>
       </div>
+      <div className>
+
+      </div>
     </>
   )
 }
