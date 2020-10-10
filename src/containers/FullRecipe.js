@@ -8,7 +8,7 @@ import '../sass/components/_Ingredient.scss'
 
 export default function FullRecipe(props) {
   const [recipe, setRecipe] = useState({})
-  const { name, ingredients, content, url, image, username, createdAt, updatedAt } = recipe
+  const { name, ingredients, content, url, image, username, createdAt, updatedAt, guests } = recipe
 
   const recipeId = props.match.params.id
 
@@ -37,7 +37,7 @@ export default function FullRecipe(props) {
             {createdAt !== updatedAt && (
               <p className="recipe-text">Edité le {moment(updatedAt).format('LL')}</p>
             )}
-            <p className="recipe-text">Pour 4 personnes</p>
+            <p className="recipe-text">Pour {guests} personnes</p>
             <p className="recipe-text">Note moy. : 5/10</p>
           </div>
           <div className="recipe-img-container">

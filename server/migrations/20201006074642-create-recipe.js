@@ -33,6 +33,11 @@ module.exports = {
         defaultValue: null,
         allowNull: true
       },
+      guests: {
+        type: Sequelize.INTEGER,
+        defaultValue: 4,
+        allowNull: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
