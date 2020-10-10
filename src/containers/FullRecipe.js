@@ -44,7 +44,7 @@ export default function FullRecipe(props) {
             {image && <img src={image} className="recipe-img" alt={name} />}
           </div>
           <div className="header-tags">
-            <ul className="recipe-taglist">
+            <ul className="taglist">
               <li>
                 <p>#saison</p>
               </li>
