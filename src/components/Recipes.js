@@ -59,7 +59,7 @@ export default function Recipes() {
   return (
     <>
       <h2>Recettes</h2>
-      <div ref={scrollableRef} className="recipes h3-container">
+      <div ref={scrollableRef} className="recipes section-container">
         <h3>Mes recettes</h3>
         <ul className="recipes-list">
           {userRecipes

@@ -139,7 +139,7 @@ export default function Inventory() {
         />
       )}
       <h2>Inventaire</h2>
-      <div className="inventory-category h3-container">
+      <div className="inventory-category section-container">
         <div onClick={toggleDrawer} className="drawer-container">
           <h3>Catégories</h3>
           <img
@@ -170,7 +170,7 @@ export default function Inventory() {
           })}
         </ul>
       </div>
-      <div ref={scrollableRef} className="inventory-ingredients h3-container">
+      <div ref={scrollableRef} className="inventory-ingredients section-container">
         <h3>Ingrédients</h3>
         <ul className="inventory-ingredients_list">
           {inventory &&
