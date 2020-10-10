@@ -76,6 +76,7 @@ describe('RECIPE', () => {
         expect(res.body[randomNumber]).toHaveProperty('name')
         expect(res.body[randomNumber]).toHaveProperty('content')
         expect(res.body[randomNumber]).toHaveProperty('Ingredients')
+        expect(res.body[randomNumber]).toHaveProperty('guests')
       })
   })
 
@@ -112,6 +113,7 @@ describe('RECIPE', () => {
         expect(res.body).toHaveProperty('name')
         expect(res.body).toHaveProperty('content')
         expect(res.body).toHaveProperty('Ingredients')
+        expect(res.body).toHaveProperty('guests')
         expect(res.body.Ingredients.length).toBeGreaterThan(1)
       })
   })
@@ -149,6 +151,7 @@ describe('RECIPE', () => {
         expect(res.body[randomNumber]).toHaveProperty('name')
         expect(res.body[randomNumber]).toHaveProperty('content')
         expect(res.body[randomNumber]).toHaveProperty('Ingredients')
+        expect(res.body[randomNumber]).toHaveProperty('guests')
       })
   })
   it('addIngredientInRecipe - SUCCESS - NON EXISTING INGREDIENT', () => {

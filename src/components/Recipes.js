@@ -22,6 +22,8 @@ export default function Recipes() {
 
   const handleFetchRecipes = async () => {
     const results = await fecthRecipies()
+    console.log(results)
+    
     const parsedResults = parseFetchedRecipes(results)
     setUserRecipes(parsedResults)
   }
@@ -57,12 +59,6 @@ export default function Recipes() {
             <input type="search" className="recipies-search-tag" placeholder="recherche par tag" />
           </div>
           <ul className="taglist">
-            <li>
-              <p>#charcuterie</p>
-            </li>
-            <li>
-              <p>#saison</p>
-            </li>
           </ul>
         </div>
       </div>

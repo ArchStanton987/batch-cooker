@@ -6,7 +6,8 @@ module.exports = {
       const recipes = await models.Recipe.findAll({
         include: [
           { model: models.User, attributes: ['username'] },
-          { model: models.Ingredient, attributes: ['name'] }
+          { model: models.Ingredient, attributes: ['name'] },
+          { model: models.Tag, attributes: ['tagname'] }
         ]
       })
       res.status(200).json(recipes)
@@ -37,7 +38,8 @@ module.exports = {
         },
         include: [
           { model: models.User, attributes: ['username'] },
-          { model: models.Ingredient, attributes: ['name'] }
+          { model: models.Ingredient, attributes: ['name'] },
+          { model: models.Tag, attributes: ['tagname'] }
         ]
       })
       if (!recipe) {

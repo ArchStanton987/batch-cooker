@@ -8,7 +8,18 @@ import '../sass/components/_Ingredient.scss'
 
 export default function FullRecipe(props) {
   const [recipe, setRecipe] = useState({})
-  const { name, ingredients, content, url, image, username, createdAt, updatedAt, guests } = recipe
+  const {
+    name,
+    ingredients,
+    content,
+    url,
+    image,
+    username,
+    createdAt,
+    updatedAt,
+    guests,
+    Tags
+  } = recipe
 
   const recipeId = props.match.params.id
 
@@ -45,21 +56,11 @@ export default function FullRecipe(props) {
           </div>
           <div className="header-tags">
             <ul className="taglist">
-              <li>
-                <p>#saison</p>
-              </li>
-              <li>
-                <p>#été</p>
-              </li>
-              <li>
-                <p>#charcuterie</p>
-              </li>
-              <li>
-                <p>#enfants</p>
-              </li>
-              <li>
-                <p>#gourmandise</p>
-              </li>
+              {Tags && Tags.map(tag => (
+                <li key={`fullRecipe-${tag.TagRecipe.id}`}>
+                  <p>{`#${tag.tagname}`}</p>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
