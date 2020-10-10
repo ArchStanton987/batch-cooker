@@ -1,9 +1,9 @@
-'use strict'
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Recipe extends Model {
     static associate(models) {
       Recipe.belongsToMany(models.Ingredient, { through: models.RecipeIng })
+      Recipe.belongsToMany(models.Tag, { through: models.TagRecipe })
       Recipe.belongsTo(models.User, { foreignKey: 'creatorId' })
       Recipe.hasMany(models.RecipeIng, { onDelete: 'CASCADE' })
     }

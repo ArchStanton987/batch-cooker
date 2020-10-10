@@ -1,16 +1,16 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('RecipeIngs', {
+    await queryInterface.createTable('TagRecipes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ingredientId: {
+      tagId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Ingredients',
+          model: 'Tags',
           key: 'id'
         }
       },
@@ -19,24 +19,19 @@ module.exports = {
         references: {
           model: 'Recipes',
           key: 'id'
-        },
-        onDelete: 'CASCADE'
+        }
       },
-      quantity: { type: Sequelize.INTEGER, allowNull: true },
-      unity: { type: Sequelize.STRING, allowNull: true },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('NOW()')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('NOW()')
+        type: Sequelize.DATE
       }
-    })
+    });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('RecipeIngs')
+    await queryInterface.dropTable('TagRecipes');
   }
-}
+};
