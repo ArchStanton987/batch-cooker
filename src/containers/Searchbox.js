@@ -9,7 +9,8 @@ export default function Searchbox({
   handleSearchInput,
   scrollableRef,
   toggleModal,
-  parentName
+  parentName,
+  placeholder
 }) {
   const [isSearchboxActive, setSearchbox] = useState(false)
 
@@ -38,6 +39,7 @@ export default function Searchbox({
             isSearchboxActive ? 'inventory-searchbox_input' : 'inventory-searchbox_input inactive'
           }
           disabled={isSearchboxActive && false}
+          placeholder={placeholder ? placeholder : null}
         />
         <img
           onClick={handleResetSearchInput}

@@ -4,6 +4,7 @@ import RecipeCard from '../containers/RecipeCard'
 import { fecthRecipies, parseFetchedRecipes } from '../lib/recipies'
 import '../sass/pages/_Recipes.scss'
 import Searchbox from '../containers/Searchbox'
+import searchIcon from '../assets/icons/search.svg'
 
 export default function Recipes() {
   const [userRecipes, setUserRecipes] = useState([])
@@ -44,6 +45,13 @@ export default function Recipes() {
   return (
     <>
       <h2>Recettes</h2>
+      <div className="section-container">
+        <h3>Tags</h3>
+        <div className=" search-tag-container">
+          <img src={searchIcon} className="search-tag" alt="search by tag" />
+          <input type="search" className="recipies-search-tag" />
+        </div>
+      </div>
       <div ref={scrollableRef} className="recipes section-container">
         <h3>Mes recettes</h3>
         <ul className="recipes-list">
@@ -61,6 +69,7 @@ export default function Recipes() {
         handleResetSearchInput={handleResetSearchInput}
         handleSearchInput={handleSearchInput}
         parentName={'recipes'}
+        placeholder={'recherche par nom'}
       />
     </>
   )

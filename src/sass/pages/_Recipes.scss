@@ -11,3 +11,29 @@
   flex: 1;
   overflow: auto;
 }
+
+.search-tag-container {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.recipies-search-tag {
+  flex: 1;
+  height: 2rem;
+  background-color: v.$color4;
+  margin-left: -2rem;
+  border: solid 2px v.$color3;
+  border-radius: 8px;
+  padding: 0.3rem;
+  padding-left: 2.5rem;  
+}
+
+.search-tag {
+  max-width: 2rem;
+  max-height: 2rem;
+  padding: 0.3rem;
+  background-color: v.$color1;
+  border-radius: 8px;
+  z-index: 3;
+}

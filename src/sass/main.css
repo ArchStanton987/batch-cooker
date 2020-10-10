@@ -100,6 +100,18 @@ button {
   justify-content: space-evenly;
 }
 
+.justifyCenter {
+  justify-content: center;
+}
+
+.alignItemsCenter {
+  align-items: center;
+}
+
+.alignContentCenter {
+  align-content: center;
+}
+
 header {
   display: flex;
   justify-content: space-between;
