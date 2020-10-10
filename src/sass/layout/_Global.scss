@@ -61,6 +61,21 @@ p {
   flex-direction: column;
 }
 
+.taglist {
+  list-style: none;
+  color: v.$color1;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 0.3rem;
+
+  li p {
+    font-size: 1.1rem;
+    font-weight: bolder;
+    padding: 0.4rem;
+  }
+}
+
 input:focus {
   box-shadow: 0px 0px 8px 1px rgba(85, 85, 85, 0.281);
 }
@@ -88,6 +103,10 @@ button {
 .flexColumn {
   display: flex;
   flex-direction: column;
+}
+
+.flex1 {
+  flex: 1;
 }
 
 .spaceBetween {

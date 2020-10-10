@@ -17,18 +17,13 @@ export default function Recipes() {
 
   const scrollableRef = useRef(null)
 
-  const toggleDrawer = () => {
-    setDrawer(prevState => !prevState)
-  }
+  const toggleDrawer = () => setDrawer(prevState => !prevState)
+  const toggleModal = () => setRecipeModal(prevState => !prevState)
 
   const handleFetchRecipes = async () => {
     const results = await fecthRecipies()
     const parsedResults = parseFetchedRecipes(results)
     setUserRecipes(parsedResults)
-  }
-
-  const toggleModal = () => {
-    setRecipeModal(prevState => !prevState)
   }
 
   const handleSearchInput = e => {
@@ -39,11 +34,6 @@ export default function Recipes() {
     searchboxSearch.value = ''
     setSearchInput('')
   }
-  // const handleEditRecipe = id => {
-  //   let ingredientData = inventory.filter(ingredient => ingredient.ingredientId === id)
-  //   setNewIngredient(ingredientData[0])
-  //   toggleModal()
-  // }
 
   useEffect(() => {
     handleFetchRecipes()
@@ -64,7 +54,7 @@ export default function Recipes() {
         <div className={isExpended ? 'collapsible' : 'collapsible retracted'}>
           <div className="search-tag-container">
             <img src={searchIcon} className="search-tag" alt="search by tag" />
-            <input type="search" className="recipies-search-tag" />
+            <input type="search" className="recipies-search-tag" placeholder="recherche par tag" />
           </div>
           <ul className="taglist">
             <li>

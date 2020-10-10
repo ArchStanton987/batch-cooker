@@ -2,18 +2,30 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import defaultImg from '../assets/images/defaultRecipe.jpg'
-import '../sass/components/_Recipe.scss'
+import '../sass/components/_RecipeCard.scss'
+import '../sass/pages/_FullRecipe.scss'
 
 export default function RecipeCard({ recipe }) {
   return (
     <>
       <Link
         className="recipe-link"
-        to={{ pathname: `/recipes/${recipe.id}`, recipe: {...recipe} }}
+        to={{ pathname: `/recipes/${recipe.id}`, recipe: { ...recipe } }}
       >
         <li className="recipe-card">
-          <h5>{recipe.name}</h5>
-          <img className="recipe_image" src={recipe.image || defaultImg} alt={recipe.name} />
+          <div className="flexColumn">
+            <h5>{recipe.name}</h5>
+            <div className="flexRow flex1 alignItemsCenter">
+              <ul className="taglist">
+                <li>#charcuterie</li>
+                <li>#saison</li>
+                <li>#été</li>
+              </ul>
+            </div>
+          </div>
+          <div className="recipe-image-container">
+            <img className="recipe-image" src={recipe.image || defaultImg} alt={recipe.name} />
+          </div>
         </li>
       </Link>
     </>

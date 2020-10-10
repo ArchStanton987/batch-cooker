@@ -1,0 +1,42 @@
+@use '../variables' as v;
+
+.recipe-link {
+  text-decoration: none;
+}
+
+.recipe-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.3rem;
+  margin: 1rem 1rem;
+  border: solid 2px v.$color3;
+  border-radius: 8px;
+  box-shadow: 1px 1px 1px 1px v.$color2;
+  background-color: v.$color6;
+  min-height: 15vh;
+  max-height: 22vh;
+
+  h5 {
+    padding-top: 0.5rem;
+    font-weight: bolder;
+  }
+
+  .taglist {
+    justify-content: flex-start;
+    li {
+      padding: 0.1rem 0.3rem;
+    }
+  }
+}
+
+.recipe-image-container {
+  padding: 0.5rem;
+  display: flex;
+  border-left: solid 2px v.$color3;
+  width: 40%;
+}
+.recipe-image {
+  margin: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
