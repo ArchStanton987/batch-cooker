@@ -13,6 +13,7 @@ export default function Recipes() {
   const [isModalActive, setRecipeModal] = useState(false)
   const [newRecipe, setNewRecipe] = useState(null)
   const [searchInput, setSearchInput] = useState('')
+  const [activeTags, setActiveTags] = useState('')
   const [isExpended, setDrawer] = useState(false)
 
   const scrollableRef = useRef(null)
@@ -22,8 +23,6 @@ export default function Recipes() {
 
   const handleFetchRecipes = async () => {
     const results = await fecthRecipies()
-    console.log(results)
-    
     const parsedResults = parseFetchedRecipes(results)
     setUserRecipes(parsedResults)
   }
@@ -67,6 +66,7 @@ export default function Recipes() {
         <ul className="recipes-list">
           {userRecipes
             .filter(recipe => recipe.name.toLowerCase().includes(searchInput.toLowerCase()))
+            // .filter(recipe => recipe.Tags.some(tag => tag.tagname === recipe.Tags))
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(recipe => {
               return <RecipeCard key={`user-recipe-${recipe.id}`} recipe={recipe} />
