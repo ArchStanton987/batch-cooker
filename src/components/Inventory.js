@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 
 import { fetchUserInventory, parseFetchedInventory } from '../lib/inventory'
+import { ingredientCategories } from '../lib/ingredientCategories'
 import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
@@ -9,19 +10,9 @@ import Searchbox from '../containers/Searchbox'
 import chevron from '../assets/icons/chevron.svg'
 
 export default function Inventory() {
-  let includeCategories = {
-    spices: { active: true, fullname: 'assaisonnements et condiments' },
-    dairy: { active: true, fullname: 'produits laitiers' },
-    meat: { active: true, fullname: 'viandes et poissons' },
-    cereal: { active: true, fullname: 'céréales et féculents' },
-    fruits: { active: true, fullname: 'fruits et légumes' },
-    sweet: { active: true, fullname: 'sucrés' },
-    other: { active: true, fullname: 'autres' }
-  }
-
   const [isExpended, setDrawer] = useState(false)
   const [isModalActive, setIngredientModal] = useState(false)
-  const [activeCategories, setActiveCategories] = useState(includeCategories)
+  const [activeCategories, setActiveCategories] = useState(ingredientCategories)
   const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
   const [searchInput, setSearchInput] = useState('')
@@ -33,7 +24,7 @@ export default function Inventory() {
   const userId = 1
 
   const handleFetchInventory = async userId => {
-    const result = await fetchUserInventory(userId)    
+    const result = await fetchUserInventory(userId)
     const parsedResult = parseFetchedInventory(result)
     setInventory(parsedResult)
   }
