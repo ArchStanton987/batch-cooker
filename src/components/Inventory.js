@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 
+import { fetchUserInventory, parseFetchedInventory } from '../lib/inventory'
 import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
@@ -31,22 +32,10 @@ export default function Inventory() {
 
   const userId = 1
 
-  const getInventory = userId => {
-    const url = `http://192.168.1.27:8000/api/inventory/user/${userId}`
-    axios.get(url).then(res => {
-      let inventory = []
-      res.data.forEach(item => {
-        let newItem = {
-          ingredientId: item.ingredientId,
-          name: item.Ingredient.name,
-          category: item.Ingredient.category,
-          quantity: item.quantity,
-          unity: item.unity
-        }
-        inventory.push(newItem)
-      })
-      setInventory(inventory)
-    })
+  const handleFetchInventory = async userId => {
+    const result = await fetchUserInventory(userId)    
+    const parsedResult = parseFetchedInventory(result)
+    setInventory(parsedResult)
   }
 
   const toggleModal = () => {
@@ -88,13 +77,13 @@ export default function Inventory() {
   const handleDeleteIngredient = id => {
     axios
       .delete(`http://192.168.1.27:8000/api/inventory/user/1/ingredients/${id}`)
-      .then(() => getInventory(userId))
+      .then(() => handleFetchInventory(userId))
   }
 
   const handleAddToInventory = newIng => {
     axios.post('http://192.168.1.27:8000/api/inventory/user/1/ingredients', newIng).then(() => {
       toggleModal()
-      getInventory(userId)
+      handleFetchInventory(userId)
     })
   }
   const handleUpdateFromInventory = newIng => {
@@ -105,7 +94,7 @@ export default function Inventory() {
       )
       .then(() => {
         toggleModal()
-        getInventory(userId)
+        handleFetchInventory(userId)
       })
   }
   const handleSubmitIngredient = (e, isUpdating) => {
@@ -121,11 +110,11 @@ export default function Inventory() {
   }
 
   useEffect(() => {
-    getInventory(userId)
+    handleFetchInventory(userId)
   }, [])
 
   return (
-    <>    
+    <>
       {isModalActive && (
         <InventoryModal
           handleSubmitIngredient={handleSubmitIngredient}
@@ -211,7 +200,7 @@ export default function Inventory() {
         scrollableRef={scrollableRef}
         handleResetSearchInput={handleResetSearchInput}
         handleSearchInput={handleSearchInput}
-        parentName={"inventory"}
+        parentName={'inventory'}
       />
     </>
   )

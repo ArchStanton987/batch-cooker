@@ -18,6 +18,21 @@ export const parseFetchedRecipe = data => {
   return data
 }
 
+export const parseFetchedRecipes = data => {
+  if (Array.isArray(data)) {
+    data.forEach(recipe => {
+      parseFetchedRecipe(recipe)
+    })
+    return data
+  }
+}
+
+export const fecthRecipies = async () => {
+  const url = `http://192.168.1.27:8000/api/recipes`
+  const res = await axios.get(url)
+  return res.data
+}
+
 export const fetchRecipe = async recipeId => {
   const url = `http://192.168.1.27:8000/api/recipes/${recipeId}`
   const res = await axios.get(url)

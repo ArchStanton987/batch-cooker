@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import defaultImg from '../assets/images/defaultRecipe.jpg'
 import '../sass/components/_Recipe.scss'
 
-export default function Recipe({ recipe }) {
+export default function RecipeCard({ recipe }) {
   return (
     <>
       <Link

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
 
-import Recipe from '../containers/RecipeCard'
+import RecipeCard from '../containers/RecipeCard'
+import { fecthRecipies, parseFetchedRecipes } from '../lib/recipies'
 import '../sass/pages/_Recipes.scss'
 import Searchbox from '../containers/Searchbox'
 
@@ -13,25 +13,10 @@ export default function Recipes() {
 
   const scrollableRef = useRef(null)
 
-  const getUserRecipes = () => {
-    const url = 'http://192.168.1.27:8000/api/recipes/users/1'
-    axios.get(url).then(res => {
-      res.data.forEach(recipe => {
-        recipe.ingredients = []
-        recipe.Ingredients.forEach(ingredient => {
-          let newIngredient = {}
-          newIngredient.recipeIng = ingredient.RecipeIng.id
-          newIngredient.name = ingredient.name
-          newIngredient.ingredientId = ingredient.RecipeIng.ingredientId
-          newIngredient.recipeId = ingredient.RecipeIng.recipeId
-          newIngredient.quantity = ingredient.RecipeIng.quantity
-          newIngredient.unity = ingredient.RecipeIng.unity
-          recipe.ingredients.push(newIngredient)
-        })
-        delete recipe.Ingredients
-      })
-      setUserRecipes(res.data)
-    })
+  const handleFetchRecipes = async () => {
+    const results = await fecthRecipies()
+    const parsedResults = parseFetchedRecipes(results)
+    setUserRecipes(parsedResults)
   }
 
   const toggleModal = () => {
@@ -53,7 +38,7 @@ export default function Recipes() {
   // }
 
   useEffect(() => {
-    getUserRecipes()
+    handleFetchRecipes()
   }, [])
 
   return (
@@ -66,7 +51,7 @@ export default function Recipes() {
             .filter(recipe => recipe.name.toLowerCase().includes(searchInput.toLowerCase()))
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(recipe => {
-              return <Recipe key={`user-recipe-${recipe.id}`} recipe={recipe} />
+              return <RecipeCard key={`user-recipe-${recipe.id}`} recipe={recipe} />
             })}
         </ul>
       </div>
