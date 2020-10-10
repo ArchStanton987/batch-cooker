@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   Recipe.init(
     {
       creatorId: { type: DataTypes.INTEGER, allowNull: false },
-      name: { type: DataTypes.STRING, allowNull: false, unique: true },
+      name: { type: DataTypes.STRING, allowNull: false },
       image: { type: DataTypes.STRING, allowNull: true },
       url: { type: DataTypes.STRING, allowNull: true, unique: true },
       content: { type: DataTypes.STRING, allowNull: true },
