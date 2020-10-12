@@ -1,4 +1,4 @@
-// test api/inventory routes
+// test api/recipe routes
 
 const request = require('supertest')
 const app = require('../server/app')

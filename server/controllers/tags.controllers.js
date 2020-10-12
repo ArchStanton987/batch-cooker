@@ -4,7 +4,7 @@ module.exports = {
   getAllTags: async (req, res) => {
     try {
       const tags = await models.Tag.findAll()
-      res.statue(200).json(tags)
+      res.status(200).json(tags)
     } catch (err) {
       res.status(500).json({ error: err })
     }
@@ -12,7 +12,7 @@ module.exports = {
   addNewTag: async (req, res) => {
     const { tagname } = req.body
     try {
-      await models.Tag.create(tagname)
+      await models.Tag.create({ tagname: tagname })
       res.status(200).json({ message: 'Tag successfully created' })
     } catch (err) {
       res.status(500).json({ error: 'Error creating tag ; ' + err })
@@ -28,11 +28,13 @@ module.exports = {
     }
   },
   updateTag: async (req, res) => {
-    const { tagId } = req.params.tagId
+    const { tagId } = req.params
     const { tagname } = req.body
     try {
       let tag = await models.Tag.findByPk(tagId)
       tag.tagname = tagname
+      console.log(tag)
+      
       await tag.save()
       res.status(200).json({ message: 'Tag successfully updated' })
     } catch (err) {
@@ -40,7 +42,7 @@ module.exports = {
     }
   },
   deleteTag: async (req, res) => {
-    const { tagId } = req.params.tagId
+    const { tagId } = req.params
     try {
       let tag = await models.Tag.findByPk(tagId)
       await tag.destroy()

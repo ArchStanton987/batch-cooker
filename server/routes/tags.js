@@ -5,6 +5,8 @@ const tagsCtrl = require('../controllers/tags.controllers')
 
 const router = express.Router()
 
+// router.use(jwtUtils.verifyToken)
+
 router.route('/').get(tagsCtrl.getAllTags)
 router.route('/').post(tagsCtrl.addNewTag)
 router.route('/:tagId').get(tagsCtrl.getTagById)
