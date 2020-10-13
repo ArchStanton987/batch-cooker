@@ -7,17 +7,20 @@
 .recipe-card {
   display: flex;
   justify-content: space-between;
-  padding: 0 0.3rem;
-  margin: 1rem 1rem;
-  border: solid 2px v.$color3;
+  margin: 1rem;
   border-radius: 8px;
-  box-shadow: 1px 1px 1px 1px v.$color2;
+  box-shadow: 2px 2px 2px 2px #b2b2b2;
   background-color: v.$color6;
   min-height: 15vh;
   max-height: 22vh;
 
+  .info {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
   h5 {
-    padding-top: 0.5rem;
     font-weight: bolder;
   }
 
@@ -30,13 +33,11 @@
 }
 
 .recipe-image-container {
-  padding: 0.5rem;
   display: flex;
-  border-left: solid 2px v.$color3;
   width: 40%;
 }
-.recipe-image {
-  margin: auto;
-  max-width: 100%;
+.recipe-card-image {
   object-fit: cover;
+  overflow: hidden;
+  border-radius: 0 8px 8px 0;
 }

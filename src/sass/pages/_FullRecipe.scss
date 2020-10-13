@@ -28,14 +28,11 @@
     text-align: left;
   }
   .recipe-img-container {
-    padding: 0.5rem;
     display: flex;
-    border-left: solid 2px v.$color3;
   }
   .recipe-img {
-    max-height: 100%;
-    max-width: 100%;
     object-fit: cover;
+    overflow: hidden;
   }
   .header-tags {
     grid-column-start: 1;

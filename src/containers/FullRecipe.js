@@ -56,11 +56,12 @@ export default function FullRecipe(props) {
           </div>
           <div className="header-tags">
             <ul className="taglist">
-              {Tags && Tags.map(tag => (
-                <li key={`fullRecipe-${tag.TagRecipe.id}`}>
-                  <p>{`#${tag.tagname}`}</p>
-                </li>
-              ))}
+              {Tags &&
+                Tags.map(tag => (
+                  <li key={`fullRecipe-${tag.TagRecipe.id}`}>
+                    <p>{`#${tag.tagname}`}</p>
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
@@ -94,9 +95,6 @@ export default function FullRecipe(props) {
           <p className="recipe-text">Il n'y a aucun avis sur cette recette pour le moment.</p>
         </div>
       </div>
-      {/* <div className>
-
-      </div> */}
     </>
   )
 }

@@ -13,7 +13,7 @@ export default function RecipeCard({ recipe }) {
         to={{ pathname: `/recipes/${recipe.id}`, recipe: { ...recipe } }}
       >
         <li className="recipe-card">
-          <div className="flexColumn">
+          <div className="info">
             <h5>{recipe.name}</h5>
             <div className="flexRow flex1 alignItemsCenter">
               <ul className="taglist">
@@ -26,7 +26,7 @@ export default function RecipeCard({ recipe }) {
             </div>
           </div>
           <div className="recipe-image-container">
-            <img className="recipe-image" src={recipe.image || defaultImg} alt={recipe.name} />
+            <img className="recipe-card-image" src={recipe.image || defaultImg} alt={recipe.name} />
           </div>
         </li>
       </Link>

@@ -10,7 +10,7 @@ module.exports = {
     }
   },
   addNewTag: async (req, res) => {
-    const { tagname } = req.body
+    const tagname = req.body.tagname.toLowerCase()
     try {
       await models.Tag.create({ tagname: tagname })
       res.status(200).json({ message: 'Tag successfully created' })
@@ -34,7 +34,6 @@ module.exports = {
       let tag = await models.Tag.findByPk(tagId)
       tag.tagname = tagname
       console.log(tag)
-      
       await tag.save()
       res.status(200).json({ message: 'Tag successfully updated' })
     } catch (err) {
