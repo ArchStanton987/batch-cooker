@@ -1,25 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
 import RecipeCard from '../containers/RecipeCard'
 import { fecthRecipies, parseFetchedRecipes } from '../lib/recipies'
-import '../sass/pages/_Recipes.scss'
 import Searchbox from '../containers/Searchbox'
 import searchIcon from '../assets/icons/search.svg'
 import chevron from '../assets/icons/chevron.svg'
+import '../sass/pages/_Recipes.scss'
 import '../sass/pages/_FullRecipe.scss'
 
 export default function Recipes() {
   const [userRecipes, setUserRecipes] = useState([])
-  const [isModalActive, setRecipeModal] = useState(false)
-  const [newRecipe, setNewRecipe] = useState(null)
   const [searchInput, setSearchInput] = useState('')
-  const [activeTags, setActiveTags] = useState('')
+  // const [activeTags, setActiveTags] = useState('')
   const [isExpended, setDrawer] = useState(false)
 
   const scrollableRef = useRef(null)
 
   const toggleDrawer = () => setDrawer(prevState => !prevState)
-  const toggleModal = () => setRecipeModal(prevState => !prevState)
 
   const handleFetchRecipes = async () => {
     const results = await fecthRecipies()
@@ -57,8 +55,7 @@ export default function Recipes() {
             <img src={searchIcon} className="search-tag" alt="search by tag" />
             <input type="search" className="recipies-search-tag" placeholder="recherche par tag" />
           </div>
-          <ul className="taglist">
-          </ul>
+          <ul className="taglist"></ul>
         </div>
       </div>
       <div ref={scrollableRef} className="recipes section-container">
@@ -73,8 +70,10 @@ export default function Recipes() {
             })}
         </ul>
       </div>
+      <Link to={{ pathname: '/recipes/new/1' }}>
+        <button>Ajouter</button>
+      </Link>
       <Searchbox
-        toggleModal={toggleModal}
         scrollableRef={scrollableRef}
         handleResetSearchInput={handleResetSearchInput}
         handleSearchInput={handleSearchInput}

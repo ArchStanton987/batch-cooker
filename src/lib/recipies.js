@@ -38,3 +38,9 @@ export const fetchRecipe = async recipeId => {
   const res = await axios.get(url)
   return res.data
 }
+
+export const postNewRecipe = async recipe => {
+  const url = `http://192.168.1.27:8000/api/recipes`
+  const res = await axios.post(url, recipe)
+  return res.data
+}
