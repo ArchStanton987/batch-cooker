@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import '../sass/pages/_newRecipe.scss'
 import minusIcon from '../assets/icons/minus.svg'
@@ -22,6 +22,7 @@ export default function NewRecipe() {
   const [newRecipe, setNewRecipe] = useState(initialValue)
   const [ingredients, setIngredients] = useState([{ ...defaultIngredient }])
   const [tags, setTags] = useState([{ ...defaultTag }])
+  const [recipeSubmit, setRecipeSubmit] = useState(false)
 
   // ingredient handlers
   const addIngredient = () => {
@@ -88,14 +89,20 @@ export default function NewRecipe() {
   }
   const handleRecipeSubmit = async e => {
     e.preventDefault()
-    const response = await postNewRecipe(newRecipe)
-    const newRecipeId = response.recipeId
-    handleIngredientsSubmit(newRecipeId, ingredients)
-    handleTagsSubmit(newRecipeId, tags)
+    try {
+      const response = await postNewRecipe(newRecipe)
+      const newRecipeId = response.recipeId
+      await handleIngredientsSubmit(newRecipeId, ingredients)
+      await handleTagsSubmit(newRecipeId, tags)
+      setTimeout(() => setRecipeSubmit(true), 500)
+    } catch (err) {
+      return <p>ERROR</p>
+    }
   }
 
   return (
     <>
+      {recipeSubmit && <Redirect to="/recipes" />}
       <div className="new-recipe">
         <h2>Création de recette</h2>
         <form onSubmit={handleRecipeSubmit} className="new-recipe-form" method="post">
@@ -154,7 +161,7 @@ export default function NewRecipe() {
             <ul className="flexColumn justifyCenter">
               {ingredients.map((ingredient, i) => {
                 return (
-                  <li className="recipe-form--ingredient-container">
+                  <li key={`new-ingredient-${i + 1}`} className="recipe-form--ingredient-container">
                     <p className="ingredient-number">{`Ingredient #${i + 1}`}</p>
                     <select
                       className="recipe-form--category"
