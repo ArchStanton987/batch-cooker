@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 
-import '../sass/pages/_newRecipe.scss'
+import '../sass/pages/_NewRecipe.scss'
 import minusIcon from '../assets/icons/minus.svg'
 import plusIcon from '../assets/icons/plus.svg'
 import { postNewIngredient, postNewRecipe, postNewTag } from '../lib/recipies'
@@ -103,7 +103,7 @@ export default function NewRecipe() {
   return (
     <>
       {recipeSubmit && <Redirect to="/recipes" />}
-      <div className="new-recipe">
+      <div className="new-recipe page">
         <h2>Création de recette</h2>
         <form onSubmit={handleRecipeSubmit} className="new-recipe-form" method="post">
           <div className="new-recipe section-container">

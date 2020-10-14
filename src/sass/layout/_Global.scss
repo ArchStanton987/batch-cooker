@@ -53,6 +53,14 @@ p {
   font-size: 1rem;
 }
 
+.page {
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: auto;
+}
+
 .section-container {
   margin: 0.25rem 0;
   border: solid 2px v.$color3;
