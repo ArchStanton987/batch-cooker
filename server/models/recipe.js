@@ -3,9 +3,10 @@ module.exports = (sequelize, DataTypes) => {
   class Recipe extends Model {
     static associate(models) {
       Recipe.belongsToMany(models.Ingredient, { through: models.RecipeIng })
-      Recipe.belongsToMany(models.Tag, { through: models.TagRecipe })
+      Recipe.belongsToMany(models.Tag, { through: models.TagRecipe, foreignKey: 'recipeId' })
       Recipe.belongsTo(models.User, { foreignKey: 'creatorId' })
       Recipe.hasMany(models.RecipeIng, { onDelete: 'CASCADE' })
+      Recipe.hasMany(models.TagRecipe, { onDelete: 'CASCADE' })
     }
   }
   Recipe.init(

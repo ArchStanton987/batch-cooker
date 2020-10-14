@@ -48,4 +48,11 @@ export const postNewRecipe = async recipe => {
 export const postNewIngredient = async (recipeId, ingredient) => {
   const url = `http://192.168.1.27:8000/api/recipes/${recipeId}/ingredients`
   const res = await axios.post(url, ingredient)
+  return res.data
+}
+
+export const postNewTag = async (recipeId, tag) => {
+  const url = `http://192.168.1.27:8000/api/recipes/${recipeId}/tags`
+  const res = await axios.post(url, tag)
+  return res.data
 }

@@ -2,7 +2,8 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class TagRecipe extends Model {
     static associate(models) {
-      // define association here
+      TagRecipe.belongsTo(models.Tag, { foreignKey: 'tagId' })
+      TagRecipe.belongsTo(models.Recipe, { foreignKey: 'recipeId' })
     }
   }
   TagRecipe.init(

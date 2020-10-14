@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import '../sass/pages/_newRecipe.scss'
 import minusIcon from '../assets/icons/minus.svg'
 import plusIcon from '../assets/icons/plus.svg'
-import { postNewRecipe } from '../lib/recipies'
+import { postNewIngredient, postNewRecipe, postNewTag } from '../lib/recipies'
 
 export default function NewRecipe() {
   const initialValue = {
@@ -58,7 +58,26 @@ export default function NewRecipe() {
     setTags(tagList)
   }
 
-  const handleSubmitIngredient = () => {}
+  const handleIngredientsSubmit = async (recipeId, ingredients) => {
+    ingredients.forEach(async ingredient => {
+      try {
+        const response = await postNewIngredient(recipeId, ingredient)
+        console.log(response)
+      } catch (err) {
+        return <p>Erreur en enregistrant le {ingredient}</p>
+      }
+    })
+  }
+  const handleTagsSubmit = async (recipeId, tags) => {
+    tags.forEach(async tag => {
+      try {
+        const response = await postNewTag(recipeId, tag)
+        console.log(response)
+      } catch (err) {
+        return <p>Erreur en enregistrant le tag {tag}</p>
+      }
+    })
+  }
 
   // Recipe handlers
   const handleChangeNewRecipe = e => {
@@ -67,19 +86,19 @@ export default function NewRecipe() {
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
-  const handleSubmitRecipe = async e => {
+  const handleRecipeSubmit = async e => {
     e.preventDefault()
     const response = await postNewRecipe(newRecipe)
     const newRecipeId = response.recipeId
-
-    ingredients.forEach(ingredient => {})
+    handleIngredientsSubmit(newRecipeId, ingredients)
+    handleTagsSubmit(newRecipeId, tags)
   }
 
   return (
     <>
       <div className="new-recipe">
         <h2>Création de recette</h2>
-        <form onSubmit={handleSubmitRecipe} className="new-recipe-form" method="post">
+        <form onSubmit={handleRecipeSubmit} className="new-recipe-form" method="post">
           <div className="new-recipe section-container">
             <h3>Votre recette</h3>
             <label className="recipe-form--label" htmlFor="name">
@@ -158,10 +177,7 @@ export default function NewRecipe() {
                     <label className="ingredient-label" htmlFor={`ingredient-name-${i}`}>
                       <p>Nom</p>
                     </label>
-                    <label
-                      className="ingredient-label"
-                      htmlFor={`ingredient-quantity-${i}`}
-                    >
+                    <label className="ingredient-label" htmlFor={`ingredient-quantity-${i}`}>
                       <p>Quantité</p>
                     </label>
                     <label className="ingredient-label" htmlFor={`ingredient-unity-${i}`}>
@@ -174,6 +190,7 @@ export default function NewRecipe() {
                       type="text"
                       name="name"
                       id={`ingredient-name-${i}`}
+                      required
                     />
                     <input
                       className="ingredient-input--quantity"
@@ -182,6 +199,7 @@ export default function NewRecipe() {
                       type="number"
                       name="quantity"
                       id={`ingredient-quantity-${i}`}
+                      required
                     />
                     <input
                       className="ingredient-input--unity"

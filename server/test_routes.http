@@ -65,6 +65,14 @@ Content-Type: application/json
 }
 ###
 
+POST http://localhost:8000/api/recipes/1/tags
+Content-Type: application/json
+
+{
+    "tagname": "tralala" 
+}
+###
+
 GET http://localhost:8000/api/recipes/8/ingredients/10
 
 ###

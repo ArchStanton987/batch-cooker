@@ -20,5 +20,9 @@ router.route('/:recipeId/ingredients/:ingredientId').get(recipesCtrl.getIngredie
 router.route('/:recipeId/ingredients/:ingredientId').put(recipesCtrl.updateIngredientFromRecipe)
 router.route('/:recipeId/ingredients/:ingredientId').delete(recipesCtrl.deleteIngredientFromRecipe)
 
+router.route('/:recipeId/tags').post(recipesCtrl.addTagInRecipe)
+router.route('/:recipeId/tags/:tagId').get(recipesCtrl.getTagFromRecipe)
+router.route('/:recipeId/tags/:tagId').put(recipesCtrl.updateTagFromRecipe)
+router.route('/:recipeId/tags/:tagId').delete(recipesCtrl.deleteTagFromRecipe)
 
 module.exports = router

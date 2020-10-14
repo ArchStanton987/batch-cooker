@@ -94,8 +94,6 @@ module.exports = {
     }
   },
   addIngredientInRecipe: async (req, res) => {
-    // TO DO : handle if ingredient if already in recipe
-
     const recipeId = parseInt(req.params.recipeId, 10)
     const { name, category, quantity, unity } = req.body
     const newIngredient = { name: name, category: category }
@@ -144,8 +142,6 @@ module.exports = {
     }
   },
   updateIngredientFromRecipe: async (req, res) => {
-    // TO DO : handle if ingredient if already in recipe
-
     const { recipeId, ingredientId } = req.params
     const { quantity, unity } = req.body
     try {
@@ -179,5 +175,41 @@ module.exports = {
     } catch (err) {
       res.status(500).json(err)
     }
-  }
+  },
+  addTagInRecipe: async (req, res) => {
+    const recipeId = parseInt(req.params.recipeId, 10)
+    const { tagname } = req.body
+    const newTag = { tagname: tagname }
+
+    const tagExists = await models.Tag.findOne({
+      where: { tagname: tagname }
+    })
+    if (!tagExists) {
+      try {
+        let createdTag = await models.Tag.create(newTag)
+        newTag.id = createdTag.id
+      } catch (err) {
+        res.status(500).json({ error: 'Error creating the tag : ' + err })
+        return
+      }
+    }
+    if (tagExists) {
+      newTag.id = tagExists.id
+    }
+    try {
+      let newTagRecipe = await models.TagRecipe.create({
+        tagId: newTag.id,
+        recipeId: recipeId
+      })
+      res.status(200).json({
+        message: 'Tag successfully associated with recipe',
+        tagRecipe: newTagRecipe.id
+      })
+    } catch (err) {
+      res.status(500).json({ error: 'Error associating tag to recipe : ' + err })
+    }
+  },
+  getTagFromRecipe: async (req, res) => {},
+  updateTagFromRecipe: async (req, res) => {},
+  deleteTagFromRecipe: async (req, res) => {}
 }
