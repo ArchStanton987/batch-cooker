@@ -11,8 +11,6 @@
   border-radius: 8px;
   box-shadow: 2px 2px 2px 2px #b2b2b2;
   background-color: v.$color6;
-  min-height: 15vh;
-  max-height: 22vh;
 
   .info {
     display: flex;
@@ -35,6 +33,7 @@
 .recipe-image-container {
   display: flex;
   width: 40%;
+  max-height: 20vh;
 }
 .recipe-card-image {
   object-fit: cover;
