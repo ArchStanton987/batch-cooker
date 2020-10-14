@@ -70,7 +70,7 @@ export default function Recipes() {
             })}
         </ul>
       </div>
-      <Link to={{ pathname: '/recipes/new/1' }}>
+      <Link to={{ pathname: '/recipes/new' }}>
         <button>Ajouter</button>
       </Link>
       <Searchbox

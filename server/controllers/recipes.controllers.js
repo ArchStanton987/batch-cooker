@@ -21,10 +21,11 @@ module.exports = {
     const existingRecipe = await models.Recipe.findOne({ where: { name: name } })
     if (existingRecipe) {
       res.status(500).json({ error: 'Recipe name already existing' })
+      return
     }
     try {
-      await models.Recipe.create(newRecipe)
-      res.status(200).json({ message: 'Recipe successfully created' })
+      const createdRecipe = await models.Recipe.create(newRecipe)
+      res.status(200).json({ message: 'Recipe successfully created', recipeId: createdRecipe.id })
     } catch (err) {
       res.status(500).json({ error: err + ' ; error when creating recipe' })
     }

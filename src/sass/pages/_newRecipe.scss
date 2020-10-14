@@ -4,17 +4,21 @@
   height: 100%;
   overflow: scroll;
 
-  label {
-    margin: 0.25rem 1rem 0;
+  .recipe-form--label,
+  .recipe-form--input,
+  textarea {
+    margin: 0 1rem;
   }
-  .input-type-button {
-    width: 2rem;
-    border-radius: 50%;
+  .recipe-form--label {
+    margin-top: 0.25rem;
+  }
+  .recipe-form--input,
+  textarea {
+    margin-bottom: 0.5rem;
   }
   input,
   textarea {
-    margin: 0 1rem 0.25rem;
-    padding: 0.3rem;
+    padding: 0.1rem;
   }
   textarea {
     min-height: 25vh;
@@ -34,11 +38,71 @@
   flex: 1;
 }
 
+.recipe-form--ingredient-container {
+  margin: 0.5rem 0.5rem;
+  display: grid;
+  grid-template-columns: 6fr 2fr 2fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 0 8px;
+  grid-template-areas:
+    'ingredient-number ingredient-number ingredient-number ingredient-number'
+    'ingredient-label--name ingredient-label--quantity ingredient-label--unity x'
+    'ingredient-input--name ingredient-input--quantity ingredient-input--unity remove-element-btn';
+}
+.ingredient-number {
+  grid-area: ingredient-number;
+}
+.ingredient-input--name {
+  grid-area: ingredient-input--name;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1;
+}
+.ingredient-input--quantity {
+  grid-area: ingredient-input--quantity;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.ingredient-input--unity {
+  grid-area: ingredient-input--unity;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
 .remove-element-btn {
+  grid-area: remove-element-btn;
+  align-self: center;
   border-radius: 50%;
   border: solid 2px v.$color1;
   max-height: 2rem;
   max-width: 2rem;
   padding: 0.2rem;
+  &.tag {
+    margin: 0 0.5rem;
+  }
+}
+.new-recipe--add-icon {
+  max-height: 2.5rem;
+  max-width: 2.5rem;
+  padding: 0.3rem;
+  margin: 0.5rem 0;
+  align-self: center;
+  background-color: v.$color1;
+  border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+  }
+}
 
+.recipe-form--tag-container {
+  display: flex;
+  flex-direction: column;
+
+}
+.recipe-form--tag-input {
+  flex: 1;
+  margin: 0 0 0 1rem;
 }

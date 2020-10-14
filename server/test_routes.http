@@ -34,15 +34,15 @@ Content-Type: application/json
 }
 ###
 
-PUT http://localhost:8000/api/recipes/8
+POST http://localhost:8000/api/recipes
 Content-Type: application/json
 
 {
     "creatorId": 2,
-    "name": "test update !",
+    "name": "test retour id",
     "image": null,
     "url": null,
-    "content": "Recette pour tester l'update "
+    "content": "Recette pour tester le retour id "
 }
 ###
 
