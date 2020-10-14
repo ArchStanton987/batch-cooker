@@ -45,12 +45,15 @@
   grid-template-rows: auto auto auto;
   gap: 0 8px;
   grid-template-areas:
-    'ingredient-number ingredient-number ingredient-number ingredient-number'
+    'ingredient-number recipe-form--category recipe-form--category recipe-form--category'
     'ingredient-label--name ingredient-label--quantity ingredient-label--unity x'
     'ingredient-input--name ingredient-input--quantity ingredient-input--unity remove-element-btn';
 }
 .ingredient-number {
   grid-area: ingredient-number;
+}
+.recipe-form--category {
+  grid-area: recipe-form--category;
 }
 .ingredient-input--name {
   grid-area: ingredient-input--name;
@@ -105,4 +108,8 @@
 .recipe-form--tag-input {
   flex: 1;
   margin: 0 0 0 1rem;
+}
+
+.ingredient-label {
+  margin-top: 0.5rem;
 }

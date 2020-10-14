@@ -16,7 +16,7 @@ export default function NewRecipe() {
     guests: null
   }
 
-  const defaultIngredient = { name: '' }
+  const defaultIngredient = { name: '', category: '', quantity: 0, unity: '' }
   const defaultTag = { tagname: '' }
 
   const [newRecipe, setNewRecipe] = useState(initialValue)
@@ -35,8 +35,9 @@ export default function NewRecipe() {
     setIngredients(ingredientList)
   }
   const handleIngredientChange = (e, index) => {
+    const { name, value } = e.currentTarget
     const ingredientList = [...ingredients]
-    ingredientList[index].name = e.currentTarget.value
+    ingredientList[index][name] = value
     setIngredients(ingredientList)
   }
 
@@ -57,6 +58,8 @@ export default function NewRecipe() {
     setTags(tagList)
   }
 
+  const handleSubmitIngredient = () => {}
+
   // Recipe handlers
   const handleChangeNewRecipe = e => {
     setNewRecipe({
@@ -69,9 +72,7 @@ export default function NewRecipe() {
     const response = await postNewRecipe(newRecipe)
     const newRecipeId = response.recipeId
 
-    // ingredients.forEach(ingredient => {
-
-    // })
+    ingredients.forEach(ingredient => {})
   }
 
   return (
@@ -136,16 +137,34 @@ export default function NewRecipe() {
                 return (
                   <li className="recipe-form--ingredient-container">
                     <p className="ingredient-number">{`Ingredient #${i + 1}`}</p>
-                    <label className="ingredient-label--name" htmlFor={`ingredient-name-${i}`}>
+                    <select
+                      className="recipe-form--category"
+                      onChange={e => handleIngredientChange(e, i)}
+                      id="category"
+                      name="category"
+                      required
+                    >
+                      <option value="">Catégorie</option>
+                      <option value="fruits et légumes">fruits et légumes</option>
+                      <option value="viandes et poissons">viandes et poissons</option>
+                      <option value="produits laitiers">produits laitiers</option>
+                      <option value="assaisonnements et condiments">
+                        assaisonnements et condiments
+                      </option>
+                      <option value="céréales et féculents">céréales et féculents</option>
+                      <option value="sucrés">sucrés</option>
+                      <option value="autres">autres</option>
+                    </select>
+                    <label className="ingredient-label" htmlFor={`ingredient-name-${i}`}>
                       <p>Nom</p>
                     </label>
                     <label
-                      className="ingredient-label--quantity"
+                      className="ingredient-label"
                       htmlFor={`ingredient-quantity-${i}`}
                     >
                       <p>Quantité</p>
                     </label>
-                    <label className="ingredient-label--unity" htmlFor={`ingredient-unity-${i}`}>
+                    <label className="ingredient-label" htmlFor={`ingredient-unity-${i}`}>
                       <p>Unité</p>
                     </label>
                     <input
@@ -153,7 +172,7 @@ export default function NewRecipe() {
                       value={ingredient.name}
                       onChange={e => handleIngredientChange(e, i)}
                       type="text"
-                      name={`ingredient-name-${i}`}
+                      name="name"
                       id={`ingredient-name-${i}`}
                     />
                     <input
@@ -161,7 +180,7 @@ export default function NewRecipe() {
                       value={ingredient.quantity}
                       onChange={e => handleIngredientChange(e, i)}
                       type="number"
-                      name={`ingredient-quantity-${i}`}
+                      name="quantity"
                       id={`ingredient-quantity-${i}`}
                     />
                     <input
@@ -169,7 +188,7 @@ export default function NewRecipe() {
                       value={ingredient.unity}
                       onChange={e => handleIngredientChange(e, i)}
                       type="text"
-                      name={`ingredient-unity-${i}`}
+                      name="unity"
                       id={`ingredient-unity-${i}`}
                     />
                     {
