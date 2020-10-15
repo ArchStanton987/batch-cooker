@@ -119,6 +119,10 @@ label {
   color: #516f9b;
 }
 
+.marginAuto {
+  margin: auto;
+}
+
 .flexRow {
   display: flex;
   flex-direction: row;

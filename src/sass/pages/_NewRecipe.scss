@@ -1,10 +1,6 @@
 @use '../variables' as v;
 
 .new-recipe {
-  // height: 100%;
-  overflow: scroll;
-  margin: 0.5rem 0.5rem;
-
   .recipe-form--label,
   .recipe-form--input,
   textarea {

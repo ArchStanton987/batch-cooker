@@ -1,11 +1,5 @@
 @use '../variables' as v;
 
-.full-recipe {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
 .section-container {
   &.recipe-header {
     display: grid;

@@ -34,7 +34,7 @@ export default function Menu({ toggleFunction, setMenu, isSideMenuActive }) {
         <Link onClick={() => toggleFunction(setMenu)} to="/recipes">
           <li>
             <img className="sidemenu_icon" src={recipesIcon} alt="recipes" />
-            Recettes
+            Mes recettes
           </li>
         </Link>
         <Link onClick={() => toggleFunction(setMenu)} to="/inventory">

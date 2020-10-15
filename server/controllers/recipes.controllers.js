@@ -178,7 +178,7 @@ module.exports = {
   },
   addTagInRecipe: async (req, res) => {
     const recipeId = parseInt(req.params.recipeId, 10)
-    const { tagname } = req.body
+    const tagname = req.body.tagname.toLowerCase()
     const newTag = { tagname: tagname }
 
     const tagExists = await models.Tag.findOne({
