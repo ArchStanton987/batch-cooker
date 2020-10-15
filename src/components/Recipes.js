@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom'
 
 import RecipeCard from '../containers/RecipeCard'
 import { fecthRecipies, parseFetchedRecipes } from '../lib/recipies'
-import Searchbox from '../containers/Searchbox'
 import searchIcon from '../assets/icons/search.svg'
 import chevron from '../assets/icons/chevron.svg'
-import plusIcon from '../assets/icons/plus.svg'
 import '../sass/pages/_Recipes.scss'
 import '../sass/pages/_FullRecipe.scss'
 
 export default function Recipes() {
+  // const defaultTagFilter = { tagname: '' }
+
   const [userRecipes, setUserRecipes] = useState([])
   const [searchInput, setSearchInput] = useState('')
-  // const [activeTags, setActiveTags] = useState('')
   const [isExpended, setDrawer] = useState(false)
 
   const scrollableRef = useRef(null)
@@ -29,11 +28,6 @@ export default function Recipes() {
   const handleSearchInput = e => {
     setSearchInput(e.currentTarget.value)
   }
-  const handleResetSearchInput = () => {
-    const searchboxSearch = document.getElementById('recipes-searchbox_search') || {}
-    searchboxSearch.value = ''
-    setSearchInput('')
-  }
 
   useEffect(() => {
     handleFetchRecipes()
@@ -48,7 +42,6 @@ export default function Recipes() {
           <ul className="recipes-list">
             {userRecipes
               .filter(recipe => recipe.name.toLowerCase().includes(searchInput.toLowerCase()))
-              // .filter(recipe => recipe.Tags.some(tag => tag.tagname === recipe.Tags))
               .sort((a, b) => a.name.localeCompare(b.name))
               .map(recipe => {
                 return <RecipeCard key={`user-recipe-${recipe.id}`} recipe={recipe} />
@@ -68,12 +61,12 @@ export default function Recipes() {
             <div className="search-tag-container">
               <img src={searchIcon} className="search-tag" alt="search by tag" />
               <input
+                onChange={handleSearchInput}
                 type="search"
                 className="recipies-search-tag"
-                placeholder="recherche par tag"
+                placeholder="recherche par nom"
               />
             </div>
-            <ul className="taglist"></ul>
           </div>
         </div>
         <Link className="marginAuto" to={{ pathname: '/recipes/new' }}>
@@ -94,14 +87,6 @@ export default function Recipes() {
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </Link>
-
-        {/* <Searchbox
-          scrollableRef={scrollableRef}
-          handleResetSearchInput={handleResetSearchInput}
-          handleSearchInput={handleSearchInput}
-          parentName={'recipes'}
-          placeholder={'recherche par nom'}
-        /> */}
       </div>
     </>
   )
