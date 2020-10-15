@@ -1,0 +1,23 @@
+@use '../variables' as v;
+
+.dynform--tag-container {
+  display: flex;
+  flex-direction: column;
+}
+.recipe-form--tag-input {
+  flex: 1;
+  margin: 0 0 0 1rem;
+}
+
+.remove-element-btn {
+  grid-area: remove-element-btn;
+  align-self: center;
+  border-radius: 50%;
+  border: solid 2px v.$color1;
+  max-height: 2rem;
+  max-width: 2rem;
+  padding: 0.2rem;
+  &.tag {
+    margin: 0 0.5rem;
+  }
+}

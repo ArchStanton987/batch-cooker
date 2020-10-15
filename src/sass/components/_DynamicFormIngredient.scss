@@ -1,0 +1,51 @@
+@use '../variables' as v;
+
+.dynform--ingdt-container {
+  margin: 0.5rem 0.5rem;
+  display: grid;
+  grid-template-columns: 6fr 2fr 2fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 0 8px;
+  grid-template-areas:
+    'ingredient-number ingdt--category ingdt--category ingdt--category'
+    'ingredient-label--name ingredient-label--quantity ingredient-label--unity x'
+    'ingdt-input--name ingdt-input--quantity ingdt-input--unity remove-element-btn';
+}
+.ingredient-number {
+  grid-area: ingredient-number;
+}
+.ingdt--category {
+  grid-area: ingdt--category;
+}
+.ingdt-label {
+  margin-top: 0.5rem;
+}
+.ingdt-input--name {
+  grid-area: ingdt-input--name;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1;
+}
+.ingdt-input--quantity {
+  grid-area: ingdt-input--quantity;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.ingdt-input--unity {
+  grid-area: ingdt-input--unity;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.remove-element-btn {
+  grid-area: remove-element-btn;
+  align-self: center;
+  border-radius: 50%;
+  border: solid 2px v.$color1;
+  max-height: 2rem;
+  max-width: 2rem;
+  padding: 0.2rem;
+}

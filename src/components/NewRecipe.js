@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 
 import '../sass/pages/_NewRecipe.scss'
-import minusIcon from '../assets/icons/minus.svg'
 import plusIcon from '../assets/icons/plus.svg'
 import { postNewIngredient, postNewRecipe, postNewTag } from '../lib/recipies'
+import DynamicFormIngredient from './DynamicFormIngredient'
+import DynamicFormTags from './DynamicFormTags'
 
 export default function NewRecipe() {
   const initialValue = {
@@ -161,70 +162,13 @@ export default function NewRecipe() {
             <ul className="flexColumn justifyCenter">
               {ingredients.map((ingredient, i) => {
                 return (
-                  <li key={`new-ingredient-${i + 1}`} className="recipe-form--ingredient-container">
-                    <p className="ingredient-number">{`Ingredient #${i + 1}`}</p>
-                    <select
-                      className="recipe-form--category"
-                      onChange={e => handleIngredientChange(e, i)}
-                      id="category"
-                      name="category"
-                      required
-                    >
-                      <option value="">Catégorie</option>
-                      <option value="fruits et légumes">fruits et légumes</option>
-                      <option value="viandes et poissons">viandes et poissons</option>
-                      <option value="produits laitiers">produits laitiers</option>
-                      <option value="assaisonnements et condiments">
-                        assaisonnements et condiments
-                      </option>
-                      <option value="céréales et féculents">céréales et féculents</option>
-                      <option value="sucrés">sucrés</option>
-                      <option value="autres">autres</option>
-                    </select>
-                    <label className="ingredient-label" htmlFor={`ingredient-name-${i}`}>
-                      <p>Nom</p>
-                    </label>
-                    <label className="ingredient-label" htmlFor={`ingredient-quantity-${i}`}>
-                      <p>Quantité</p>
-                    </label>
-                    <label className="ingredient-label" htmlFor={`ingredient-unity-${i}`}>
-                      <p>Unité</p>
-                    </label>
-                    <input
-                      className="ingredient-input--name"
-                      value={ingredient.name}
-                      onChange={e => handleIngredientChange(e, i)}
-                      type="text"
-                      name="name"
-                      id={`ingredient-name-${i}`}
-                      required
-                    />
-                    <input
-                      className="ingredient-input--quantity"
-                      value={ingredient.quantity}
-                      onChange={e => handleIngredientChange(e, i)}
-                      type="number"
-                      name="quantity"
-                      id={`ingredient-quantity-${i}`}
-                      required
-                    />
-                    <input
-                      className="ingredient-input--unity"
-                      value={ingredient.unity}
-                      onChange={e => handleIngredientChange(e, i)}
-                      type="text"
-                      name="unity"
-                      id={`ingredient-unity-${i}`}
-                    />
-                    {
-                      <img
-                        className="remove-element-btn"
-                        onClick={() => removeIngredient(i)}
-                        src={minusIcon}
-                        alt={`remove ingredient ${i}`}
-                      />
-                    }
-                  </li>
+                  <DynamicFormIngredient
+                    key={`new-ingredient-${i + 1}`}
+                    handleIngredientChange={handleIngredientChange}
+                    removeIngredient={removeIngredient}
+                    ingredient={ingredient}
+                    index={i}
+                  />
                 )
               })}
             </ul>
@@ -238,33 +182,15 @@ export default function NewRecipe() {
           <div className="new-recipe section-container">
             <h3>Associer des tags (maximum : 4)</h3>
             <ul>
-              {tags.map((tag, i) => {
-                return (
-                  <li className="recipe-form--tag-container" key={`tag-${i}`}>
-                    <label className="recipe-form--label">
-                      <p>{`Tag #${i + 1}`}</p>
-                    </label>
-                    <div className="flexRow alignItemsCenter">
-                      <input
-                        className="recipe-form--tag-input"
-                        value={tag.tagname}
-                        onChange={e => handleTagChange(e, i)}
-                        type="text"
-                        name={`tag-${i}`}
-                        id={`tag-${i}`}
-                      />
-                      {
-                        <img
-                          className="remove-element-btn tag"
-                          onClick={() => removeTag(i)}
-                          src={minusIcon}
-                          alt={`remove tag ${i}`}
-                        />
-                      }
-                    </div>
-                  </li>
-                )
-              })}
+              {tags.map((tag, i) => (
+                <DynamicFormTags
+                  key={`tag-${i}`}
+                  tag={tag}
+                  index={i}
+                  handleTagChange={handleTagChange}
+                  removeTag={removeTag}
+                />
+              ))}
             </ul>
             <img className="new-recipe--add-icon" src={plusIcon} alt="add tag" onClick={addTag} />
           </div>
