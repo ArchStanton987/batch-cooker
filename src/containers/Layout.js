@@ -3,7 +3,7 @@ import Div100vh from 'react-div-100vh'
 
 import Header from './Header'
 import Main from './Main'
-import Menu from './Menu'
+import Sidemenu from './Sidemenu'
 import '../sass/layout/_Layout.scss'
 
 export default function Layout() {
@@ -15,7 +15,7 @@ export default function Layout() {
     <Div100vh>
       <div className="global-layout">
         <Header toggleFunction={toggleFunction} setMenu={setMenu} />
-        <Menu
+        <Sidemenu
           toggleFunction={toggleFunction}
           setMenu={setMenu}
           isSideMenuActive={isSideMenuActive}

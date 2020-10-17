@@ -53,6 +53,26 @@ p {
   font-size: 1rem;
 }
 
+ul {
+  list-style: none;
+}
+
+@media screen and (min-width: v.$bp1-min) {
+  .mobile-only {
+    display: none;
+  }
+}
+@media screen and (max-width: v.$bp1-min) {
+  .desktop-only {
+    display: none;
+  }
+}
+.icon {
+  cursor: pointer;
+  height: 2rem;
+  width: 2rem;
+}
+
 .page {
   padding: 0.5rem 0.5rem;
   display: flex;
@@ -84,7 +104,8 @@ p {
   }
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   box-shadow: 0px 0px 8px 1px rgba(85, 85, 85, 0.281);
 }
 

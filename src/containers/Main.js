@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import Home from '../components/Home'
-import Calendar from '../components/Calendar'
+import Menu from '../components/Menu'
 import FullRecipe from '../containers/FullRecipe'
 import NewRecipe from '../components/NewRecipe'
 import Recipes from '../components/Recipes'
@@ -15,12 +15,13 @@ export default function Main() {
     <main className="main-layout">
       <Switch>
         <Route exact path="/" render={() => <Home />} />
+        <Route path="/home" render={() => <Home />} />
         <Route path="/inventory" render={() => <Inventory />} />
         <Route path="/recipes/new" render={props => <NewRecipe {...props} />} />
         <Route path="/recipes/:id" render={props => <FullRecipe {...props} />} />
         <Route path="/recipes" render={() => <Recipes />} />
         <Route path="/shoplist" render={() => <Shoplist />} />
-        <Route path="/calendar" render={() => <Calendar />} />
+        <Route path="/menu" render={() => <Menu />} />
       </Switch>
     </main>
   )

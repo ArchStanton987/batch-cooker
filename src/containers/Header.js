@@ -6,7 +6,7 @@ import '../sass/layout/_Header.scss'
 
 export default function Header({ toggleFunction, setMenu }) {
   return (
-    <header className="header">
+    <header className="header mobile-only">
       <Link id="homeIcon-link" to="/">
         <img className="header_icon" src={homeIcon} alt="home" />
       </Link>

@@ -21,46 +21,65 @@
   }
 }
 
-.sidemenu_close-icon {
-  cursor: pointer;
-  margin-left: auto;
-  height: 2rem;
-  width: 2rem;
+@media screen and (min-width: v.$bp1-min) {
+  .sidemenu {
+    position: fixed;
+    left: 0;
+    width: 20vw;
+    min-width: 250px;
+    max-width: 300px;
+    &.inactive,
+    &.active {
+      transform: translateX(0px);
+      transition: transform 0.4s ease-in-out;
+    }
+  }
 }
 
-.sidemenu_list {
-  list-style: none;
-  margin: 0 0 1rem;
+.sidemenu--close-icon {
+  margin-left: auto;
+}
 
+@media screen and (max-width: v.$bp1-max) {
+  .sidemenu--title {
+    margin-top: auto;
+  }
+}
+
+.sidemenu--hr {
+  margin: 1rem 0;
+  color: v.$color2;
+}
+
+.sidemenu--username {
+  color: v.$color2;
+}
+
+.sidemenu--navlist {
   a {
     text-decoration: none;
   }
-
   li {
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-family: v.$h2-font;
-    font-size: 1rem;
-    color: v.$color2;
     padding: 0.5rem;
     background-color: v.$color4;
     border-radius: 8px;
     margin: 1rem 0;
   }
+  h2 {
+    background-color: v.$color4;
+    color: v.$color2;
+    font-size: 1rem;
+  }
 }
 
-.sidemenu_icon {
-  max-height: 2rem;
-  max-width: 2rem;
+.sidemenu--icon {
   margin-right: 1rem;
 }
 
-.sidemenu_hr {
-  color: v.$color2;
-}
-
-.sidemenu_title {
-  margin-top: auto;
-  border-top: solid 1px v.$color2;
+.active-link li {
+  box-shadow: 0px 0px 4px 1px v.$color2;
+  transition: box-shadow 0.15s ease-out ;
 }
