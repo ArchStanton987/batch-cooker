@@ -191,12 +191,6 @@ header {
   padding: 0 1rem;
 }
 
-.header_icon {
-  cursor: pointer;
-  max-height: 2rem;
-  max-width: 2rem;
-}
-
 .global-layout {
   min-height: 450px;
   height: 100%;

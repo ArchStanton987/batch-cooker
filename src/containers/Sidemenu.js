@@ -15,7 +15,7 @@ export default function Sidemenu({ toggleFunction, setMenu, isSideMenuActive }) 
       <CloseIcon
         parent={'sidemenu'}
         onClick={() => toggleFunction(setMenu)}
-        additionalClasses="mobile-only"
+        className={"sidemenu--close-icon mobile-only"}
       />
       <h1 className="sidemenu--title desktop-only">BatchCooker</h1>
       <hr className="sidemenu--hr desktop-only" />

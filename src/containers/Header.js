@@ -8,11 +8,11 @@ export default function Header({ toggleFunction, setMenu }) {
   return (
     <header className="header mobile-only">
       <Link id="homeIcon-link" to="/">
-        <img className="header_icon" src={homeIcon} alt="home" />
+        <img className="header--icon icon" src={homeIcon} alt="home" />
       </Link>
       <h1>BatchCooker</h1>
       <img
-        className="header_icon"
+        className="header--icon icon"
         src={menuIcon}
         alt="menu"
         onClick={() => toggleFunction(setMenu)}
