@@ -23,7 +23,7 @@
 
 @media screen and (min-width: v.$bp1-min) {
   .sidemenu {
-    position: fixed;
+    position: static;
     left: 0;
     width: 20vw;
     min-width: 250px;

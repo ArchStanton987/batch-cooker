@@ -6,7 +6,7 @@ import recipesIcon from '../assets/icons/recipesIcon.png'
 import calendarIcon from '../assets/icons/calendarIcon.png'
 import inventoryIcon from '../assets/icons/shelf.png'
 import shoplistIcon from '../assets/icons/shop-listIcon.png'
-import '../sass/layout/_Menu.scss'
+import '../sass/layout/_Sidemenu.scss'
 import CloseIcon from '../components/CloseIcon'
 
 export default function Sidemenu({ toggleFunction, setMenu, isSideMenuActive }) {  

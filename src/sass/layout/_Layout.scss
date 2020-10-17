@@ -1,7 +1,17 @@
+@use "../variables" as v;
+
 .global-layout {
   min-height: 450px;
   // min-height: var(--initialHeight);
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+@media screen and (min-width: v.$bp1-min) {
+  .global-layout {
+    display: flex;
+    flex-direction: row;
+    background-color: v.$color8;
+  }
 }
