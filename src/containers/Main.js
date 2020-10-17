@@ -1,13 +1,13 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import Home from '../components/Home'
-import Menu from '../components/Menu'
-import FullRecipe from '../containers/FullRecipe'
-import NewRecipe from '../components/NewRecipe'
-import Recipes from '../components/Recipes'
-import Inventory from '../components/Inventory'
-import Shoplist from '../components/Shoplist'
+import Home from '../pages/Home'
+import Menu from '../pages/Menu'
+import FullRecipe from '../pages/FullRecipe'
+import NewRecipe from '../pages/NewRecipe'
+import Recipes from '../pages/Recipes'
+import Inventory from '../pages/Inventory'
+import Shoplist from '../pages/Shoplist'
 import '../sass/layout/_Main.scss'
 
 export default function Main() {

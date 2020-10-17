@@ -18,9 +18,8 @@ h2 {
   font-size: 1.5rem;
   text-align: center;
   font-weight: lighter;
-  color: #516f9b;
-  background-color: #bacdeb;
-  margin: 0.25rem 0;
+  color: #e3e3e3;
+  background-color: #6c8cb8;
   border-radius: 5px;
 }
 
@@ -79,12 +78,45 @@ ul {
   overflow: auto;
 }
 
+@media screen and (min-width: 650px) {
+  .page {
+    margin: 0.5rem 1rem;
+  }
+}
 .section-container {
   margin: 0.25rem 0;
   border: solid 2px #bacdeb;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+}
+.section-container.extended {
+  flex: 1;
+  overflow: auto;
+}
+.section-container.no-border {
+  border: none;
+}
+
+.drawer-container {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: #bacdeb;
+  margin: 0;
+  padding: 0;
+}
+
+.chevron {
+  margin-left: auto;
+  max-height: 1.5rem;
+  max-width: 1.5rem;
+  transform: rotateZ(0deg);
+  transition: transform 0.4s ease-out;
+}
+.chevron.rotated {
+  transform: rotateZ(180deg);
+  transition: transform 0.4s ease-out;
 }
 
 .taglist {
@@ -111,14 +143,19 @@ button {
   border-radius: 5px;
   background: #516f9b;
   color: #e3e3e3;
+  border: #516f9b 1px solid;
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.2;
-  white-space: nowrap;
   text-decoration: none;
   padding: 0.4rem;
   margin: 0.2rem;
   cursor: pointer;
+}
+button.secondary {
+  background-color: #fff;
+  border: #bacdeb 1px solid;
+  color: #516f9b;
 }
 
 .input-type-button {
@@ -238,28 +275,7 @@ header {
   z-index: 2;
 }
 
-.drawer-container {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background-color: #bacdeb;
-  margin: 0;
-  padding: 0;
-}
-
-.inventory-category-arrow {
-  margin-left: auto;
-  max-height: 1.5rem;
-  max-width: 1.5rem;
-  transform: rotateZ(0deg);
-  transition: transform 0.4s ease-out;
-}
-.inventory-category-arrow.rotated {
-  transform: rotateZ(180deg);
-  transition: transform 0.4s ease-out;
-}
-
-.inventory-category_list {
+.inventory-category--list {
   display: flex;
   flex-wrap: wrap;
   overflow: hidden;
@@ -268,20 +284,8 @@ header {
   max-height: 200px;
   transition: max-height 0.4s ease-in-out;
 }
-.inventory-category_list.retracted {
+.inventory-category--list.retracted {
   max-height: 0;
-}
-
-.inventory-category_name {
-  border: #bacdeb 1px solid;
-}
-.inventory-category_name.inactive {
-  background-color: #fff;
-  border: #bacdeb 1px solid;
-  color: #516f9b;
-}
-.inventory-category_name:focus {
-  outline: none;
 }
 
 .inventory-ingredients {
@@ -290,7 +294,7 @@ header {
   z-index: 1;
 }
 
-.inventory-ingredients_list {
+.inventory-ingredients--list {
   flex: 1;
   overflow: auto;
 }

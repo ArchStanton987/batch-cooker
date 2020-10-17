@@ -20,9 +20,8 @@ h2 {
   font-size: 1.5rem;
   text-align: center;
   font-weight: lighter;
-  color: v.$color1;
-  background-color: v.$color3;
-  margin: 0.25rem 0;
+  color: v.$color2;
+  background-color: v.$color4;
   border-radius: 5px;
 }
 
@@ -80,6 +79,11 @@ ul {
   flex: 1;
   overflow: auto;
 }
+@media screen and (min-width: v.$bp1-min) {
+  .page {
+    margin: 0.5rem 1rem;
+  }
+}
 
 .section-container {
   margin: 0.25rem 0;
@@ -87,6 +91,34 @@ ul {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  &.extended {
+    flex: 1;
+    overflow: auto;
+  }
+  &.no-border {
+    border: none;
+  }
+}
+
+.drawer-container {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: v.$color3;
+  margin: 0;
+  padding: 0;
+}
+
+.chevron {
+  margin-left: auto;
+  max-height: 1.5rem;
+  max-width: 1.5rem;
+  transform: rotateZ(0deg);
+  transition: transform 0.4s ease-out;
+  &.rotated {
+    transform: rotateZ(180deg);
+    transition: transform 0.4s ease-out;
+  }
 }
 
 .taglist {
@@ -114,14 +146,19 @@ button {
   border-radius: 5px;
   background: v.$color1;
   color: v.$color2;
+  border: v.$color1 1px solid;
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.2;
-  white-space: nowrap;
   text-decoration: none;
   padding: 0.4rem;
   margin: 0.2rem;
   cursor: pointer;
+  &.secondary {
+    background-color: v.$color6;
+    border: v.$color3 1px solid;
+    color: v.$color1;
+  }
 }
 
 .input-type-button {

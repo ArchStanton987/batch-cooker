@@ -4,8 +4,8 @@ import { Link, Redirect } from 'react-router-dom'
 import '../sass/pages/_NewRecipe.scss'
 import plusIcon from '../assets/icons/plus.svg'
 import { postNewIngredient, postNewRecipe, postNewTag } from '../lib/recipies'
-import DynamicFormIngredient from './DynamicFormIngredient'
-import DynamicFormTags from './DynamicFormTags'
+import DynamicFormIngredient from '../components/DynamicFormIngredient'
+import DynamicFormTags from '../components/DynamicFormTags'
 
 export default function NewRecipe() {
   const initialValue = {

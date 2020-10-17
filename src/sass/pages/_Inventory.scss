@@ -1,28 +1,6 @@
 @use '../variables' as v;
 
-.drawer-container {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background-color: v.$color3;
-  margin: 0;
-  padding: 0;
-}
-
-.inventory-category-arrow {
-  margin-left: auto;
-  max-height: 1.5rem;
-  max-width: 1.5rem;
-  transform: rotateZ(0deg);
-  transition: transform 0.4s ease-out;
-
-  &.rotated {
-    transform: rotateZ(180deg);
-    transition: transform 0.4s ease-out;
-  }
-}
-
-.inventory-category_list {
+.inventory-category--list {
   display: flex;
   flex-wrap: wrap;
   overflow: hidden;
@@ -30,23 +8,8 @@
   list-style: none;
   max-height: 200px;
   transition: max-height 0.4s ease-in-out;
-
   &.retracted {
     max-height: 0;
-  }
-}
-
-.inventory-category_name {
-  border: v.$color3 1px solid;
-
-  &.inactive {
-    background-color: v.$color6;
-    border: v.$color3 1px solid;
-    color: v.$color1;
-  }
-
-  &:focus {
-    outline: none;
   }
 }
 
@@ -56,7 +19,7 @@
   z-index: 1;
 }
 
-.inventory-ingredients_list {
+.inventory-ingredients--list {
   flex: 1;
   overflow: auto;
 }

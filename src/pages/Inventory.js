@@ -7,7 +7,8 @@ import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
 import Searchbox from '../containers/Searchbox'
-import chevron from '../assets/icons/chevron.svg'
+import Section from '../components/Section'
+import ChevronIcon from '../components/ChevronIcon'
 
 export default function Inventory() {
   const [isExpended, setDrawer] = useState(false)
@@ -120,19 +121,13 @@ export default function Inventory() {
           />
         )}
         <h2>Inventaire</h2>
-        <div className="inventory-category section-container">
+        <Section>
           <div onClick={toggleDrawer} className="drawer-container">
             <h3>Catégories</h3>
-            <img
-              alt="reveal categories"
-              src={chevron}
-              className={
-                isExpended ? 'inventory-category-arrow' : 'inventory-category-arrow rotated'
-              }
-            />
+            <ChevronIcon isExpended={isExpended}/>
           </div>
           <ul
-            className={isExpended ? 'inventory-category_list' : 'inventory-category_list retracted'}
+            className={isExpended ? 'inventory-category--list' : 'inventory-category--list retracted'}
           >
             {categories.map(category => {
               return (
@@ -141,9 +136,7 @@ export default function Inventory() {
                     name={category[0]}
                     onClick={toggleCategoryFilter}
                     className={
-                      category[1].active === true
-                        ? 'inventory-category_name'
-                        : 'inventory-category_name inactive'
+                      !category[1].active && 'secondary'
                     }
                   >
                     {category[1].fullname}
@@ -152,10 +145,10 @@ export default function Inventory() {
               )
             })}
           </ul>
-        </div>
-        <div ref={scrollableRef} className="inventory-ingredients section-container">
-          <h3>Ingrédients</h3>
-          <ul className="inventory-ingredients_list">
+        </Section>
+        <Section className={'extended'}>
+          <h3 ref={scrollableRef}>Ingrédients</h3>
+          <ul className="inventory-ingredients--list">
             {inventory &&
               inventory
                 .filter(item => {
@@ -188,14 +181,16 @@ export default function Inventory() {
                   )
                 )}
           </ul>
-        </div>
-        <Searchbox
-          toggleModal={toggleModal}
-          scrollableRef={scrollableRef}
-          handleResetSearchInput={handleResetSearchInput}
-          handleSearchInput={handleSearchInput}
-          parentName={'inventory'}
-        />
+        </Section>
+        <Section className={'no-border'}>
+          <Searchbox
+            toggleModal={toggleModal}
+            scrollableRef={scrollableRef}
+            handleResetSearchInput={handleResetSearchInput}
+            handleSearchInput={handleSearchInput}
+            parentName={'inventory'}
+          />
+        </Section>
       </div>
     </>
   )
