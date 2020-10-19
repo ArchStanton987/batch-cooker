@@ -6,6 +6,7 @@ import '../sass/components/_Search.scss'
 export default function Search(props) {
   const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)
   const {
+    className,
     parent,
     handleSearchInput,
     scrollableRef,
@@ -16,7 +17,7 @@ export default function Search(props) {
 
   return (
     <>
-      <div className="search-container">
+      <div className={`search-container ${className}`}>
         <img
           onClick={toggleSearchbox}
           className="icon search-icon"

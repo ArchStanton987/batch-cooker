@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
+import Section from '../components/Section'
 import RecipeCard from '../containers/RecipeCard'
+import ChevronIcon from '../components/ChevronIcon'
 import { fecthRecipies, parseFetchedRecipes } from '../lib/recipies'
-import searchIcon from '../assets/icons/search.svg'
-import chevron from '../assets/icons/chevron.svg'
 import '../sass/pages/_Recipes.scss'
 import '../sass/pages/_FullRecipe.scss'
+import Search from '../components/Search'
 
 export default function Recipes() {
   // const defaultTagFilter = { tagname: '' }
@@ -37,8 +38,8 @@ export default function Recipes() {
     <>
       <div className="page">
         <h2>Mes recettes</h2>
-        <div ref={scrollableRef} className="recipes section-container">
-          <h3>Liste</h3>
+        <Section className={'extended'}>
+          <h3 ref={scrollableRef}>Liste</h3>
           <ul className="recipes-list">
             {userRecipes
               .filter(recipe => recipe.name.toLowerCase().includes(searchInput.toLowerCase()))
@@ -47,28 +48,23 @@ export default function Recipes() {
                 return <RecipeCard key={`user-recipe-${recipe.id}`} recipe={recipe} />
               })}
           </ul>
-        </div>
-        <div className="section-container">
+        </Section>
+        <Section className={''}>
           <div onClick={toggleDrawer} className="drawer-container">
             <h3>Recherche</h3>
-            <img
-              alt="reveal categories"
-              src={chevron}
-              className={isExpended ? 'recipe-tags-arrow' : 'recipe-tags-arrow rotated'}
+            <ChevronIcon isExpended={isExpended} />
+          </div>
+          <div className={isExpended ? 'recipes--search-drawer' : 'recipes--search-drawer retracted'}>
+            <Search
+              className={"justifyCenter"}
+              parent="recipes"
+              handleSearchInput={handleSearchInput}
+              scrollableRef={scrollableRef}
+              isSearchboxActive={true}
+              placeholder="ex: blanquette de veau"
             />
           </div>
-          <div className={isExpended ? 'collapsible' : 'collapsible retracted'}>
-            <div className="search-tag-container">
-              <img src={searchIcon} className="search-tag" alt="search by tag" />
-              <input
-                onChange={handleSearchInput}
-                type="search"
-                className="recipies-search-tag"
-                placeholder="recherche par nom"
-              />
-            </div>
-          </div>
-        </div>
+        </Section>
         <Link className="marginAuto" to={{ pathname: '/recipes/new' }}>
           <svg
             className="add-element-icon"

@@ -1,10 +1,10 @@
 @use '../variables' as v;
 
-.recipes {
-  flex: 1;
-  overflow: auto;
-  background-color: v.$color6;
-}
+// .recipes {
+//   flex: 1;
+//   overflow: auto;
+//   background-color: v.$color6;
+// }
 
 .recipes-list {
   list-style: none;
@@ -12,53 +12,18 @@
   overflow: auto;
 }
 
-.collapsible {
+.recipes--search-drawer {
   max-height: 200px;
   overflow: hidden;
   transition: max-height 200ms ease-in-out;
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem;
   &.retracted {
+    margin: 0;
     max-height: 0;
     transition: max-height 200ms ease-in-out;
   }
-}
-
-.recipe-tags-arrow {
-  margin-left: auto;
-  max-height: 1.5rem;
-  max-width: 1.5rem;
-  transform: rotateZ(0deg);
-  transition: transform 0.4s ease-out;
-
-  &.rotated {
-    transform: rotateZ(180deg);
-    transition: transform 0.4s ease-out;
-  }
-}
-
-.search-tag-container {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-}
-
-.recipies-search-tag {
-  flex: 1;
-  height: 2rem;
-  background-color: v.$color4;
-  margin-left: -2rem;
-  border: solid 2px v.$color3;
-  border-radius: 8px;
-  padding: 0.3rem;
-  padding-left: 2.5rem;
-}
-
-.search-tag {
-  max-width: 2rem;
-  max-height: 2rem;
-  padding: 0.3rem;
-  background-color: v.$color1;
-  border-radius: 8px;
-  z-index: 3;
 }
 
 .add-element-icon {
