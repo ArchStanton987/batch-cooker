@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import Section from '../components/Section'
-import RecipeCard from '../containers/RecipeCard'
+import MyRecipesCard from '../containers/MyRecipesCard'
 import ChevronIcon from '../components/ChevronIcon'
 import plusIcon from '../assets/icons/plus.svg'
 import { fecthRecipies, parseFetchedRecipes } from '../lib/recipies'
@@ -60,7 +60,7 @@ export default function Recipes() {
               .filter(recipe => recipe.name.toLowerCase().includes(searchInput.toLowerCase()))
               .sort((a, b) => a.name.localeCompare(b.name))
               .map(recipe => {
-                return <RecipeCard key={`user-recipe-${recipe.id}`} recipe={recipe} />
+                return <MyRecipesCard key={`user-recipe-${recipe.id}`} recipe={recipe} />
               })}
           </ul>
         </Section>

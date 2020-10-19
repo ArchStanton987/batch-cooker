@@ -5,7 +5,7 @@ import defaultImg from '../assets/images/defaultRecipe.jpg'
 import '../sass/components/_RecipeCard.scss'
 import '../sass/pages/_FullRecipe.scss'
 
-export default function RecipeCard({ recipe }) {
+export default function MyRecipesCard({ recipe }) {
   return (
     <>
       <Link

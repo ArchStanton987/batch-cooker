@@ -11,6 +11,10 @@
   border-radius: 8px;
   box-shadow: 2px 2px 2px 2px #b2b2b2;
   background-color: v.$color6;
+  max-height: 95px;
+  @media screen and (min-width: v.$bp1-min) {
+    max-height: 125px;
+  }
 
   .info {
     display: flex;
@@ -19,13 +23,19 @@
   }
 
   h5 {
+    overflow: hidden;
     font-weight: bolder;
+    font-size: 1.1rem;
+    @media screen and (min-width: v.$bp1-min) {
+      font-size: 1.4rem;
+    }
   }
 
   .taglist {
     justify-content: flex-start;
     li {
       padding: 0.1rem 0.3rem;
+      color: v.$color9;
     }
   }
 }
@@ -33,7 +43,8 @@
 .recipe-image-container {
   display: flex;
   width: 40%;
-  max-height: 15vh;
+  max-height: 100px;
+  max-width: 100px;
 }
 .recipe-card-image {
   object-fit: cover;
