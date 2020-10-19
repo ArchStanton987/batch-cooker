@@ -163,6 +163,13 @@ button {
   cursor: pointer;
 }
 
+.add-element-icon {
+  margin: auto;
+  background-color: v.$color1;
+  border-radius: 50%;
+  padding: 0.3rem;
+}
+
 label {
   color: v.$color1;
 }

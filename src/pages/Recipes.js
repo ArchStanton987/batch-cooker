@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import Section from '../components/Section'
 import RecipeCard from '../containers/RecipeCard'
 import ChevronIcon from '../components/ChevronIcon'
+import plusIcon from '../assets/icons/plus.svg'
 import { fecthRecipies, parseFetchedRecipes } from '../lib/recipies'
 import '../sass/pages/_Recipes.scss'
 import '../sass/pages/_FullRecipe.scss'
 import Search from '../components/Search'
+import SectionCTA from '../components/SectionCTA'
+import CTAButton from '../components/CTAButton'
 
 export default function Recipes() {
   // const defaultTagFilter = { tagname: '' }
@@ -30,6 +33,10 @@ export default function Recipes() {
     setSearchInput(e.currentTarget.value)
   }
 
+  // const redirectNewRecipe = () => {
+  //   return <Redirect to={{ pathname: '/recipes/new' }}/>
+  // }
+
   useEffect(() => {
     handleFetchRecipes()
   }, [])
@@ -38,6 +45,19 @@ export default function Recipes() {
     <>
       <div className="page">
         <h2>Mes recettes</h2>
+        <SectionCTA className={'desktop-only no-border'}>
+          <Search
+            handleSearchInput={handleSearchInput}
+            scrollableRef={scrollableRef}
+            isSearchboxActive={true}
+          />
+          <Link to={{ pathname: '/recipes/new' }}>
+            <CTAButton className={'add-recipe'}>
+              <img className="icon cta-button--icon" src={plusIcon} alt="add new recipe" />
+              Ajouter
+            </CTAButton>
+          </Link>
+        </SectionCTA>
         <Section className={'extended'}>
           <h3 ref={scrollableRef}>Liste</h3>
           <ul className="recipes-list">
@@ -49,14 +69,16 @@ export default function Recipes() {
               })}
           </ul>
         </Section>
-        <Section className={''}>
+        <Section className={'mobile-only'}>
           <div onClick={toggleDrawer} className="drawer-container">
             <h3>Recherche</h3>
             <ChevronIcon isExpended={isExpended} />
           </div>
-          <div className={isExpended ? 'recipes--search-drawer' : 'recipes--search-drawer retracted'}>
+          <div
+            className={isExpended ? 'recipes--search-drawer' : 'recipes--search-drawer retracted'}
+          >
             <Search
-              className={"justifyCenter"}
+              className={'justifyCenter'}
               parent="recipes"
               handleSearchInput={handleSearchInput}
               scrollableRef={scrollableRef}
@@ -65,24 +87,26 @@ export default function Recipes() {
             />
           </div>
         </Section>
-        <Link className="marginAuto" to={{ pathname: '/recipes/new' }}>
-          <svg
-            className="add-element-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width="44"
-            height="44"
-            viewBox="0 0 24 24"
-            strokeWidth="3"
-            stroke="#fff"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-        </Link>
+        <Section className={'mobile-only no-border'}>
+          <Link className="marginAuto" to={{ pathname: '/recipes/new' }}>
+            <svg
+              className="add-element-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              strokeWidth="3"
+              stroke="#fff"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </Link>
+        </Section>
       </div>
     </>
   )
