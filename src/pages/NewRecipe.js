@@ -6,6 +6,9 @@ import plusIcon from '../assets/icons/plus.svg'
 import { postNewIngredient, postNewRecipe, postNewTag } from '../lib/recipies'
 import DynamicFormIngredient from '../components/DynamicFormIngredient'
 import DynamicFormTags from '../components/DynamicFormTags'
+import Section from '../components/Section'
+import SectionCTA from '../components/SectionCTA'
+import CTAButton from '../components/CTAButton'
 
 export default function NewRecipe() {
   const initialValue = {
@@ -107,7 +110,7 @@ export default function NewRecipe() {
       <div className="new-recipe page">
         <h2>Création de recette</h2>
         <form onSubmit={handleRecipeSubmit} className="new-recipe-form" method="post">
-          <div className="new-recipe section-container">
+          <Section className={"new-recipe"}>
             <h3>Votre recette</h3>
             <label className="recipe-form--label" htmlFor="name">
               <p>Nom de la recette</p>
@@ -148,7 +151,7 @@ export default function NewRecipe() {
               name="url"
             />
             <label className="recipe-form--label" htmlFor="content">
-              <p>Détails</p>
+              <p>Préparation</p>
             </label>
             <textarea
               onChange={handleChangeNewRecipe}
@@ -156,8 +159,8 @@ export default function NewRecipe() {
               id="content"
               name="content"
             />
-          </div>
-          <div className="new-recipe section-container">
+          </Section>
+          <Section className={"new-recipe"}>
             <h3>Associer les ingrédients (maximum : 12)</h3>
             <ul className="flexColumn justifyCenter">
               {ingredients.map((ingredient, i) => {
@@ -178,8 +181,8 @@ export default function NewRecipe() {
               alt="add ingredient"
               onClick={addIngredient}
             />
-          </div>
-          <div className="new-recipe section-container">
+          </Section>
+          <Section className={"new-recipe"}>
             <h3>Associer des tags (maximum : 4)</h3>
             <ul>
               {tags.map((tag, i) => (
@@ -193,13 +196,13 @@ export default function NewRecipe() {
               ))}
             </ul>
             <img className="new-recipe--add-icon" src={plusIcon} alt="add tag" onClick={addTag} />
-          </div>
-          <div className="flexRow spaceBetween">
+          </Section>
+          <SectionCTA className={"no-border"}>
             <Link to="/recipes">
-              <button>Retour</button>
+              <CTAButton className={"secondary"}>Retour</CTAButton>
             </Link>
             <button type="submit">Enregistrer</button>
-          </div>
+          </SectionCTA>
         </form>
       </div>
     </>

@@ -142,7 +142,7 @@ export default function Inventory() {
             Ajouter
           </CTAButton>
         </SectionCTA>
-        <Section>
+        <Section className={''}>
           <div onClick={toggleDrawer} className="drawer-container">
             <h3>Catégories</h3>
             <ChevronIcon isExpended={isExpended} />

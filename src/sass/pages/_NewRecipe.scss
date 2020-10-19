@@ -4,7 +4,7 @@
   .recipe-form--label,
   .recipe-form--input,
   textarea {
-    margin: 0 1rem;
+    margin: 0 1rem;    
   }
   .recipe-form--label {
     margin-top: 0.25rem;
@@ -14,11 +14,15 @@
     margin-bottom: 0.5rem;
   }
   input,
-  textarea {
+  textarea,
+  select {
     padding: 0.1rem;
   }
   textarea {
     min-height: 25vh;
+    @media screen and (min-width: v.$bp1-min) {
+      min-height: 15vh;
+    }
     border: solid 1px #a6a6a6;
     border-radius: 8px;
     box-shadow: none;
@@ -43,6 +47,9 @@
   max-height: 2rem;
   max-width: 2rem;
   padding: 0.2rem;
+  &:hover {
+    cursor: pointer;
+  }
   &.tag {
     margin: 0 0.5rem;
   }
@@ -59,16 +66,6 @@
     cursor: pointer;
   }
 }
-
-// .recipe-form--tag-container {
-//   display: flex;
-//   flex-direction: column;
-
-// }
-// .recipe-form--tag-input {
-//   flex: 1;
-//   margin: 0 0 0 1rem;
-// }
 
 .ingredient-label {
   margin-top: 0.5rem;

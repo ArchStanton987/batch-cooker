@@ -10,7 +10,6 @@
   }
 
   & .name {
-    // font-size: 20px;
     flex: 6;
     margin: 0.3rem;
   }
@@ -39,7 +38,7 @@
     cursor: pointer;
     background-color: v.$color1;
     color: v.$color2;
-    .-delete {
+    .delete {
       color: v.$color2;
     }
   }
