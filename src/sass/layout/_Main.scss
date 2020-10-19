@@ -11,9 +11,11 @@
 @media screen and (min-width: v.$bp1-min) {
   .main-layout {
     margin: 0 auto;
+    // height: 100%;
     width: 100%;
     min-width: 400px;
     max-width: 45vw;
     background-color: v.$color6;
+    overflow: unset;    
   }
 }

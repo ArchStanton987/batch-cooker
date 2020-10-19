@@ -1,5 +1,8 @@
 @use '../variables' as v;
 
+.sidemenu-container {
+  position: absolute;
+}
 .sidemenu {
   position: fixed;
   width: 100%;
@@ -22,13 +25,19 @@
 }
 
 @media screen and (min-width: v.$bp1-min) {
-  .sidemenu {
+  .sidemenu-container {
     position: static;
-    z-index: 1;
-    left: 0;
     width: 20vw;
     min-width: 250px;
     max-width: 300px;
+  }
+  .sidemenu {
+    position: fixed;
+    z-index: 1;
+    width: 20vw;
+    min-width: 250px;
+    max-width: 300px;
+    height: 100%;
     &.inactive,
     &.active {
       transform: translateX(0px);
@@ -82,5 +91,5 @@
 
 .active-link li {
   box-shadow: 0px 0px 4px 1px v.$color2;
-  transition: box-shadow 0.15s ease-out ;
+  transition: box-shadow 0.15s ease-out;
 }

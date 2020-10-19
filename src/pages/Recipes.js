@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Section from '../components/Section'
 import RecipeCard from '../containers/RecipeCard'
@@ -13,8 +13,6 @@ import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
 
 export default function Recipes() {
-  // const defaultTagFilter = { tagname: '' }
-
   const [userRecipes, setUserRecipes] = useState([])
   const [searchInput, setSearchInput] = useState('')
   const [isExpended, setDrawer] = useState(false)
@@ -33,10 +31,6 @@ export default function Recipes() {
     setSearchInput(e.currentTarget.value)
   }
 
-  // const redirectNewRecipe = () => {
-  //   return <Redirect to={{ pathname: '/recipes/new' }}/>
-  // }
-
   useEffect(() => {
     handleFetchRecipes()
   }, [])
@@ -47,6 +41,7 @@ export default function Recipes() {
         <h2>Mes recettes</h2>
         <SectionCTA className={'desktop-only no-border'}>
           <Search
+            className={''}
             handleSearchInput={handleSearchInput}
             scrollableRef={scrollableRef}
             isSearchboxActive={true}

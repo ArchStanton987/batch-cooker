@@ -83,6 +83,8 @@ ul {
 @media screen and (min-width: v.$bp1-min) {
   .page {
     margin: 0.5rem 1rem;
+    overflow: unset;
+    // height: 100%;
   }
 }
 
