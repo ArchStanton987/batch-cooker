@@ -1,0 +1,7 @@
+@use '../variables' as v;
+
+.smaller-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}

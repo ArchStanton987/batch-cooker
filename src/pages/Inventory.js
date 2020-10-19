@@ -5,13 +5,14 @@ import { fetchUserInventory, parseFetchedInventory } from '../lib/inventory'
 import { ingredientCategories } from '../lib/ingredientCategories'
 import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
-import InventoryModal from '../containers/InventoryModal'
+import IngredientForm from '../containers/IngredientForm'
 import Section from '../components/Section'
 import ChevronIcon from '../components/ChevronIcon'
 import plusIcon from '../assets/icons/plus.svg'
 import Search from '../components/Search'
 import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
+import Modal from '../components/Modal'
 
 export default function Inventory() {
   const [isExpended, setDrawer] = useState(false)
@@ -110,16 +111,22 @@ export default function Inventory() {
     <>
       <div className="page">
         {isModalActive && (
-          <InventoryModal
-            handleSubmitIngredient={handleSubmitIngredient}
-            handleNewIngredient={handleNewIngredient}
-            toggleModal={toggleModal}
-            name={newIngredient ? newIngredient.name : ''}
-            category={newIngredient ? newIngredient.category : ''}
-            ingredientId={newIngredient ? newIngredient.ingredientId : ''}
-            quantity={newIngredient ? newIngredient.quantity : ''}
-            unity={newIngredient ? newIngredient.unity : ''}
-          />
+          <Modal
+            title="Ajouter / modifier un ingrédient"
+            handleClose={toggleModal}
+            parent="ingredient"
+          >
+            <IngredientForm
+              handleSubmitIngredient={handleSubmitIngredient}
+              handleNewIngredient={handleNewIngredient}
+              toggleModal={toggleModal}
+              name={newIngredient ? newIngredient.name : ''}
+              category={newIngredient ? newIngredient.category : ''}
+              ingredientId={newIngredient ? newIngredient.ingredientId : ''}
+              quantity={newIngredient ? newIngredient.quantity : ''}
+              unity={newIngredient ? newIngredient.unity : ''}
+            />
+          </Modal>
         )}
         <h2>Inventaire</h2>
         <SectionCTA className={'no-border desktop-only'}>

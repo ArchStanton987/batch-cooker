@@ -7,7 +7,7 @@ export default function CloseIcon(props) {
     <>
       <img
         onClick={onClick}
-        className={`icon ${className}`}
+        className={`icon ${parent}--close-icon ${className}`}
         src={closeIcon}
         alt={`close ${parent}`}
       />
