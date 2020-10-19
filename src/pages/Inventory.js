@@ -6,9 +6,12 @@ import { ingredientCategories } from '../lib/ingredientCategories'
 import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
 import InventoryModal from '../containers/InventoryModal'
-import Searchbox from '../containers/Searchbox'
 import Section from '../components/Section'
 import ChevronIcon from '../components/ChevronIcon'
+import plusIcon from '../assets/icons/plus.svg'
+import Search from '../components/Search'
+import SectionCTA from '../components/SectionCTA'
+import CTAButton from '../components/CTAButton'
 
 export default function Inventory() {
   const [isExpended, setDrawer] = useState(false)
@@ -17,6 +20,9 @@ export default function Inventory() {
   const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
   const [searchInput, setSearchInput] = useState('')
+  const [isSearchboxActive, setSearchbox] = useState(false)
+
+  const toggleSearchbox = () => setSearchbox(prevState => !prevState)
 
   let categories = Object.entries(activeCategories)
 
@@ -54,11 +60,6 @@ export default function Inventory() {
   }
   const handleSearchInput = e => {
     setSearchInput(e.currentTarget.value)
-  }
-  const handleResetSearchInput = () => {
-    const searchboxSearch = document.getElementById('inventory-searchbox_search') || {}
-    searchboxSearch.value = ''
-    setSearchInput('')
   }
   const handleEditIngredient = id => {
     let ingredientData = inventory.filter(ingredient => ingredient.ingredientId === id)
@@ -121,13 +122,28 @@ export default function Inventory() {
           />
         )}
         <h2>Inventaire</h2>
+        <SectionCTA className={'no-border desktop-only'}>
+          <Search
+            isSearchboxActive={true}
+            parent={'inventory'}
+            handleSearchInput={handleSearchInput}
+            scrollableRef={scrollableRef}
+            placeholder={'poivre, moutarde, etc.'}
+          />
+          <CTAButton action={toggleModal}>
+            <img className="icon cta-button--icon" src={plusIcon} alt="add to inventory" />
+            Ajouter
+          </CTAButton>
+        </SectionCTA>
         <Section>
           <div onClick={toggleDrawer} className="drawer-container">
             <h3>Catégories</h3>
-            <ChevronIcon isExpended={isExpended}/>
+            <ChevronIcon isExpended={isExpended} />
           </div>
           <ul
-            className={isExpended ? 'inventory-category--list' : 'inventory-category--list retracted'}
+            className={
+              isExpended ? 'inventory-category--list' : 'inventory-category--list retracted'
+            }
           >
             {categories.map(category => {
               return (
@@ -135,9 +151,7 @@ export default function Inventory() {
                   <button
                     name={category[0]}
                     onClick={toggleCategoryFilter}
-                    className={
-                      !category[1].active && 'secondary'
-                    }
+                    className={!category[1].active ? 'secondary' : ''}
                   >
                     {category[1].fullname}
                   </button>
@@ -176,21 +190,24 @@ export default function Inventory() {
                       quantity={item.quantity}
                       ingredientId={item.ingredientId}
                       unity={item.unity}
-                      scrollableRef={scrollableRef}
                     />
                   )
                 )}
           </ul>
         </Section>
-        <Section className={'no-border'}>
-          <Searchbox
-            toggleModal={toggleModal}
-            scrollableRef={scrollableRef}
-            handleResetSearchInput={handleResetSearchInput}
+        <SectionCTA className={'mobile-only no-border'}>
+          <Search
+            parent={'inventory'}
             handleSearchInput={handleSearchInput}
-            parentName={'inventory'}
+            scrollableRef={scrollableRef}
+            isSearchboxActive={isSearchboxActive}
+            toggleSearchbox={toggleSearchbox}
           />
-        </Section>
+          <CTAButton action={toggleModal}>
+            <img className="icon cta-button--icon" src={plusIcon} alt="add to inventory" />
+            Ajouter
+          </CTAButton>
+        </SectionCTA>
       </div>
     </>
   )

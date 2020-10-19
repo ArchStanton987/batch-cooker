@@ -21,6 +21,7 @@ h2 {
   color: #e3e3e3;
   background-color: #6c8cb8;
   border-radius: 5px;
+  margin: 0.25rem 0;
 }
 
 h3 {
@@ -71,7 +72,7 @@ ul {
 }
 
 .page {
-  padding: 0.5rem 0.5rem;
+  padding: 0.25rem 0.25rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -83,21 +84,6 @@ ul {
     margin: 0.5rem 1rem;
   }
 }
-.section-container {
-  margin: 0.25rem 0;
-  border: solid 2px #bacdeb;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-}
-.section-container.extended {
-  flex: 1;
-  overflow: auto;
-}
-.section-container.no-border {
-  border: none;
-}
-
 .drawer-container {
   cursor: pointer;
   display: flex;
@@ -147,13 +133,14 @@ button {
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.2;
+  white-space: nowrap;
   text-decoration: none;
   padding: 0.4rem;
   margin: 0.2rem;
   cursor: pointer;
 }
 button.secondary {
-  background-color: #fff;
+  background-color: transparent;
   border: #bacdeb 1px solid;
   color: #516f9b;
 }

@@ -13,7 +13,6 @@ export default function Searchbox({
   placeholder
 }) {
   const [isSearchboxActive, setSearchbox] = useState(false)
-
   const toggleSearchbox = () => setSearchbox(prevState => !prevState)
 
   const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop)

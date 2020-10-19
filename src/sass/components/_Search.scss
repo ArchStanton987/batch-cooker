@@ -1,0 +1,42 @@
+@use '../variables' as v;
+
+.search-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 8rem;
+}
+
+.icon.search-icon {
+  background-color: v.$color1;
+  border-radius: 8px;
+  padding: 0.3rem;
+  z-index: 2;
+}
+.search-input {
+  flex: 1;
+  height: 2rem;
+  width: auto;
+  min-width: 0;
+  max-width: 18rem;
+  margin-left: -2rem;
+  border: v.$color3 2px solid;
+  border-radius: 8px;
+  color: v.$color1;
+  background-color: v.$color7;
+  font-size: 1rem;
+  padding-left: 2.5rem;
+  transition: max-width 400ms ease-in-out, padding-left 100ms 400ms, padding-right 100ms 400ms,
+    margin-left 100ms 400ms, margin-right 100ms 400ms;
+  &:focus {
+    outline: none;
+  }
+  &.inactive {
+    min-width: 0rem;
+    max-width: 0rem;
+    padding-right: 0rem;
+    padding-left: 0rem;
+    border: v.$color3 0px solid;
+    transition: max-width 200ms ease-in-out 200ms, border 200ms ease-in-out 200ms;
+  }
+}

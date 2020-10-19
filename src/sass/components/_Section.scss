@@ -1,0 +1,22 @@
+@use '../variables' as v;
+
+.section-container {
+  margin: 0.25rem 0;
+  border: solid 2px v.$color3;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  &.extended {
+    flex: 1;
+    overflow: auto;
+  }
+  &.no-border {
+    border: none;
+  }
+  &.cta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
