@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { fetchUserInventory, parseFetchedInventory } from '../lib/inventory'
@@ -26,8 +26,6 @@ export default function Inventory() {
   const toggleSearchbox = () => setSearchbox(prevState => !prevState)
 
   let categories = Object.entries(activeCategories)
-
-  const scrollableRef = useRef(null)
 
   const userId = 1
 
@@ -134,7 +132,6 @@ export default function Inventory() {
             isSearchboxActive={true}
             parent={'inventory'}
             handleSearchInput={handleSearchInput}
-            scrollableRef={scrollableRef}
             placeholder={'poivre, moutarde, etc.'}
           />
           <CTAButton action={toggleModal}>
@@ -168,7 +165,7 @@ export default function Inventory() {
           </ul>
         </Section>
         <Section className={'extended'}>
-          <h3 ref={scrollableRef}>Ingrédients</h3>
+          <h3>Ingrédients</h3>
           <ul className="inventory-ingredients--list">
             {inventory &&
               inventory
@@ -206,7 +203,6 @@ export default function Inventory() {
           <Search
             parent={'inventory'}
             handleSearchInput={handleSearchInput}
-            scrollableRef={scrollableRef}
             isSearchboxActive={isSearchboxActive}
             toggleSearchbox={toggleSearchbox}
           />
