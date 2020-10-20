@@ -3,17 +3,25 @@
 .section-container {
   &.recipe-header {
     display: grid;
-    grid-template-columns: 1fr 50%;
-    grid-template-rows: 25vh auto;
+    grid-template-columns: 1fr 200px;
+    grid-template-rows: auto 200px auto;
     grid-column-gap: 0.5rem;
     grid-template-areas:
+      'header-title header-title '
       'header-text recipe-img-container'
-      'header-tags';
+      'header-tags header-tags';
   }
 }
 
 .recipe-header {
+  .header-title {
+    grid-area: header-title;
+    font-size: 1.2rem;
+  }
   .header-text {
+    overflow: hidden;
+    word-break: none;
+    text-overflow: ellipsis;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -23,6 +31,8 @@
   }
   .recipe-img-container {
     display: flex;
+    max-height: 200px;
+    max-width: 200px;
   }
   .recipe-img {
     margin-left: auto;

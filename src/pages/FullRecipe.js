@@ -5,6 +5,12 @@ import 'moment/locale/fr'
 import { fetchRecipe, parseFetchedRecipe } from '../lib/recipies'
 import '../sass/pages/_FullRecipe.scss'
 import '../sass/components/_Ingredient.scss'
+import Section from '../components/Section'
+import SectionCTA from '../components/SectionCTA'
+import CTAButton from '../components/CTAButton'
+import favIconFullYellow from '../assets/icons/star-full-yellow.svg'
+import calendarIcon from '../assets/icons/calendarIcon.png'
+import defaultPic from '../assets/images/chefhat.png'
 
 export default function FullRecipe(props) {
   const [recipe, setRecipe] = useState({})
@@ -38,11 +44,24 @@ export default function FullRecipe(props) {
   return (
     <>
       <div className="full-recipe page">
-        <h2>{name}</h2>
-        <div className="section-container recipe-header">
+        <h2>Recette</h2>
+        <SectionCTA className={'no-border'}>
+          <CTAButton className={'secondary'}>Modifier</CTAButton>
+          <CTAButton className={'secondary'}>Supprimer</CTAButton>
+          <CTAButton className={''}>
+            <img className="icon cta-button--icon" src={favIconFullYellow} alt="add to favorites" />
+            Ajouter à mon carnet
+          </CTAButton>
+          <CTAButton className={''}>
+            <img className="icon cta-button--icon" src={calendarIcon} alt="add to menu" />
+            Ajouter au menu
+          </CTAButton>
+        </SectionCTA>
+        <Section className={'recipe-header'}>
+          <h3 className="header-title">{name}</h3>
           <div className="header-text">
             <p className="recipe-text">
-              <span>{username}</span>
+              Auteur : <span>{username}</span>
             </p>
             <p className="recipe-text">le {moment(createdAt).format('LL')}</p>
             {createdAt !== updatedAt && (
@@ -52,7 +71,7 @@ export default function FullRecipe(props) {
             <p className="recipe-text">Note moy. : 5/10</p>
           </div>
           <div className="recipe-img-container">
-            {image && <img src={image} className="recipe-img" alt={name} />}
+            <img src={image ? image : defaultPic} className="recipe-img" alt={image ? name : "cooking hat"} />
           </div>
           <div className="header-tags">
             <ul className="taglist">
@@ -64,7 +83,7 @@ export default function FullRecipe(props) {
                 ))}
             </ul>
           </div>
-        </div>
+        </Section>
         <div className="section-container">
           <h3>Ingrédients</h3>
           <ul className="recipe-ingredient-list">
