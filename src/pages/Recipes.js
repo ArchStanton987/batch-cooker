@@ -43,7 +43,7 @@ export default function Recipes() {
           <Search
             className={''}
             handleSearchInput={handleSearchInput}
-            scrollableRef={scrollableRef}
+            scrollableRef={""}
             isSearchboxActive={true}
           />
           <Link to={{ pathname: '/recipes/new' }}>

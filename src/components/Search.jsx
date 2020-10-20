@@ -29,9 +29,9 @@ export default function Search(props) {
           id={`${parent}--search-input`}
           onChange={e => {
             handleSearchInput(e)
-            scrollToRef(scrollableRef)
+            // scrollableRef && scrollToRef(scrollableRef)
           }}
-          onFocus={() => setTimeout(() => scrollToRef(scrollableRef), 500)}
+          // onFocus={() => setTimeout(() => scrollToRef(scrollableRef), 500)}
           className={isSearchboxActive ? 'search-input' : 'search-input inactive'}
           disabled={isSearchboxActive && false}
           placeholder={placeholder ? placeholder : null}
