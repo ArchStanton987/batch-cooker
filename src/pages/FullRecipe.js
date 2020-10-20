@@ -71,7 +71,11 @@ export default function FullRecipe(props) {
             <p className="recipe-text">Note moy. : 5/10</p>
           </div>
           <div className="recipe-img-container">
-            <img src={image ? image : defaultPic} className="recipe-img" alt={image ? name : "cooking hat"} />
+            <img
+              src={image ? image : defaultPic}
+              className="recipe-img"
+              alt={image ? name : 'cooking hat'}
+            />
           </div>
           <div className="header-tags">
             <ul className="taglist">

@@ -27,7 +27,7 @@ export const parseFetchedRecipes = data => {
   }
 }
 
-export const fecthRecipies = async () => {
+export const fecthRecipes = async () => {
   const url = `http://192.168.1.27:8000/api/recipes`
   const res = await axios.get(url)
   return res.data
