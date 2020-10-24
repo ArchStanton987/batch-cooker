@@ -1,74 +1,40 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import Home from '../pages/Home'
 import Menu from '../pages/Menu'
 import FullRecipe from '../pages/FullRecipe'
 import NewRecipe from '../pages/NewRecipe'
-import Recipes from '../pages/Recipes'
+import MyRecipes from '../pages/MyRecipes'
 import Inventory from '../pages/Inventory'
 import Shoplist from '../pages/Shoplist'
+import PrivateRoute from '../pages/PrivateRoute'
+import LoginForm from '../pages/Login'
 import '../sass/layout/_Main.scss'
 
 export default function Main() {
-  const [isLogged, setIsLogged] = useState(false)
-  const [token, setToken] = useState('')
   return (
     <main className="main-layout">
       <Switch>
-        <Route
-          exact
-          path="/"
-          render={() => <Home isLogged={isLogged} setIsLogged={setIsLogged} setToken={setToken} />}
-        />
-        <Route
-          path="/home"
-          render={() => <Home isLogged={isLogged} setIsLogged={setIsLogged} setToken={setToken} />}
-        />
-        <Route
-          path="/inventory"
-          render={() => (
-            <Inventory isLogged={isLogged} setIsLogged={setIsLogged} setToken={setToken} />
-          )}
-        />
-        <Route
-          path="/recipes/new"
-          render={props => (
-            <NewRecipe
-              isLogged={isLogged}
-              setIsLogged={setIsLogged}
-              setToken={setToken}
-              {...props}
-            />
-          )}
-        />
-        <Route
-          path="/recipes/:id"
-          render={props => (
-            <FullRecipe
-              isLogged={isLogged}
-              setIsLogged={setIsLogged}
-              setToken={setToken}
-              {...props}
-            />
-          )}
-        />
-        <Route
-          path="/recipes"
-          render={() => (
-            <Recipes isLogged={isLogged} setIsLogged={setIsLogged} setToken={setToken} />
-          )}
-        />
-        <Route
-          path="/shoplist"
-          render={() => (
-            <Shoplist isLogged={isLogged} setIsLogged={setIsLogged} setToken={setToken} />
-          )}
-        />
-        <Route
-          path="/menu"
-          render={() => <Menu isLogged={isLogged} setIsLogged={setIsLogged} setToken={setToken} />}
-        />
+        <Route exact path="/" render={() => <Home />} />
+        <Route path="/home" render={() => <Home />} />
+        <Route path="/recipes/:id" render={props => <FullRecipe {...props} />} />
+        <Route path="/login" render={() => <LoginForm />} />
+        <PrivateRoute path="/recipes/new">
+          <NewRecipe />
+        </PrivateRoute>
+        <PrivateRoute path="/inventory">
+          <Inventory />
+        </PrivateRoute>
+        <PrivateRoute path="/myrecipes">
+          <MyRecipes />
+        </PrivateRoute>
+        <PrivateRoute path="/shoplist">
+          <Shoplist />
+        </PrivateRoute>
+        <PrivateRoute path="/menu">
+          <Menu />
+        </PrivateRoute>
       </Switch>
     </main>
   )

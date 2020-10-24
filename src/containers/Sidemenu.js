@@ -38,7 +38,7 @@ export default function Sidemenu({ toggleFunction, setMenu, isSideMenuActive }) 
           <NavLink
             activeClassName="active-link"
             onClick={() => toggleFunction(setMenu)}
-            to="/recipes"
+            to="/myrecipes"
           >
             <li>
               <img className="sidemenu--icon icon" src={recipesIcon} alt="recipes" />

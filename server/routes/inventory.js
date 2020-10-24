@@ -1,11 +1,11 @@
 // routes/inventory.js
-const jwtUtils = require('../utils/jwtUtils')
+// const jwtUtils = require('../utils/jwtUtils')
 const express = require('express')
 const inventoryCtrl = require('../controllers/inventory.controllers')
 
 const router = express.Router()
 
-router.use(jwtUtils.verifyToken)
+// router.use(jwtUtils.verifyToken)
 
 router.route('/user/:userId').get(inventoryCtrl.getUserInventory)
 router.route('/user/:userId/ingredients').post(inventoryCtrl.addToInventory)

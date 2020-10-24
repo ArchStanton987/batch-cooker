@@ -12,7 +12,7 @@ import Search from '../components/Search'
 import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
 
-export default function Recipes() {
+export default function MyRecipes() {
   const [userRecipes, setUserRecipes] = useState([])
   const [searchInput, setSearchInput] = useState('')
   const [isExpended, setDrawer] = useState(false)

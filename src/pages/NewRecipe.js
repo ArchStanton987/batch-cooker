@@ -66,20 +66,18 @@ export default function NewRecipe() {
   const handleIngredientsSubmit = async (recipeId, ingredients) => {
     ingredients.forEach(async ingredient => {
       try {
-        const response = await postNewIngredient(recipeId, ingredient)
-        console.log(response)
+        await postNewIngredient(recipeId, ingredient)
       } catch (err) {
-        return <p>Erreur en enregistrant le {ingredient}</p>
+        return <p>Erreur en enregistrant le {ingredient}. {err}</p>
       }
     })
   }
   const handleTagsSubmit = async (recipeId, tags) => {
     tags.forEach(async tag => {
       try {
-        const response = await postNewTag(recipeId, tag)
-        console.log(response)
+        await postNewTag(recipeId, tag)
       } catch (err) {
-        return <p>Erreur en enregistrant le tag {tag}</p>
+        return <p>Erreur en enregistrant le tag {tag}. {err}</p>
       }
     })
   }
@@ -100,7 +98,7 @@ export default function NewRecipe() {
       await handleTagsSubmit(newRecipeId, tags)
       setTimeout(() => setRecipeSubmit(true), 500)
     } catch (err) {
-      return <p>ERROR</p>
+      return <p>{err}</p>
     }
   }
 
