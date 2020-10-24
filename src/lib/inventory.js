@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const fetchUserInventory = async userId => {
   const url = `http://192.168.1.27:8000/api/inventory/user/${userId}`
-  const result = await axios.get(url)
+  const result = await axios.get(url, { withCredentials: true })
   return result.data
 }
 

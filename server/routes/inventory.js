@@ -5,7 +5,7 @@ const inventoryCtrl = require('../controllers/inventory.controllers')
 
 const router = express.Router()
 
-//router.use(jwtUtils.verifyToken)
+router.use(jwtUtils.verifyToken)
 
 router.route('/user/:userId').get(inventoryCtrl.getUserInventory)
 router.route('/user/:userId/ingredients').post(inventoryCtrl.addToInventory)

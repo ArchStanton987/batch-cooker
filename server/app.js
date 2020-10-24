@@ -10,7 +10,18 @@ const tags = require('./routes/tags')
 
 const app = express()
 
-app.use(cors())
+app.use(cors({ credentials: true, origin: 'http://localhost:3000', optionsSuccessStatus: 200 }))
+
+// app.use(function(req, res, next) {
+//   res.header('Content-Type', 'application/json;charset=UTF-8')
+//   res.header('Access-Control-Allow-Credentials', true)
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   )
+//   next()
+// })
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
@@ -34,7 +45,7 @@ app.use('/api/tags', tags)
 // DELETE /api/inventory/users/:userId/ingredients/:ingId  delete one ingredient
 //
 // GET /api/recipes                                       get all recipes
-// POST /api/recipes                                      add a new recipie// 
+// POST /api/recipes                                      add a new recipie//
 // GET /api/recipes/:recipieId                            get one recipie
 // PUT /api/recipes/:recipieId                            update one recipie
 // DELETE /api/recipes/:recipieId                         delete one recipie

@@ -25,7 +25,7 @@ h2 {
 }
 
 h3 {
-  font-family: "Lato", sans-serif;
+  font-family: "Ruda", sans-serif;
   color: #516f9b;
   background-color: #bacdeb;
   padding: 0.2rem;
@@ -82,6 +82,7 @@ ul {
 @media screen and (min-width: 650px) {
   .page {
     margin: 0.5rem 1rem;
+    overflow: unset;
   }
 }
 .drawer-container {
@@ -160,6 +161,13 @@ button.secondary {
   cursor: pointer;
 }
 
+.add-element-icon {
+  margin: auto;
+  background-color: #516f9b;
+  border-radius: 50%;
+  padding: 0.3rem;
+}
+
 label {
   color: #516f9b;
 }
@@ -227,6 +235,8 @@ header {
     display: flex;
     flex-direction: row;
     background-color: #E0E0E0;
+    height: auto;
+    min-height: 100%;
   }
 }
 .main-layout {
@@ -244,6 +254,7 @@ header {
     min-width: 400px;
     max-width: 45vw;
     background-color: #fff;
+    overflow: unset;
   }
 }
 .navbar {

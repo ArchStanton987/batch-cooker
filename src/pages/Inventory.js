@@ -13,8 +13,11 @@ import Search from '../components/Search'
 import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
 import Modal from '../components/Modal'
+import LoginForm from '../containers/LoginForm'
 
-export default function Inventory() {
+export default function Inventory(props) {
+  const { isLogged, setIsLogged, setToken } = props
+
   const [isExpended, setDrawer] = useState(false)
   const [isModalActive, setIngredientModal] = useState(false)
   const [activeCategories, setActiveCategories] = useState(ingredientCategories)
@@ -102,12 +105,18 @@ export default function Inventory() {
   }
 
   useEffect(() => {
+    const verifyAuth = () => {
+      // let authCookie = document.cookie
+      console.log(document.cookie)
+    }
+    verifyAuth()
     handleFetchInventory(userId)
   }, [])
 
   return (
     <>
       <div className="page">
+        {!isLogged && <LoginForm setToken={setToken} setIsLogged={setIsLogged}/>}
         {isModalActive && (
           <Modal
             title="Ajouter / modifier un ingrédient"
