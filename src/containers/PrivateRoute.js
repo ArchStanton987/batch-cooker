@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-import { fakeAuth } from '../lib/fakeAuth'
-
 export default function PrivateRoute({ children, ...rest }) {
+  const { isValidToken } = rest
+
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        fakeAuth.isAuthenticated ? (
+        isValidToken ? (
           children
         ) : (
           <Redirect

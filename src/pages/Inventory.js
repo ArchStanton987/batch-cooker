@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 
-import { fetchUserInventory, parseFetchedInventory } from '../lib/inventory'
+import {
+  addIngredientToInventory,
+  deleteIngredientFromInventory,
+  fetchUserInventory,
+  parseFetchedInventory,
+  updateIngredientFromInventory
+} from '../lib/inventory'
 import { ingredientCategories } from '../lib/ingredientCategories'
 import Ingredient from '../containers/Ingredient'
 import '../sass/pages/_Inventory.scss'
@@ -14,7 +19,7 @@ import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
 import Modal from '../components/Modal'
 
-export default function Inventory() {
+export default function Inventory(props) {
   const [isExpended, setDrawer] = useState(false)
   const [isModalActive, setIngredientModal] = useState(false)
   const [activeCategories, setActiveCategories] = useState(ingredientCategories)
@@ -23,17 +28,13 @@ export default function Inventory() {
   const [searchInput, setSearchInput] = useState('')
   const [isSearchboxActive, setSearchbox] = useState(false)
 
+  const { setIsValidToken } = props
+
   const toggleSearchbox = () => setSearchbox(prevState => !prevState)
 
   let categories = Object.entries(activeCategories)
 
   const userId = 1
-
-  const handleFetchInventory = async userId => {
-    const result = await fetchUserInventory(userId)
-    const parsedResult = parseFetchedInventory(result)
-    setInventory(parsedResult)
-  }
 
   const toggleModal = () => {
     setIngredientModal(prevState => !prevState)
@@ -66,28 +67,41 @@ export default function Inventory() {
     toggleModal()
   }
 
-  const handleDeleteIngredient = id => {
-    axios
-      .delete(`http://192.168.1.27:8000/api/inventory/user/1/ingredients/${id}`)
-      .then(() => handleFetchInventory(userId))
+  const handleFetchInventory = async () => {
+    try {
+      const result = await fetchUserInventory(userId)
+      const parsedResult = parseFetchedInventory(result.data)
+      setInventory(parsedResult)
+    } catch (err) {
+      console.log('invalid token, redirect to login')
+      setIsValidToken(false)
+    }
   }
-
-  const handleAddToInventory = newIng => {
-    axios.post('http://192.168.1.27:8000/api/inventory/user/1/ingredients', newIng).then(() => {
+  const handleDeleteIngredient = async id => {
+    try {
+      await deleteIngredientFromInventory(id, userId)
+      handleFetchInventory(userId)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const handleAddToInventory = async newIng => {
+    try {
+      await addIngredientToInventory(newIng, userId)
       toggleModal()
       handleFetchInventory(userId)
-    })
+    } catch (err) {
+      console.log(err)
+    }
   }
-  const handleUpdateFromInventory = newIng => {
-    axios
-      .put(
-        `http://192.168.1.27:8000/api/inventory/user/1/ingredients/${newIng.ingredientId}`,
-        newIng
-      )
-      .then(() => {
-        toggleModal()
-        handleFetchInventory(userId)
-      })
+  const handleUpdateFromInventory = async newIng => {
+    try {
+      await updateIngredientFromInventory(newIng, userId)
+      toggleModal()
+      handleFetchInventory(userId)
+    } catch (err) {
+      console.log(err)
+    }
   }
   const handleSubmitIngredient = (e, isUpdating) => {
     e.preventDefault()

@@ -4,10 +4,9 @@ import '../sass/components/_LoginForm.scss'
 import CTAButton from '../components/CTAButton'
 import { postLogin } from '../lib/login'
 import { useHistory, useLocation } from 'react-router'
-import { fakeAuth } from '../lib/fakeAuth'
 
 export default function LoginForm(props) {
-  let { setIsLogged } = props
+  let { setUserId, setIsValidToken } = props
 
   let history = useHistory()
   let location = useLocation()
@@ -27,34 +26,24 @@ export default function LoginForm(props) {
     setErrorMessage('')
     try {
       const result = await postLogin(credentials)
-      if (result) {
-        setIsLogged(true)
-      }
+      setUserId(result.userId)
+      setIsValidToken(true)
+      return history.replace(from)
     } catch (err) {
       setIsError(true)
-      setErrorMessage(err.response.data.error)
+      setErrorMessage(err)
     }
-  }  
-
-  const login = () => {
-    fakeAuth.authenticate(() => {
-      history.replace(from)
-    })
   }
 
   return (
     <>
       <div className="login-box">
-        <div>
-          <p>You must log in to view the {from.pathname}</p>
-          <button onClick={login}>Log in</button>
-        </div>
+        <p>You must log in to view the {from.pathname}</p>
         <form onSubmit={handleLoginSubmit} methode="post">
           <label htmlFor="email">
             <p>Email</p>
           </label>
           <input onChange={handleCredentialChange} name="email" type="text" />
-
           <label htmlFor="password">
             <p>Mot de passe</p>
           </label>
