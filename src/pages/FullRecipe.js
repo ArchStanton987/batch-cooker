@@ -33,7 +33,7 @@ export default function FullRecipe(props) {
 
   const handleFetchRecipe = async recipeId => {
     const result = await fetchRecipe(recipeId)
-    const parsedResults = parseFetchedRecipe(result)
+    const parsedResults = parseFetchedRecipe(result.data)
     setRecipe(parsedResults)
   }
 
