@@ -18,6 +18,13 @@ module.exports = {
   addNewRecipe: async (req, res) => {
     const { creatorId, name, image, url, content } = req.body
     let newRecipe = { creatorId: creatorId, name: name, image: image, url: url, content: content }
+
+    const parsedId = parseInt(creatorId, 10)
+    if (parsedId !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
+
     const existingRecipe = await models.Recipe.findOne({ where: { name: name } })
     if (existingRecipe) {
       res.status(500).json({ error: 'Recipe name already existing' })
@@ -55,8 +62,13 @@ module.exports = {
   updateOneRecipe: async (req, res) => {
     const { recipeId } = req.params
     const { name, image, url, content } = req.body
+    
     try {
       let recipe = await models.Recipe.findByPk(recipeId)
+        if (recipe.creatorId !== req.tokenUser) {
+          res.status(401).json({ error: 'Forbidden' })
+          return
+        }
       recipe.id = recipeId
       recipe.name = name
       recipe.image = image
@@ -73,6 +85,10 @@ module.exports = {
     const recipeId = req.params.recipeId
     try {
       const recipeToDelete = await models.Recipe.findByPk(recipeId)
+      if (recipeToDelete.creatorId !== req.tokenUser) {
+        res.status(401).json({ error: 'Forbidden' })
+        return
+      }
       await recipeToDelete.destroy()
       res.status(200).json({ message: 'Recipe successfully deleted' })
     } catch (err) {
@@ -80,13 +96,22 @@ module.exports = {
     }
   },
   getRecipesOfUser: async (req, res) => {
-    const userId = req.params.userId
+    const userId = parseInt(req.params.userId, 10)
+    
+    if (userId !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
     try {
       const recipes = await models.Recipe.findAll({
         where: {
           creatorId: userId
         },
-        include: [{ model: models.Ingredient, attributes: ['name'] }]
+        include: [
+          { model: models.User, attributes: ['username'] },
+          { model: models.Ingredient, attributes: ['name'] },
+          { model: models.Tag, attributes: ['tagname'] }
+        ]
       })
       res.status(200).json(recipes)
     } catch (err) {
@@ -95,6 +120,13 @@ module.exports = {
   },
   addIngredientInRecipe: async (req, res) => {
     const recipeId = parseInt(req.params.recipeId, 10)
+
+    const recipe = await models.Recipe.findByPk(recipeId)
+    if (recipe.creatorId !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
+
     const { name, category, quantity, unity } = req.body
     const newIngredient = { name: name, category: category }
 
@@ -144,6 +176,13 @@ module.exports = {
   updateIngredientFromRecipe: async (req, res) => {
     const { recipeId, ingredientId } = req.params
     const { quantity, unity } = req.body
+
+    const recipe = await models.Recipe.findByPk(recipeId)
+    if (recipe.creatorId !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
+
     try {
       const ingredient = await models.RecipeIng.findOne({
         where: { recipeId: recipeId, ingredientId: ingredientId }
@@ -162,6 +201,13 @@ module.exports = {
   },
   deleteIngredientFromRecipe: async (req, res) => {
     const { recipeId, ingredientId } = req.params
+
+    const recipe = await models.Recipe.findByPk(recipeId)
+    if (recipe.creatorId !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
+
     try {
       const ingredient = await models.RecipeIng.findOne({
         where: { recipeId: recipeId, ingredientId: ingredientId }
@@ -178,6 +224,13 @@ module.exports = {
   },
   addTagInRecipe: async (req, res) => {
     const recipeId = parseInt(req.params.recipeId, 10)
+
+    const recipe = await models.Recipe.findByPk(recipeId)
+    if (recipe.creatorId !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
+    
     const tagname = req.body.tagname.toLowerCase()
     const newTag = { tagname: tagname }
 

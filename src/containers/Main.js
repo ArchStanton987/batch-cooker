@@ -13,8 +13,13 @@ import Login from '../pages/Login'
 import '../sass/layout/_Main.scss'
 
 export default function Main() {
-  const [userId, setUserId] = useState(null)
-  const [isValidToken, setIsValidToken] = useState(true)
+  const [userId, setUserId] = useState(parseInt(sessionStorage.getItem('userId'), 10) || null)
+  const [hasUserLogged, setHasUserLogged] = useState(false)
+
+  const storage = sessionStorage.getItem('userId')
+  if (!hasUserLogged && storage !== null) {
+    setHasUserLogged(true)
+  }
 
   return (
     <main className="main-layout">
@@ -24,43 +29,23 @@ export default function Main() {
         <Route path="/recipes/:id" render={props => <FullRecipe {...props} />} />
         <Route
           path="/login"
-          render={() => (
-            <Login
-              isValidToken={isValidToken}
-              setIsValidToken={setIsValidToken}
-              setUserId={setUserId}
-            />
-          )}
+          render={() => <Login setHasUserLogged={setHasUserLogged} setUserId={setUserId} />}
         />
-        {/* <PrivateRoute path="/recipes/new">
+        <PrivateRoute hasUserLogged={hasUserLogged} path="/recipes/new">
           <NewRecipe />
-        </PrivateRoute> */}
-        <PrivateRoute
-          isValidToken={isValidToken}
-          setIsValidToken={setIsValidToken}
-          path="/inventory"
-        >
-          <Inventory
-            isValidToken={isValidToken}
-            setIsValidToken={setIsValidToken}
-            userId={userId}
-          />
         </PrivateRoute>
-        {/* <PrivateRoute path="/myrecipes">
-          <MyRecipes />
+        <PrivateRoute hasUserLogged={hasUserLogged} path="/inventory">
+          <Inventory userId={userId} />
         </PrivateRoute>
-        <PrivateRoute path="/shoplist">
+        <PrivateRoute hasUserLogged={hasUserLogged} path="/myrecipes">
+          <MyRecipes userId={userId} />
+        </PrivateRoute>
+        <PrivateRoute hasUserLogged={hasUserLogged} path="/shoplist">
           <Shoplist />
         </PrivateRoute>
-        <PrivateRoute path="/menu">
+        <PrivateRoute hasUserLogged={hasUserLogged} path="/menu">
           <Menu />
-        </PrivateRoute> */}
-
-        <Route path="/recipes/new/" render={props => <NewRecipe {...props} />} />
-        <Route path="/myrecipes/" render={props => <MyRecipes {...props} />} />
-        {/* <Route path="/inventory/" render={props => <Inventory {...props} />} /> */}
-        <Route path="/menu/" render={props => <Menu {...props} />} />
-        <Route path="/shoplist/" render={props => <Shoplist {...props} />} />
+        </PrivateRoute>
       </Switch>
     </main>
   )

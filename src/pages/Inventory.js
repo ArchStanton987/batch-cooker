@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import {
   addIngredientToInventory,
@@ -18,30 +18,26 @@ import Search from '../components/Search'
 import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
 import Modal from '../components/Modal'
+import { useToggle } from '../lib/hooks'
 
 export default function Inventory(props) {
-  const [isExpended, setDrawer] = useState(false)
-  const [isModalActive, setIngredientModal] = useState(false)
+  const { userId } = props
+
+  const [isExpended, setDrawer] = useToggle(false)
+  const [isSearchboxActive, setSearchbox] = useToggle(false)
+  const [isIngredientModalActive, setIngredientModal] = useState(false)
   const [activeCategories, setActiveCategories] = useState(ingredientCategories)
   const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
   const [searchInput, setSearchInput] = useState('')
-  const [isSearchboxActive, setSearchbox] = useState(false)
-
-  const { setIsValidToken } = props
-
-  const toggleSearchbox = () => setSearchbox(prevState => !prevState)
+  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   let categories = Object.entries(activeCategories)
 
-  const userId = 1
-
   const toggleModal = () => {
     setIngredientModal(prevState => !prevState)
-    isModalActive && setNewIngredient(null)
-  }
-  const toggleDrawer = () => {
-    setDrawer(prevState => !prevState)
+    isIngredientModalActive && setNewIngredient(null)
   }
   const toggleCategoryFilter = e => {
     let categoryName = e.target.name
@@ -50,6 +46,15 @@ export default function Inventory(props) {
     setActiveCategories(prevState => {
       return { ...prevState, ...updatedValues }
     })
+  }
+
+  const handleError = err => {
+    setIsError(true)
+    setErrorMessage(err.response.data.error)
+  }
+  const dismissError = () => {
+    setIsError(false)
+    setErrorMessage('')
   }
 
   const handleNewIngredient = e => {
@@ -67,40 +72,43 @@ export default function Inventory(props) {
     toggleModal()
   }
 
-  const handleFetchInventory = async () => {
+  const handleFetchInventory = useCallback(async () => {
+    setIsError(false)
     try {
       const result = await fetchUserInventory(userId)
       const parsedResult = parseFetchedInventory(result.data)
       setInventory(parsedResult)
     } catch (err) {
-      console.log('invalid token, redirect to login')
-      setIsValidToken(false)
+      handleError(err)
     }
-  }
+  }, [userId])
   const handleDeleteIngredient = async id => {
+    setIsError(false)
     try {
       await deleteIngredientFromInventory(id, userId)
       handleFetchInventory(userId)
     } catch (err) {
-      console.log(err)
+      handleError(err)
     }
   }
   const handleAddToInventory = async newIng => {
+    setIsError(false)
     try {
       await addIngredientToInventory(newIng, userId)
       toggleModal()
       handleFetchInventory(userId)
     } catch (err) {
-      console.log(err)
+      handleError(err)
     }
   }
   const handleUpdateFromInventory = async newIng => {
+    setIsError(false)
     try {
       await updateIngredientFromInventory(newIng, userId)
       toggleModal()
       handleFetchInventory(userId)
     } catch (err) {
-      console.log(err)
+      handleError(err)
     }
   }
   const handleSubmitIngredient = (e, isUpdating) => {
@@ -116,13 +124,24 @@ export default function Inventory(props) {
   }
 
   useEffect(() => {
-    handleFetchInventory(userId)
-  }, [])
+    handleFetchInventory()
+  }, [handleFetchInventory])
 
   return (
     <>
       <div className="page">
-        {isModalActive && (
+        {isError && (
+          <Modal
+            title="Erreur"
+            handleClose={() => {
+              dismissError()
+            }}
+            parent="ingredient"
+          >
+            {errorMessage}
+          </Modal>
+        )}
+        {isIngredientModalActive && (
           <Modal
             title="Ajouter / modifier un ingrédient"
             handleClose={toggleModal}
@@ -154,7 +173,7 @@ export default function Inventory(props) {
           </CTAButton>
         </SectionCTA>
         <Section className={''}>
-          <div onClick={toggleDrawer} className="drawer-container">
+          <div onClick={setDrawer} className="drawer-container">
             <h3>Catégories</h3>
             <ChevronIcon isExpended={isExpended} />
           </div>
@@ -218,7 +237,7 @@ export default function Inventory(props) {
             parent={'inventory'}
             handleSearchInput={handleSearchInput}
             isSearchboxActive={isSearchboxActive}
-            toggleSearchbox={toggleSearchbox}
+            toggleSearchbox={setSearchbox}
           />
           <CTAButton action={toggleModal}>
             <img className="icon cta-button--icon" src={plusIcon} alt="add to inventory" />

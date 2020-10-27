@@ -15,6 +15,7 @@ module.exports = {
           if (err) {
             res.status(403).json({ error: 'Invalid JWT' })
           } else {
+            req.tokenUser = decoded.sub
             next()
           }
         }

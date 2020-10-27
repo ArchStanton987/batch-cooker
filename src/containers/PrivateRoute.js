@@ -2,13 +2,13 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
 export default function PrivateRoute({ children, ...rest }) {
-  const { isValidToken } = rest
+  const { hasUserLogged } = rest
 
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isValidToken ? (
+        hasUserLogged ? (
           children
         ) : (
           <Redirect

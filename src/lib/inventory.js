@@ -23,27 +23,18 @@ export const parseFetchedInventory = data => {
 
 export const deleteIngredientFromInventory = async (ingredientId, userId) => {
   const url = `http://192.168.1.27:8000/api/inventory/user/${userId}/ingredients/${ingredientId}`
-  try {
-    await axios.delete(url, { withCredentials: true })
-  } catch (err) {
-    return err
-  }
+  const result = await axios.delete(url, { withCredentials: true })
+  return result
 }
 
 export const addIngredientToInventory = async (newIng, userId) => {
   const url = `http://192.168.1.27:8000/api/inventory/user/${userId}/ingredients`
-  try {
-    await axios.post(url, newIng, { withCredentials: true })
-  } catch (err) {
-    return err
-  }
+  const result = await axios.post(url, newIng, { withCredentials: true })
+  return result
 }
 
 export const updateIngredientFromInventory = async (newIng, userId) => {
   const url = `http://192.168.1.27:8000/api/inventory/user/${userId}/ingredients/${newIng.ingredientId}`
-  try {
-    await axios.put(url, newIng, { withCredentials: true })
-  } catch (err) {
-    return err
-  }
+  const result = await axios.put(url, newIng, { withCredentials: true })
+  return result
 }

@@ -1,48 +1,50 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 
 import Section from '../components/Section'
 import MyRecipesCard from '../containers/MyRecipesCard'
 import ChevronIcon from '../components/ChevronIcon'
 import plusIcon from '../assets/icons/plus.svg'
-import { fecthRecipes, parseFetchedRecipes } from '../lib/recipies'
+import { fetchSavedRecipes, parseFetchedRecipes } from '../lib/recipies'
 import '../sass/pages/_Recipes.scss'
 import '../sass/pages/_FullRecipe.scss'
 import Search from '../components/Search'
 import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
 
-export default function MyRecipes() {
+export default function MyRecipes(props) {
+  const { userId } = props
+
   const [userRecipes, setUserRecipes] = useState([])
   const [searchInput, setSearchInput] = useState('')
   const [isExpended, setDrawer] = useState(false)
 
   const toggleDrawer = () => setDrawer(prevState => !prevState)
 
-  const handleFetchRecipes = async () => {
-    const results = await fecthRecipes()
-    const parsedResults = parseFetchedRecipes(results)
-    setUserRecipes(parsedResults)
-  }
+  const handleFetchSavedRecipes = useCallback(async () => {
+    try {
+      const results = await fetchSavedRecipes(userId)
+      const parsedResults = parseFetchedRecipes(results.data)
+      setUserRecipes(parsedResults)
+    } catch (err) {
+      console.log(err)
+    }
+  }, [userId])
 
   const handleSearchInput = e => {
     setSearchInput(e.currentTarget.value)
   }
 
   useEffect(() => {
-    handleFetchRecipes()
-  }, [])
+    handleFetchSavedRecipes()
+  }, [handleFetchSavedRecipes])
 
   return (
     <>
       <div className="page">
         <h2>Mes recettes</h2>
         <SectionCTA className={'desktop-only no-border'}>
-          <Search
-            className={''}
-            handleSearchInput={handleSearchInput}
-            isSearchboxActive={true}
-          />
+          <Search className={''} handleSearchInput={handleSearchInput} isSearchboxActive={true} />
           <Link to={{ pathname: '/recipes/new' }}>
             <CTAButton className={'add-recipe'}>
               <img className="icon cta-button--icon" src={plusIcon} alt="add new recipe" />

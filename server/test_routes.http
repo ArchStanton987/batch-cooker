@@ -12,7 +12,7 @@ GET http://localhost:8000/api/users/1
 
 ###
 GET http://localhost:8000/api/recipes
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAxMDk5NjA3LCJleHAiOjE2MDExMDMyMDd9.jVrxX7FdK_GFfByqr4cWZTKpOi8_jCmOYuhxNYtFm1Q
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAzODA2NTU4LCJleHAiOjE2MDM4MTAxNTh9.4L88HJeiD3TiP82Lgb_awAamJgsSNUN0v1TQr5E8BH4
 Content-Type: application/json
 
 {
@@ -23,7 +23,9 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/api/inventory/user/1
+GET http://localhost:8000/api/recipes/users/3
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAzODA2NTU4LCJleHAiOjE2MDM4MTAxNTh9.4L88HJeiD3TiP82Lgb_awAamJgsSNUN0v1TQr5E8BH4
+
 
 ###
 PUT http://localhost:8000/api/tags/1

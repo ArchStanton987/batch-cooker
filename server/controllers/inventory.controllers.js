@@ -3,11 +3,16 @@ const { Op } = require('sequelize')
 
 module.exports = {
   getUserInventory: async (req, res) => {
-    const userId = req.params.userId
+    const userId = parseInt(req.params.userId, 10)    
+    if (userId !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
     try {
       const user = await models.User.findByPk(userId)
       if (!user) {
         res.status(404).json({ error: 'Unknown user' })
+        return
       } else {
         const inventory = await models.Inventory.findAll({
           where: { userId: userId },
@@ -25,6 +30,11 @@ module.exports = {
     let { ingredientName, category, quantity, unity } = req.body
     let { userId } = req.params
     let newIngredient = { name: ingredientName.toLowerCase(), category: category }
+
+    if (parseInt(userId,10) !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
 
     const user = await models.User.findByPk(userId)
     if (!user) {
@@ -71,10 +81,16 @@ module.exports = {
   },
 
   updateFromInventory: async (req, res) => {
-    const userId = req.params.userId
+    const userId = req.params.userId    
     const ingredientId = req.params.ingredientId
     const quantity = parseInt(req.body.quantity, 10)
     const { unity } = req.body
+
+    if (parseInt(userId,10) !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
+
     try {
       const user = await models.User.findByPk(userId)
       if (!user) {
@@ -95,6 +111,12 @@ module.exports = {
   deleteFromInventory: async (req, res) => {
     const userId = req.params.userId
     const ingredientId = req.params.ingredientId
+
+    if (parseInt(userId,10) !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
+    
     try {
       const user = await models.User.findByPk(userId)
       if (!user) {
