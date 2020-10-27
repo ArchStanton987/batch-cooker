@@ -9,17 +9,20 @@ import { useToggle } from '../lib/hooks'
 
 export default function Layout() {
   const [isSideMenuActive, setMenu] = useToggle(false)
-
   const [userId, setUserId] = useState(parseInt(sessionStorage.getItem('userId'), 10) || null)
+  const [userName, setUserName] = useState('')
   const [hasUserLogged, setHasUserLogged] = useState(false)
 
-  const storage = sessionStorage.getItem('userId')
-  if (!hasUserLogged && storage !== null) {
+  const storageId = sessionStorage.getItem('userId')
+  const storageUsername = sessionStorage.getItem('username')
+  if (!hasUserLogged && storageId !== null) {
     setHasUserLogged(true)
+    setUserName(storageUsername)
   }
 
   const handleDisconnect = () => {
     sessionStorage.removeItem('userId')
+    sessionStorage.removeItem('username')
     setHasUserLogged(false)
     if (isSideMenuActive) {
       return setMenu()
@@ -31,16 +34,19 @@ export default function Layout() {
       <div className="global-layout">
         <Header setMenu={setMenu} />
         <Sidemenu
+          userName={userName}
           isSideMenuActive={isSideMenuActive}
           setMenu={setMenu}
           handleDisconnect={handleDisconnect}
           hasUserLogged={hasUserLogged}
         />
         <Main
+          userName={userName}
           userId={userId}
           setUserId={setUserId}
           hasUserLogged={hasUserLogged}
           setHasUserLogged={setHasUserLogged}
+          setUserName={setUserName}
         />
       </div>
     </Div100vh>

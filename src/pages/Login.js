@@ -6,7 +6,7 @@ import { postLogin } from '../lib/login'
 import { useHistory, useLocation } from 'react-router'
 
 export default function LoginForm(props) {
-  let { setUserId, setHasUserLogged } = props
+  let { setUserId, setHasUserLogged, setUserName } = props
 
   let history = useHistory()
   let location = useLocation()
@@ -25,9 +25,11 @@ export default function LoginForm(props) {
     setIsError(false)
     setErrorMessage('')
     try {
-      const result = await postLogin(credentials)
+      const result = await postLogin(credentials)      
       sessionStorage.setItem('userId', result.data.userId)
+      sessionStorage.setItem('username', result.data.username)
       setUserId(result.data.userId)
+      setUserName(result.data.username)
       setHasUserLogged(true)
       return history.replace(from)
     } catch (err) {

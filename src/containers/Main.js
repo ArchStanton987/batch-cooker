@@ -14,7 +14,7 @@ import '../sass/layout/_Main.scss'
 import Profile from '../pages/Profile'
 
 export default function Main({ ...props }) {
-  const { setHasUserLogged, setUserId, userId, hasUserLogged } = props
+  const { setHasUserLogged, setUserId, userId, hasUserLogged, setUserName } = props
 
   return (
     <main className="main-layout">
@@ -24,7 +24,13 @@ export default function Main({ ...props }) {
         <Route path="/recipes/:id" render={props => <FullRecipe {...props} />} />
         <Route
           path="/login"
-          render={() => <Login setHasUserLogged={setHasUserLogged} setUserId={setUserId} />}
+          render={() => (
+            <Login
+              setHasUserLogged={setHasUserLogged}
+              setUserId={setUserId}
+              setUserName={setUserName}
+            />
+          )}
         />
         <PrivateRoute hasUserLogged={hasUserLogged} path="/recipes/new">
           <NewRecipe />

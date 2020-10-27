@@ -61,7 +61,9 @@ module.exports = {
               httpOnly: true,
               sameSite: 'none'
             })
-            res.status(200).json({ message: 'Login succeeded', userId: user.id })
+            res
+              .status(200)
+              .json({ message: 'Login succeeded', userId: user.id, username: user.username })
           }
         )
       }

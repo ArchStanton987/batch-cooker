@@ -12,8 +12,7 @@ import '../sass/layout/_Sidemenu.scss'
 import CloseIcon from '../components/CloseIcon'
 
 export default function Sidemenu({ ...props }) {
-  const { setMenu, isSideMenuActive, handleDisconnect, hasUserLogged } = props
-  const userId = sessionStorage.getItem('userId')
+  const { setMenu, isSideMenuActive, handleDisconnect, hasUserLogged, userName } = props
 
   return (
     <div className="sidemenu-container">
@@ -33,10 +32,20 @@ export default function Sidemenu({ ...props }) {
             </>
           )}
         </NavLink>
-        <NavLink className="sidemenu--link desktop-only" onClick={() => setMenu()} to="/login">
-        <img className="icon" src={userIcon} alt="connexion" />
-          <p>Se connecter</p>
-        </NavLink>
+        {!hasUserLogged && (
+          <NavLink className="sidemenu--link desktop-only" onClick={() => setMenu()} to="/login">
+            <img className="icon" src={userIcon} alt="connexion" />
+            <p>Se connecter</p>
+          </NavLink>
+        )}
+        {hasUserLogged && (
+          <NavLink className="sidemenu--link desktop-only" onClick={() => setMenu()} to="/profile">
+            <>
+              <img className="icon" src={userIcon} alt="profil" />
+              <p>{userName}</p>
+            </>
+          </NavLink>
+        )}
         <hr className="sidemenu--hr" />
         <nav className="sidemenu--navlist">
           <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/home">
