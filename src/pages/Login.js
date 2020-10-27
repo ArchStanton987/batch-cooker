@@ -39,7 +39,7 @@ export default function LoginForm(props) {
   return (
     <>
       <div className="login-box">
-        <p>You must log in to view the {from.pathname}</p>
+        <p>Vous devez être connecté pour accéder à la page : "{from.pathname}"</p>
         <form onSubmit={handleLoginSubmit} methode="post">
           <label htmlFor="email">
             <p>Email</p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import Home from '../pages/Home'
@@ -11,15 +11,10 @@ import Shoplist from '../pages/Shoplist'
 import PrivateRoute from './PrivateRoute'
 import Login from '../pages/Login'
 import '../sass/layout/_Main.scss'
+import Profile from '../pages/Profile'
 
-export default function Main() {
-  const [userId, setUserId] = useState(parseInt(sessionStorage.getItem('userId'), 10) || null)
-  const [hasUserLogged, setHasUserLogged] = useState(false)
-
-  const storage = sessionStorage.getItem('userId')
-  if (!hasUserLogged && storage !== null) {
-    setHasUserLogged(true)
-  }
+export default function Main({ ...props }) {
+  const { setHasUserLogged, setUserId, userId, hasUserLogged } = props
 
   return (
     <main className="main-layout">
@@ -45,6 +40,9 @@ export default function Main() {
         </PrivateRoute>
         <PrivateRoute hasUserLogged={hasUserLogged} path="/menu">
           <Menu />
+        </PrivateRoute>
+        <PrivateRoute hasUserLogged={hasUserLogged} path="/profile">
+          <Profile />
         </PrivateRoute>
       </Switch>
     </main>

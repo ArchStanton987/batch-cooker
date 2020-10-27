@@ -4,7 +4,7 @@ import homeIcon from '../assets/icons/home-icon.png'
 import menuIcon from '../assets/icons/burger.svg'
 import '../sass/layout/_Header.scss'
 
-export default function Header({ toggleFunction, setMenu }) {
+export default function Header({ setMenu }) {
   return (
     <header className="header mobile-only">
       <Link id="homeIcon-link" to="/">
@@ -15,7 +15,7 @@ export default function Header({ toggleFunction, setMenu }) {
         className="header--icon icon"
         src={menuIcon}
         alt="menu"
-        onClick={() => toggleFunction(setMenu)}
+        onClick={() => setMenu()}
       />
     </header>
   )
