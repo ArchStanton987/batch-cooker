@@ -76,8 +76,23 @@ export default function Register(props) {
   return (
     <>
       {isConfirmationActive && (
-        <Modal handleClose={() => setConfirmation(false)} title={'Message'} parent={'register'}>
+        <Modal
+          handleClose={() => {
+            setConfirmation(false)
+            return history.replace(from)
+          }}
+          title={'Message'}
+          parent={'register'}
+        >
           Votre compte a bien été créé, vous allez être redirigé vers la page de connexion.
+          <CTAButton
+            onClick={() => {
+              setConfirmation(false)
+              return history.replace(from)
+            }}
+          >
+            OK
+          </CTAButton>
         </Modal>
       )}
       <div className="full-page-container">
@@ -118,11 +133,7 @@ export default function Register(props) {
               <p className={`error-message ${!isConfirmationValid && 'visible'}`}>
                 Les deux mots de passe ne sont pas identiques
               </p>
-              {isError && (
-                <p className={`error-message visible`}>
-                  {errorMessage}
-                </p>
-              )}
+              {isError && <p className={`error-message visible`}>{errorMessage}</p>}
               <CTAButton action={e => handleRegisterSubmit(e)} className={'authentication'}>
                 Créer mon compte
               </CTAButton>
