@@ -10,6 +10,7 @@ import Inventory from '../pages/Inventory'
 import Shoplist from '../pages/Shoplist'
 import PrivateRoute from './PrivateRoute'
 import Login from '../pages/Login'
+import Register from '../pages/Register'
 import '../sass/layout/_Main.scss'
 import Profile from '../pages/Profile'
 
@@ -32,6 +33,8 @@ export default function Main({ ...props }) {
             />
           )}
         />
+        <Route path="/register" render={() => <Register />} />
+
         <PrivateRoute hasUserLogged={hasUserLogged} path="/recipes/new">
           <NewRecipe />
         </PrivateRoute>

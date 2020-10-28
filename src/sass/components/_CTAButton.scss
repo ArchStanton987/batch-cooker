@@ -1,7 +1,13 @@
+@use '../variables' as v;
+
 .cta-button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  a {
+    text-decoration: none;
+    color: v.$color1;
+  }
 }
 
 .icon.cta-button--icon {

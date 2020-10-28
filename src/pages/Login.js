@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-import '../sass/pages/_Login.scss'
+import '../sass/pages/_Login&Register.scss'
 import CTAButton from '../components/CTAButton'
-import { postLogin } from '../lib/login'
+import { postLogin } from '../lib/account'
 import { useHistory, useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 
@@ -43,14 +43,16 @@ export default function LoginForm(props) {
     <>
       <div className="full-page-container">
         <div className="full-page-columnlayout">
-          <h1 className="full-page--title">BatchCooker</h1>
+          <h1 className="full-page--title">
+            <Link to="/home">BatchCooker</Link>
+          </h1>
           <div className="box">
             <h4>Connexion à votre compte</h4>
             <form className="flexColumn" onSubmit={handleLoginSubmit} methode="post">
               <label htmlFor="email">
                 <p>Email</p>
               </label>
-              <input autoFocus="true" onChange={handleCredentialChange} name="email" type="text" />
+              <input autoFocus={true} onChange={handleCredentialChange} name="email" type="text" />
               <label htmlFor="password">
                 <p>Mot de passe</p>
               </label>
@@ -59,12 +61,18 @@ export default function LoginForm(props) {
               <CTAButton action={e => handleLoginSubmit(e)} className={'authentication fancy-font'}>
                 Se connecter
               </CTAButton>
-              <hr className="box--hr" />
-              <Link className="authentication-link">Nouveau sur BatchCooker ?</Link>
-              <CTAButton className={'authentication secondary'}>Je créée un compte</CTAButton>
             </form>
+            <hr className="box--hr" />
+            <Link className="authentication-link" to="/register">
+              Nouveau sur BatchCooker ?
+            </Link>
+            <CTAButton className={'authentication secondary nolink'}>
+              <Link to="/register">Je créée un compte</Link>
+            </CTAButton>
           </div>
-          <Link className="authentication-link white">Mot de passe oublié ?</Link>
+          <Link to="/home" className="authentication-link white">
+            Mot de passe oublié ?
+          </Link>
         </div>
       </div>
     </>

@@ -33,7 +33,6 @@
   }
   .sidemenu {
     position: fixed;
-    // z-index: 2;
     z-index: 1;
     width: 20vw;
     min-width: 250px;
@@ -99,6 +98,7 @@
   p {
     margin-left: 0.5rem;
     color: v.$color2;
+    padding: 0.5rem 0;
   }
 }
 
