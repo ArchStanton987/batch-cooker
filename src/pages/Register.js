@@ -26,6 +26,8 @@ export default function Register(props) {
   const [isUsernameValid, setIsUsernameValid] = useState(true)
   const [isPasswordValid, setIsPasswordValid] = useState(true)
   const [isConfirmationValid, setIsConfirmationValid] = useState(true)
+  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleCredentialChange = e => {
     setCredentials({ ...credentials, [e.currentTarget.name]: e.currentTarget.value })
@@ -50,21 +52,23 @@ export default function Register(props) {
 
   const handleRegisterSubmit = async e => {
     e.preventDefault()
-
+    setIsError(false)
     checkEmailValidity(credentials.email)
     checkUsernameValidity(credentials.username)
     checkPasswordValidity(credentials.password)
     checkConfirmationValidity(credentials.password, credentials.passwordConfirmation)
-
     if (!isEmailValid || !isUsernameValid || !isPasswordValid || !isConfirmationValid) {
       return
     }
-
     try {
       await postRegister(credentials)
       setConfirmation(true)
-      return history.replace(from)
+      setInterval(() => {
+        return history.replace(from)
+      }, 6000)
     } catch (err) {
+      setIsError(true)
+      setErrorMessage(err.response.data.error)
       console.log(err)
     }
   }
@@ -73,7 +77,7 @@ export default function Register(props) {
     <>
       {isConfirmationActive && (
         <Modal handleClose={() => setConfirmation(false)} title={'Message'} parent={'register'}>
-          Votre compte a bien été crée, vous pouvez maintenant vous connecter.
+          Votre compte a bien été créé, vous allez être redirigé vers la page de connexion.
         </Modal>
       )}
       <div className="full-page-container">
@@ -114,6 +118,11 @@ export default function Register(props) {
               <p className={`error-message ${!isConfirmationValid && 'visible'}`}>
                 Les deux mots de passe ne sont pas identiques
               </p>
+              {isError && (
+                <p className={`error-message visible`}>
+                  {errorMessage}
+                </p>
+              )}
               <CTAButton action={e => handleRegisterSubmit(e)} className={'authentication'}>
                 Créer mon compte
               </CTAButton>
