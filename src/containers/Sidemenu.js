@@ -28,7 +28,7 @@ export default function Sidemenu({ ...props }) {
           {hasUserLogged && (
             <>
               <img className="icon" src={userIcon} alt="profil" />
-              <p>Username</p>
+              <p>{userName}</p>
             </>
           )}
         </NavLink>

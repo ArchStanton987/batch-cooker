@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 
-import '../sass/components/_LoginForm.scss'
+import '../sass/pages/_Login.scss'
 import CTAButton from '../components/CTAButton'
 import { postLogin } from '../lib/login'
 import { useHistory, useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
 
 export default function LoginForm(props) {
   let { setUserId, setHasUserLogged, setUserName } = props
@@ -25,7 +26,7 @@ export default function LoginForm(props) {
     setIsError(false)
     setErrorMessage('')
     try {
-      const result = await postLogin(credentials)      
+      const result = await postLogin(credentials)
       sessionStorage.setItem('userId', result.data.userId)
       sessionStorage.setItem('username', result.data.username)
       setUserId(result.data.userId)
@@ -40,23 +41,31 @@ export default function LoginForm(props) {
 
   return (
     <>
-      <div className="login-box">
-        <p>Vous devez être connecté pour accéder à la page : "{from.pathname}"</p>
-        <form onSubmit={handleLoginSubmit} methode="post">
-          <label htmlFor="email">
-            <p>Email</p>
-          </label>
-          <input onChange={handleCredentialChange} name="email" type="text" />
-          <label htmlFor="password">
-            <p>Mot de passe</p>
-          </label>
-          <input onChange={handleCredentialChange} name="password" type="password" />
-          {isError && <p className="error-message">{errorMessage}</p>}
-          <CTAButton className={'authentication'}>Je créée un compte</CTAButton>
-          <CTAButton action={e => handleLoginSubmit(e)} className={'authentication'}>
-            Connexion
-          </CTAButton>
-        </form>
+      <div className="full-page-container">
+        <div className="full-page-columnlayout">
+          <h1 className="full-page--title">BatchCooker</h1>
+          <div className="box">
+            <h4>Connexion à votre compte</h4>
+            <form className="flexColumn" onSubmit={handleLoginSubmit} methode="post">
+              <label htmlFor="email">
+                <p>Email</p>
+              </label>
+              <input autoFocus="true" onChange={handleCredentialChange} name="email" type="text" />
+              <label htmlFor="password">
+                <p>Mot de passe</p>
+              </label>
+              <input onChange={handleCredentialChange} name="password" type="password" />
+              <p className={`error-message ${isError && 'visible'}`}>{errorMessage}</p>
+              <CTAButton action={e => handleLoginSubmit(e)} className={'authentication fancy-font'}>
+                Se connecter
+              </CTAButton>
+              <hr className="box--hr" />
+              <Link className="authentication-link">Nouveau sur BatchCooker ?</Link>
+              <CTAButton className={'authentication secondary'}>Je créée un compte</CTAButton>
+            </form>
+          </div>
+          <Link className="authentication-link white">Mot de passe oublié ?</Link>
+        </div>
       </div>
     </>
   )
