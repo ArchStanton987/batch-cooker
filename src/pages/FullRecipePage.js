@@ -12,7 +12,7 @@ import favIconFullYellow from '../assets/icons/star-full-yellow.svg'
 import calendarIcon from '../assets/icons/calendarIcon.png'
 import defaultPic from '../assets/images/chefhat.png'
 
-export default function FullRecipe(props) {
+export default function FullRecipePage(props) {
   const [recipe, setRecipe] = useState({})
   const {
     name,

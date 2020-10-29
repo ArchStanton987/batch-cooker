@@ -2,7 +2,7 @@ import React from 'react'
 
 import Section from '../components/Section'
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <div className="page">

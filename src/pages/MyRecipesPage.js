@@ -12,7 +12,7 @@ import Search from '../components/Search'
 import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
 
-export default function MyRecipes(props) {
+export default function MyRecipesPage(props) {
   const { userId } = props
 
   const [userRecipes, setUserRecipes] = useState([])

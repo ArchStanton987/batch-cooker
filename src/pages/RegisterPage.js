@@ -11,7 +11,7 @@ import { validate } from '../lib/account'
 
 import { postRegister } from '../lib/account'
 
-export default function Register() {
+export default function RegisterPage() {
   const initialValues = {
     email: '',
     password: '',

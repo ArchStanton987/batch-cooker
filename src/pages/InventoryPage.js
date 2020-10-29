@@ -20,7 +20,7 @@ import CTAButton from '../components/CTAButton'
 import Modal from '../components/Modal'
 import { useToggle } from '../lib/hooks'
 
-export default function Inventory(props) {
+export default function InventoryPage(props) {
   const { userId } = props
 
   const [isExpended, setDrawer] = useToggle(false)

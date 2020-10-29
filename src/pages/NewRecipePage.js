@@ -10,7 +10,7 @@ import Section from '../components/Section'
 import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
 
-export default function NewRecipe() {
+export default function NewRecipePage() {
   const initialValue = {
     creatorId: 1,
     name: '',

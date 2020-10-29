@@ -1,18 +1,18 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import Home from '../pages/Home'
-import Menu from '../pages/Menu'
-import FullRecipe from '../pages/FullRecipe'
-import NewRecipe from '../pages/NewRecipe'
-import MyRecipes from '../pages/MyRecipes'
-import Inventory from '../pages/Inventory'
-import Shoplist from '../pages/Shoplist'
+import HomePage from '../pages/HomePage'
+import MenuPage from '../pages/MenuPage'
+import FullRecipePage from '../pages/FullRecipePage'
+import NewRecipePage from '../pages/NewRecipePage'
+import MyRecipesPage from '../pages/MyRecipesPage'
+import InventoryPage from '../pages/InventoryPage'
+import ShoplistPage from '../pages/ShoplistPage'
+import LoginPage from '../pages/LoginPage'
+import RegisterPage from '../pages/RegisterPage'
+import ProfilePage from '../pages/ProfilePage'
 import PrivateRoute from './PrivateRoute'
-import Login from '../pages/Login'
-import Register from '../pages/Register'
 import '../sass/layout/_Main.scss'
-import Profile from '../pages/Profile'
 
 export default function Main({ ...props }) {
   const { setHasUserLogged, setUserId, userId, hasUserLogged, setUserName } = props
@@ -20,38 +20,38 @@ export default function Main({ ...props }) {
   return (
     <main className="main-layout">
       <Switch>
-        <Route exact path="/" render={() => <Home />} />
-        <Route path="/home" render={() => <Home />} />
-        <Route path="/recipes/:id" render={props => <FullRecipe {...props} />} />
+        <Route exact path="/" render={() => <HomePage />} />
+        <Route path="/home" render={() => <HomePage />} />
+        <Route path="/recipes/:id" render={props => <FullRecipePage {...props} />} />
         <Route
           path="/login"
           render={() => (
-            <Login
+            <LoginPage
               setHasUserLogged={setHasUserLogged}
               setUserId={setUserId}
               setUserName={setUserName}
             />
           )}
         />
-        <Route path="/register" render={() => <Register />} />
+        <Route path="/register" render={() => <RegisterPage />} />
 
         <PrivateRoute hasUserLogged={hasUserLogged} path="/recipes/new">
-          <NewRecipe />
+          <NewRecipePage />
         </PrivateRoute>
         <PrivateRoute hasUserLogged={hasUserLogged} path="/inventory">
-          <Inventory userId={userId} />
+          <InventoryPage userId={userId} />
         </PrivateRoute>
         <PrivateRoute hasUserLogged={hasUserLogged} path="/myrecipes">
-          <MyRecipes userId={userId} />
+          <MyRecipesPage userId={userId} />
         </PrivateRoute>
         <PrivateRoute hasUserLogged={hasUserLogged} path="/shoplist">
-          <Shoplist />
+          <ShoplistPage />
         </PrivateRoute>
         <PrivateRoute hasUserLogged={hasUserLogged} path="/menu">
-          <Menu />
+          <MenuPage />
         </PrivateRoute>
         <PrivateRoute hasUserLogged={hasUserLogged} path="/profile">
-          <Profile />
+          <ProfilePage />
         </PrivateRoute>
       </Switch>
     </main>
