@@ -35,7 +35,15 @@ export default function LoginForm(props) {
       return history.replace(from)
     } catch (err) {
       setIsError(true)
-      setErrorMessage(err.response.data.error)
+      if (err.response) {
+        setErrorMessage(err.response.data.error)
+        return
+      }
+      if (err.request) {
+        setErrorMessage('Erreur dans la requête')
+        return
+      }
+      setErrorMessage(err.message)
     }
   }
 

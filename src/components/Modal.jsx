@@ -11,7 +11,7 @@ export default function Modal(props) {
         <div className="modal--box">
           <div className="flexRow spaceBetween alignItemsCenter">
             <h4>{title}</h4>
-            <CloseIcon onClick={handleClose} parent={`${parent} modal`} />
+            {handleClose && <CloseIcon onClick={handleClose} parent={`${parent} modal`} />}
           </div>
           {props.children}
         </div>

@@ -10,7 +10,13 @@ const tags = require('./routes/tags')
 
 const app = express()
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000', optionsSuccessStatus: 200 }))
+app.use(
+  cors({
+    credentials: true,
+    origin: ['http://localhost:3000', 'http://192.168.1.27:3000'],
+    optionsSuccessStatus: 200
+  })
+)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

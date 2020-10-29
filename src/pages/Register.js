@@ -1,98 +1,139 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import validator from 'validator'
 
 import '../sass/pages/_Login&Register.scss'
 import CTAButton from '../components/CTAButton'
+import Modal from '../components/Modal'
+import SectionCTA from '../components/SectionCTA'
+import Section from '../components/Section'
+import Form from '../components/Form'
+
 import { postRegister } from '../lib/account'
 import { useHistory, useLocation } from 'react-router'
-import { Link } from 'react-router-dom'
-import Modal from '../components/Modal'
 
 export default function Register(props) {
   let history = useHistory()
   let location = useLocation()
   let { from } = location.state || { from: { pathname: '/login' } }
 
-  const defaultValues = {
+  const initialValues = {
     email: '',
     password: '',
     username: '',
-    passwordConfirmation: ''
+    confirmation: ''
   }
 
-  const [credentials, setCredentials] = useState(defaultValues)
+  const emailValidation = email => (validator.isEmail(email) ? null : 'Email invalide')
+  const usernameValidation = username => {
+    return validator.isLength(username, { min: 4, max: 20 })
+      ? null
+      : 'Doit avoir entre 4 et 20 caractères'
+  }
+  const passwordValidation = password => {
+    return validator.isLength(password, { min: 6, max: 30 })
+      ? null
+      : 'Doit avoir entre 6 et 30 caractères'
+  }
+  const confirmationValidation = confirmation => {
+    const password = document.getElementById('register-form-password')
+    return validator.equals(confirmation, password.value) ? null : 'Champ différent du mot de passe'
+  }
+
+  const validate = {
+    email: emailValidation,
+    username: usernameValidation,
+    password: passwordValidation,
+    confirmation: confirmationValidation
+  }
+
+  const [credentials, setCredentials] = useState(initialValues)
   const [isConfirmationActive, setConfirmation] = useState(false)
-  const [isEmailValid, setIsEmailValid] = useState(true)
-  const [isUsernameValid, setIsUsernameValid] = useState(true)
-  const [isPasswordValid, setIsPasswordValid] = useState(true)
-  const [isConfirmationValid, setIsConfirmationValid] = useState(true)
-  const [isError, setIsError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
+  const [responseError, setResponseError] = useState(false)
+  const [responseErrorMessage, setResponseErrorMessage] = useState('')
 
   const handleCredentialChange = e => {
-    setCredentials({ ...credentials, [e.currentTarget.name]: e.currentTarget.value })
+    const { name, value } = e.target
+    setCredentials({ ...credentials, [name]: value })
+    setTouched({ ...touched, [name]: true })
   }
 
-  const checkEmailValidity = email => {
-    const isValid = validator.isEmail(email)
-    isValid ? setIsEmailValid(true) : setIsEmailValid(false)
-  }
-  const checkUsernameValidity = username => {
-    const isValid = validator.isLength(username, { min: 5, max: 20 })
-    isValid ? setIsUsernameValid(true) : setIsUsernameValid(false)
-  }
-  const checkPasswordValidity = password => {
-    const isValid = validator.isLength(password, { min: 6, max: 30 })
-    isValid ? setIsPasswordValid(true) : setIsPasswordValid(false)
-  }
-  const checkConfirmationValidity = (password, passwordConfirmation) => {
-    const isValid = validator.equals(password, passwordConfirmation)
-    isValid ? setIsConfirmationValid(true) : setIsConfirmationValid(false)
+  const handleBlur = e => {
+    const { name, value } = e.target
+    const { [name]: removedError, ...rest } = errors
+    const error = validate[name](value)
+    setErrors({ ...rest, ...(error && { [name]: touched[name] && error }) })
   }
 
   const handleRegisterSubmit = async e => {
     e.preventDefault()
-    setIsError(false)
-    checkEmailValidity(credentials.email)
-    checkUsernameValidity(credentials.username)
-    checkPasswordValidity(credentials.password)
-    checkConfirmationValidity(credentials.password, credentials.passwordConfirmation)
-    if (!isEmailValid || !isUsernameValid || !isPasswordValid || !isConfirmationValid) {
-      return
-    }
-    try {
-      await postRegister(credentials)
-      setConfirmation(true)
-      setInterval(() => {
-        return history.replace(from)
-      }, 6000)
-    } catch (err) {
-      setIsError(true)
-      setErrorMessage(err.response.data.error)
-      console.log(err)
+
+    const formValidation = Object.keys(credentials).reduce(
+      (acc, key) => {
+        const newError = validate[key](credentials[key])
+        const newTouched = { [key]: true }
+        return {
+          errors: {
+            ...acc.errors,
+            ...(newError && { [key]: newError })
+          },
+          touched: {
+            ...acc.touched,
+            ...newTouched
+          }
+        }
+      },
+      {
+        errors: { ...errors },
+        touched: { ...touched }
+      }
+    )
+    setErrors(formValidation.errors)
+    setTouched(formValidation.touched)
+    if (
+      !Object.values(formValidation.errors).length && // errors object is empty
+      Object.values(formValidation.touched).length === Object.values(credentials).length && // all fields were touched
+      Object.values(formValidation.touched).every(t => t === true) // every touched field is true
+    ) {
+      try {
+        const res = await postRegister(credentials)
+        setConfirmation(true)
+      } catch (err) {
+        setResponseError(true)
+        if (err.response) {
+          setResponseErrorMessage(err.response.data.error)
+          return
+        }
+        if (err.request) {
+          setResponseErrorMessage('Erreur dans la requête')
+          return
+        }
+        setResponseErrorMessage(err.message)
+      }
     }
   }
 
   return (
     <>
       {isConfirmationActive && (
-        <Modal
-          handleClose={() => {
-            setConfirmation(false)
-            return history.replace(from)
-          }}
-          title={'Message'}
-          parent={'register'}
-        >
-          Votre compte a bien été créé, vous allez être redirigé vers la page de connexion.
-          <CTAButton
-            onClick={() => {
-              setConfirmation(false)
-              return history.replace(from)
-            }}
-          >
-            OK
-          </CTAButton>
+        <Modal title={'Compte créé'} parent={'register'}>
+          <Section className="no-border">
+            Votre compte a bien été créé, Vous pouvez à présent vous connecter sur la page de
+            connexion.
+          </Section>
+          <SectionCTA className="no-border">
+            <Link to="/home">
+              <CTAButton className="secondary" action={() => setConfirmation(false)}>
+                Retour à l'accueil
+              </CTAButton>
+            </Link>
+            <Link to="/login">
+              <CTAButton action={() => setConfirmation(false)}>Connexion</CTAButton>
+            </Link>
+          </SectionCTA>
         </Modal>
       )}
       <div className="full-page-container">
@@ -100,44 +141,65 @@ export default function Register(props) {
           <h1 className="full-page--title">BatchCooker</h1>
           <div className="box">
             <h4>Création de votre compte</h4>
-            <form className="flexColumn" onSubmit={handleRegisterSubmit} methode="post">
-              <label htmlFor="email">
+            <Form className={'flexColumn'} handleSubmit={handleRegisterSubmit} method={'post'}>
+              <label htmlFor="register-form-email">
                 <p>Email</p>
               </label>
-              <input autoFocus={true} onChange={handleCredentialChange} name="email" type="text" />
-              <p className={`error-message ${!isEmailValid && 'visible'}`}>
-                Ce champ doit être de type email
-              </p>
-              <label htmlFor="username">
+              <input
+                type="text"
+                id="register-form-email"
+                name="email"
+                value={credentials.email}
+                autoFocus={true}
+                onChange={handleCredentialChange}
+                onBlur={handleBlur}
+                required
+              />
+              <p className={`error-message visible`}>{touched.email && errors.email}</p>
+              <label htmlFor="register-form-username">
                 <p>Nom d'utilisateur</p>
               </label>
-              <input onChange={handleCredentialChange} name="username" type="text" />
-              <p className={`error-message ${!isUsernameValid && 'visible'}`}>
-                Le nom doit avoir entre 4 et 30 caractères
-              </p>
-              <label htmlFor="password">
+              <input
+                type="text"
+                id="register-form-username"
+                name="username"
+                value={credentials.username}
+                onChange={handleCredentialChange}
+                onBlur={handleBlur}
+                required
+              />
+              <p className={`error-message visible`}>{touched.username && errors.username}</p>
+              <label htmlFor="register-form-password">
                 <p>Mot de passe</p>
               </label>
-              <input onChange={handleCredentialChange} name="password" type="password" />
-              <p className={`error-message ${!isPasswordValid && 'visible'}`}>
-                Le mot de passe doit avoir entre 6 et 30 caractères
-              </p>
-              <label htmlFor="passwordConfirmation">
+              <input
+                type="password"
+                id="register-form-password"
+                name="password"
+                value={credentials.password}
+                onChange={handleCredentialChange}
+                onBlur={handleBlur}
+                required
+              />
+              <p className={`error-message visible`}>{touched.password && errors.password}</p>
+              <label htmlFor="register-form-confirmation">
                 <p>Confirmez le mot de passe</p>
               </label>
               <input
-                onChange={handleCredentialChange}
-                name="passwordConfirmation"
                 type="password"
+                id="register-form-confirmation"
+                name="confirmation"
+                value={credentials.confirmation}
+                onChange={handleCredentialChange}
+                onBlur={handleBlur}
+                required
               />
-              <p className={`error-message ${!isConfirmationValid && 'visible'}`}>
-                Les deux mots de passe ne sont pas identiques
+              <p className={`error-message visible`}>
+                {touched.confirmation && errors.confirmation}
               </p>
-              {isError && <p className={`error-message visible`}>{errorMessage}</p>}
-              <CTAButton action={e => handleRegisterSubmit(e)} className={'authentication'}>
-                Créer mon compte
-              </CTAButton>
-            </form>
+              <p className={`error-message visible`}>{responseError && responseErrorMessage}</p>
+              <CTAButton className={'authentication'}>Créer mon compte</CTAButton>
+            </Form>
           </div>
           <Link to="/login" className="authentication-link white">
             Vous avez déjà un compte ? Se connecter
