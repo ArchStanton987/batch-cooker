@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import validator from 'validator'
 
 import '../sass/pages/_Login&Register.scss'
 import CTAButton from '../components/CTAButton'
@@ -8,15 +7,11 @@ import Modal from '../components/Modal'
 import SectionCTA from '../components/SectionCTA'
 import Section from '../components/Section'
 import Form from '../components/Form'
+import { validate } from '../lib/account'
 
 import { postRegister } from '../lib/account'
-import { useHistory, useLocation } from 'react-router'
 
-export default function Register(props) {
-  let history = useHistory()
-  let location = useLocation()
-  let { from } = location.state || { from: { pathname: '/login' } }
-
+export default function Register() {
   const initialValues = {
     email: '',
     password: '',
@@ -24,32 +19,8 @@ export default function Register(props) {
     confirmation: ''
   }
 
-  const emailValidation = email => (validator.isEmail(email) ? null : 'Email invalide')
-  const usernameValidation = username => {
-    return validator.isLength(username, { min: 4, max: 20 })
-      ? null
-      : 'Doit avoir entre 4 et 20 caractères'
-  }
-  const passwordValidation = password => {
-    return validator.isLength(password, { min: 6, max: 30 })
-      ? null
-      : 'Doit avoir entre 6 et 30 caractères'
-  }
-  const confirmationValidation = confirmation => {
-    const password = document.getElementById('register-form-password')
-    return validator.equals(confirmation, password.value) ? null : 'Champ différent du mot de passe'
-  }
-
-  const validate = {
-    email: emailValidation,
-    username: usernameValidation,
-    password: passwordValidation,
-    confirmation: confirmationValidation
-  }
-
   const [credentials, setCredentials] = useState(initialValues)
   const [isConfirmationActive, setConfirmation] = useState(false)
-
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
   const [responseError, setResponseError] = useState(false)
@@ -70,7 +41,6 @@ export default function Register(props) {
 
   const handleRegisterSubmit = async e => {
     e.preventDefault()
-
     const formValidation = Object.keys(credentials).reduce(
       (acc, key) => {
         const newError = validate[key](credentials[key])
@@ -94,12 +64,12 @@ export default function Register(props) {
     setErrors(formValidation.errors)
     setTouched(formValidation.touched)
     if (
-      !Object.values(formValidation.errors).length && // errors object is empty
-      Object.values(formValidation.touched).length === Object.values(credentials).length && // all fields were touched
-      Object.values(formValidation.touched).every(t => t === true) // every touched field is true
+      !Object.values(formValidation.errors).length &&
+      Object.values(formValidation.touched).length === Object.values(credentials).length &&
+      Object.values(formValidation.touched).every(t => t === true)
     ) {
       try {
-        const res = await postRegister(credentials)
+        await postRegister(credentials)
         setConfirmation(true)
       } catch (err) {
         setResponseError(true)
