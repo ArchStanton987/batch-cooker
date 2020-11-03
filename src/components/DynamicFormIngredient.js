@@ -8,11 +8,13 @@ export default function DynamicFormIngredient({ ...props }) {
   return (
     <li className="dynform--ingdt-container">
       <p className="ingredient-number">{`Ingredient #${index + 1}`}</p>
+      <label className="ingdt-label--category" htmlFor="recipe-form-category"><p>Catégorie</p></label>
       <select
-        className="ingdt--category"
+        className="ingdt-input--category"
         onChange={e => handleIngredientChange(e, index)}
-        id="category"
+        id="recipe-form-category"
         name="category"
+        value={ingredient.category}
         required
       >
         <option value="">Catégorie</option>
@@ -24,40 +26,40 @@ export default function DynamicFormIngredient({ ...props }) {
         <option value="sucrés">sucrés</option>
         <option value="autres">autres</option>
       </select>
-      <label className="ingdt-label" htmlFor={`ingredient-name-${index}`}>
+      <label className="ingdt-label--name" htmlFor={`ingredient-name-${index}`}>
         <p>Nom</p>
       </label>
-      <label className="ingdt-label" htmlFor={`ingredient-quantity-${index}`}>
+      <label className="ingdt-label--quantity" htmlFor={`ingredient-quantity-${index}`}>
         <p>Quantité</p>
       </label>
-      <label className="ingdt-label" htmlFor={`ingredient-unity-${index}`}>
+      <label className="ingdt-label--unity" htmlFor={`ingredient-unity-${index}`}>
         <p>Unité</p>
       </label>
       <input
+        type="text"
+        id={`ingredient-name-${index}`}
+        name="name"
         className="ingdt-input--name"
         value={ingredient.name}
         onChange={e => handleIngredientChange(e, index)}
-        type="text"
-        name="name"
-        id={`ingredient-name-${index}`}
         required
       />
       <input
+        type="number"
+        id={`ingredient-quantity-${index}`}
+        name="quantity"
         className="ingdt-input--quantity"
         value={ingredient.quantity}
         onChange={e => handleIngredientChange(e, index)}
-        type="number"
-        name="quantity"
-        id={`ingredient-quantity-${index}`}
         required
       />
       <input
-        className="ingdt-input--unity"
-        value={ingredient.unity}
-        onChange={e => handleIngredientChange(e, index)}
         type="text"
-        name="unity"
         id={`ingredient-unity-${index}`}
+        name="unity"
+        className="ingdt-input--unity"
+        value={ingredient.unity || ''}
+        onChange={e => handleIngredientChange(e, index)}
       />
       {
         <img

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       creatorId: { type: DataTypes.INTEGER, allowNull: false },
       name: { type: DataTypes.STRING, allowNull: false },
       image: { type: DataTypes.STRING, allowNull: true },
-      url: { type: DataTypes.STRING, allowNull: true, unique: true },
+      url: { type: DataTypes.STRING, allowNull: true },
       content: { type: DataTypes.STRING, allowNull: true },
       guests: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 4 }
     },

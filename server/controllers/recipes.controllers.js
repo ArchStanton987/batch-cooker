@@ -6,7 +6,7 @@ module.exports = {
       const recipes = await models.Recipe.findAll({
         include: [
           { model: models.User, attributes: ['username'] },
-          { model: models.Ingredient, attributes: ['name'] },
+          { model: models.Ingredient, attributes: ['name', 'category'] },
           { model: models.Tag, attributes: ['tagname'] }
         ]
       })
@@ -16,8 +16,15 @@ module.exports = {
     }
   },
   addNewRecipe: async (req, res) => {
-    const { creatorId, name, image, url, content } = req.body
-    let newRecipe = { creatorId: creatorId, name: name, image: image, url: url, content: content }
+    const { creatorId, name, image, url, content, guests } = req.body
+    let newRecipe = {
+      creatorId: creatorId,
+      guests: guests,
+      name: name,
+      image: image,
+      url: url,
+      content: content
+    }
 
     const parsedId = parseInt(creatorId, 10)
     if (parsedId !== req.tokenUser) {
@@ -25,11 +32,6 @@ module.exports = {
       return
     }
 
-    const existingRecipe = await models.Recipe.findOne({ where: { name: name } })
-    if (existingRecipe) {
-      res.status(500).json({ error: 'Recipe name already existing' })
-      return
-    }
     try {
       const createdRecipe = await models.Recipe.create(newRecipe)
       res.status(200).json({ message: 'Recipe successfully created', recipeId: createdRecipe.id })
@@ -46,7 +48,7 @@ module.exports = {
         },
         include: [
           { model: models.User, attributes: ['username'] },
-          { model: models.Ingredient, attributes: ['name'] },
+          { model: models.Ingredient, attributes: ['name', 'category'] },
           { model: models.Tag, attributes: ['tagname'] }
         ]
       })
@@ -61,19 +63,20 @@ module.exports = {
   },
   updateOneRecipe: async (req, res) => {
     const { recipeId } = req.params
-    const { name, image, url, content } = req.body
-    
+    const { name, image, url, content, guests } = req.body
+
     try {
-      let recipe = await models.Recipe.findByPk(recipeId)
-        if (recipe.creatorId !== req.tokenUser) {
-          res.status(401).json({ error: 'Forbidden' })
-          return
-        }
+      let recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
+      if (recipe.creatorId !== req.tokenUser) {
+        res.status(401).json({ error: 'Forbidden' })
+        return
+      }
       recipe.id = recipeId
       recipe.name = name
       recipe.image = image
       recipe.url = url
       recipe.content = content
+      recipe.guests = guests
       await recipe.save()
       res.status(200).json({ message: 'Recipe successfully updated' })
     } catch (err) {
@@ -84,7 +87,7 @@ module.exports = {
   deleteOneRecipe: async (req, res) => {
     const recipeId = req.params.recipeId
     try {
-      const recipeToDelete = await models.Recipe.findByPk(recipeId)
+      const recipeToDelete = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
       if (recipeToDelete.creatorId !== req.tokenUser) {
         res.status(401).json({ error: 'Forbidden' })
         return
@@ -97,7 +100,7 @@ module.exports = {
   },
   getRecipesOfUser: async (req, res) => {
     const userId = parseInt(req.params.userId, 10)
-    
+
     if (userId !== req.tokenUser) {
       res.status(401).json({ error: 'Forbidden' })
       return
@@ -109,7 +112,7 @@ module.exports = {
         },
         include: [
           { model: models.User, attributes: ['username'] },
-          { model: models.Ingredient, attributes: ['name'] },
+          { model: models.Ingredient, attributes: ['name', 'category'] },
           { model: models.Tag, attributes: ['tagname'] }
         ]
       })
@@ -118,43 +121,36 @@ module.exports = {
       res.status(500).json({ error: err })
     }
   },
-  addIngredientInRecipe: async (req, res) => {
-    const recipeId = parseInt(req.params.recipeId, 10)
+  addIngredientsToRecipe: async (req, res) => {
+    const { recipeId } = req.params
+    let recipeIngredients = req.body
 
-    const recipe = await models.Recipe.findByPk(recipeId)
+    const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
       res.status(401).json({ error: 'Forbidden' })
       return
     }
 
-    const { name, category, quantity, unity } = req.body
-    const newIngredient = { name: name, category: category }
-
-    const ingredientExists = await models.Ingredient.findOne({
-      where: { name: name, category: category }
-    })
-    if (!ingredientExists) {
-      try {
-        let createdIngredient = await models.Ingredient.create(newIngredient)
-        newIngredient.id = createdIngredient.id
-      } catch (err) {
-        res.status(500).json({ error: 'Error creating the ingredient : ' + err })
-        return
-      }
-    }
-    if (ingredientExists) {
-      newIngredient.id = ingredientExists.id
-    }
     try {
-      await models.RecipeIng.create({
-        ingredientId: newIngredient.id,
-        recipeId: recipeId,
-        quantity: quantity,
-        unity: unity
+      await recipeIngredients.forEach(async ingredient => {
+        let ingredientExists = await models.Ingredient.findOne({
+          where: { name: ingredient.name, category: ingredient.category }
+        })
+        if (!ingredientExists) {
+          let createdIng = await models.Ingredient.create({
+            name: ingredient.name,
+            category: ingredient.category
+          })
+          ingredient.ingredientId = createdIng.id
+        } else {
+          ingredient.ingredientId = ingredientExists.id
+        }
+        ingredient.recipeId = recipeId
+        await models.RecipeIng.create(ingredient)
       })
-      res.status(200).json({ message: 'Ingredient successfully associated with recipe' })
+      res.status(200).json({ message: 'Ingredients successfully created' })
     } catch (err) {
-      res.status(500).json({ error: 'Error associating ingredient to recipe : ' + err })
+      res.status(500).json({ error: 'Error when creating ingredients' })
     }
   },
   getIngredientFromRecipe: async (req, res) => {
@@ -173,30 +169,38 @@ module.exports = {
       res.status(500).json(err)
     }
   },
-  updateIngredientFromRecipe: async (req, res) => {
-    const { recipeId, ingredientId } = req.params
-    const { quantity, unity } = req.body
+  updateIngredientsFromRecipe: async (req, res) => {
+    const { recipeId } = req.params
+    let recipeIngredients = req.body
 
-    const recipe = await models.Recipe.findByPk(recipeId)
+    const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
       res.status(401).json({ error: 'Forbidden' })
       return
     }
 
+    await models.RecipeIng.destroy({ where: { recipeId: recipeId } })
+
     try {
-      const ingredient = await models.RecipeIng.findOne({
-        where: { recipeId: recipeId, ingredientId: ingredientId }
+      await recipeIngredients.forEach(async ingredient => {
+        let ingredientExists = await models.Ingredient.findOne({
+          where: { name: ingredient.name, category: ingredient.category }
+        })
+        if (!ingredientExists) {
+          let createdIng = await models.Ingredient.create({
+            name: ingredient.name,
+            category: ingredient.category
+          })
+          ingredient.ingredientId = createdIng.id
+        } else {
+          ingredient.ingredientId = ingredientExists.id
+        }
+        ingredient.recipeId = recipeId
+        await models.RecipeIng.create(ingredient)
       })
-      if (!ingredient) {
-        res.status(404).json({ error: 'Ingredient not found' })
-        return
-      }
-      ingredient.quantity = quantity
-      ingredient.unity = unity
-      await ingredient.save()
-      res.status(200).json(ingredient)
+      res.status(200).json({ message: 'Ingredients successfully updated' })
     } catch (err) {
-      res.status(500).json(err)
+      res.status(500).json({ error: 'Error when updating ingredients' })
     }
   },
   deleteIngredientFromRecipe: async (req, res) => {
@@ -222,47 +226,70 @@ module.exports = {
       res.status(500).json(err)
     }
   },
-  addTagInRecipe: async (req, res) => {
-    const recipeId = parseInt(req.params.recipeId, 10)
+  addTagsInRecipe: async (req, res) => {
+    const { recipeId } = req.params
+    let recipeTags = req.body
 
-    const recipe = await models.Recipe.findByPk(recipeId)
+    const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
       res.status(401).json({ error: 'Forbidden' })
       return
     }
-    
-    const tagname = req.body.tagname.toLowerCase()
-    const newTag = { tagname: tagname }
 
-    const tagExists = await models.Tag.findOne({
-      where: { tagname: tagname }
-    })
-    if (!tagExists) {
-      try {
-        let createdTag = await models.Tag.create(newTag)
-        newTag.id = createdTag.id
-      } catch (err) {
-        res.status(500).json({ error: 'Error creating the tag : ' + err })
-        return
-      }
-    }
-    if (tagExists) {
-      newTag.id = tagExists.id
-    }
     try {
-      let newTagRecipe = await models.TagRecipe.create({
-        tagId: newTag.id,
-        recipeId: recipeId
+      await recipeTags.forEach(async tag => {
+        let tagExists = await models.Tag.findOne({
+          where: { tagname: tag.tagname }
+        })
+        if (!tagExists) {
+          let createdTag = await models.Tag.create({
+            tagname: tag.tagname
+          })
+          tag.tagId = createdTag.id
+        } else {
+          tag.tagId = tagExists.id
+        }
+        tag.recipeId = recipeId
+        await models.TagRecipe.create(tag)
       })
-      res.status(200).json({
-        message: 'Tag successfully associated with recipe',
-        tagRecipe: newTagRecipe.id
-      })
+      res.status(200).json({ message: 'Tags successfully associated with recipe' })
     } catch (err) {
-      res.status(500).json({ error: 'Error associating tag to recipe : ' + err })
+      res.status(500).json({ error: 'Error associating tags with recipe' })
     }
   },
   getTagFromRecipe: async (req, res) => {},
-  updateTagFromRecipe: async (req, res) => {},
+  updateTagsFromRecipe: async (req, res) => {
+    const { recipeId } = req.params
+    let recipeTags = req.body
+
+    const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
+    if (recipe.creatorId !== req.tokenUser) {
+      res.status(401).json({ error: 'Forbidden' })
+      return
+    }
+
+    await models.TagRecipe.destroy({ where: { recipeId: recipeId } })
+
+    try {
+      await recipeTags.forEach(async tag => {
+        let tagExists = await models.Tag.findOne({
+          where: { tagname: tag.tagname }
+        })
+        if (!tagExists) {
+          let createdTag = await models.Tag.create({
+            tagname: tag.tagname
+          })
+          tag.tagId = createdTag.id
+        } else {
+          tag.tagId = tagExists.id
+        }
+        tag.recipeId = recipeId
+        await models.TagRecipe.create(tag)
+      })
+      res.status(200).json({ message: 'Tags successfully associated with recipe' })
+    } catch (err) {
+      res.status(500).json({ error: 'Error associating tags with recipe' })
+    }
+  },
   deleteTagFromRecipe: async (req, res) => {}
 }

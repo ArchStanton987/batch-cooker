@@ -5,12 +5,13 @@ import Section from '../components/Section'
 import MyRecipesCard from '../containers/MyRecipesCard'
 import ChevronIcon from '../components/ChevronIcon'
 import plusIcon from '../assets/icons/plus.svg'
-import { fetchSavedRecipes, parseFetchedRecipes } from '../lib/recipies'
+import { fetchSavedRecipes, parseFetchedRecipes } from '../lib/recipes'
 import '../sass/pages/_Recipes.scss'
 import '../sass/pages/_FullRecipe.scss'
 import Search from '../components/Search'
 import SectionCTA from '../components/SectionCTA'
 import CTAButton from '../components/CTAButton'
+import Modal from '../components/Modal'
 
 export default function MyRecipesPage(props) {
   const { userId } = props
@@ -18,6 +19,8 @@ export default function MyRecipesPage(props) {
   const [userRecipes, setUserRecipes] = useState([])
   const [searchInput, setSearchInput] = useState('')
   const [isExpended, setDrawer] = useState(false)
+  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const toggleDrawer = () => setDrawer(prevState => !prevState)
 
@@ -27,7 +30,14 @@ export default function MyRecipesPage(props) {
       const parsedResults = parseFetchedRecipes(results.data)
       setUserRecipes(parsedResults)
     } catch (err) {
-      console.log(err)
+      if (err.response) {
+        setIsError(true)
+        setErrorMessage(err.response.data.error)
+      } else {
+        setIsError(true)
+        setErrorMessage(err)
+        console.log(err)
+      }
     }
   }, [userId])
 
@@ -42,10 +52,22 @@ export default function MyRecipesPage(props) {
   return (
     <>
       <div className="page">
+        {isError && (
+          <Modal
+            title="Erreur"
+            handleClose={() => {
+              setIsError(false)
+              setErrorMessage('')
+            }}
+            parent="ingredient"
+          >
+            {errorMessage}
+          </Modal>
+        )}
         <h2>Mes recettes</h2>
         <SectionCTA className={'desktop-only no-border'}>
           <Search className={''} handleSearchInput={handleSearchInput} isSearchboxActive={true} />
-          <Link to={{ pathname: '/recipes/new' }}>
+          <Link to={{ pathname: '/myrecipes/new' }}>
             <CTAButton className={'add-recipe'}>
               <img className="icon cta-button--icon" src={plusIcon} alt="add new recipe" />
               Ajouter
@@ -81,7 +103,7 @@ export default function MyRecipesPage(props) {
           </div>
         </Section>
         <Section className={'mobile-only no-border'}>
-          <Link className="marginAuto" to={{ pathname: '/recipes/new' }}>
+          <Link className="marginAuto" to={{ pathname: '/myrecipes/new' }}>
             <svg
               className="add-element-icon"
               xmlns="http://www.w3.org/2000/svg"

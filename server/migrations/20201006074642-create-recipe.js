@@ -24,8 +24,7 @@ module.exports = {
       url: {
         type: Sequelize.STRING,
         defaultValue: null,
-        allowNull: true,
-        unique: true
+        allowNull: true
       },
       content: {
         type: Sequelize.STRING(3000),

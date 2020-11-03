@@ -1,0 +1,72 @@
+@use '../variables' as v;
+
+.recipe-form {
+  .recipe-form--label,
+  .recipe-form--input,
+  textarea {
+    margin: 0 1rem;    
+  }
+  .recipe-form--label {
+    margin-top: 0.25rem;
+  }
+  .recipe-form--input,
+  textarea {
+    margin-bottom: 0.5rem;
+  }
+  input,
+  textarea,
+  select {
+    padding: 0.1rem;
+  }
+  textarea {
+    min-height: 25vh;
+    @media screen and (min-width: v.$bp1-min) {
+      min-height: 15vh;
+    }
+    border: solid 1px #a6a6a6;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+}
+
+.new-recipe-form {
+  margin: 0.25rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-recipe-content {
+  flex: 1;
+}
+
+.remove-element-btn {
+  grid-area: remove-element-btn;
+  align-self: center;
+  border-radius: 50%;
+  border: solid 2px v.$color1;
+  max-height: 2rem;
+  max-width: 2rem;
+  padding: 0.2rem;
+  &:hover {
+    cursor: pointer;
+  }
+  &.tag {
+    margin: 0 0.5rem;
+  }
+}
+.new-recipe--add-icon {
+  max-height: 2.5rem;
+  max-width: 2.5rem;
+  padding: 0.3rem;
+  margin: 0.5rem 0;
+  align-self: center;
+  background-color: v.$color1;
+  border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.ingredient-label {
+  margin-top: 0.5rem;
+}

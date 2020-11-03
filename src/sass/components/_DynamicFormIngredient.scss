@@ -4,21 +4,32 @@
   margin: 0.5rem 0.5rem;
   display: grid;
   grid-template-columns: 6fr 2fr 2fr 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto auto;
   gap: 0 8px;
   grid-template-areas:
-    'ingredient-number ingdt--category ingdt--category ingdt--category'
-    'ingredient-label--name ingredient-label--quantity ingredient-label--unity x'
+    'ingredient-number ingdt-label--category ingdt-label--category ingdt-label--category'
+    'ingredient-number ingdt-input--category ingdt-input--category ingdt-input--category'
+    'ingdt-label--name ingdt-label--quantity ingdt-label--unity .'
     'ingdt-input--name ingdt-input--quantity ingdt-input--unity remove-element-btn';
+  border-top: solid 2px v.$color4;
+    label {
+    margin-top: 0.5rem;
+  }
 }
 .ingredient-number {
   grid-area: ingredient-number;
+  align-self: center;
+  font-weight: bolder;
+  color: v.$color1;
 }
-.ingdt--category {
-  grid-area: ingdt--category;
+.ingdt-label--category {
+  grid-area: ingdt-label--category;
 }
-.ingdt-label {
-  margin-top: 0.5rem;
+.ingdt-input--category {
+  grid-area: ingdt-input--category;
+}
+.ingdt-label--name {
+  grid-area: ingdt-label--name;
 }
 .ingdt-input--name {
   grid-area: ingdt-input--name;
@@ -28,11 +39,17 @@
   max-width: 100%;
   flex: 1;
 }
+.ingdt-label--quantity {
+  grid-area: ingdt-label--quantity;
+}
 .ingdt-input--quantity {
   grid-area: ingdt-input--quantity;
   margin: 0;
   padding: 0;
   min-width: 0;
+}
+.ingdt-label--unity {
+  grid-area: ingdt-label--unity;
 }
 .ingdt-input--unity {
   grid-area: ingdt-input--unity;

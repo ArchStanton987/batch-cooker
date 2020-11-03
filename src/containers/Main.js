@@ -5,6 +5,7 @@ import HomePage from '../pages/HomePage'
 import MenuPage from '../pages/MenuPage'
 import FullRecipePage from '../pages/FullRecipePage'
 import NewRecipePage from '../pages/NewRecipePage'
+import EditRecipePage from '../pages/EditRecipePage'
 import MyRecipesPage from '../pages/MyRecipesPage'
 import InventoryPage from '../pages/InventoryPage'
 import ShoplistPage from '../pages/ShoplistPage'
@@ -35,23 +36,26 @@ export default function Main({ ...props }) {
         />
         <Route path="/register" render={() => <RegisterPage />} />
 
-        <PrivateRoute hasUserLogged={hasUserLogged} path="/recipes/new">
-          <NewRecipePage />
+        <PrivateRoute path="/myrecipes/new" hasUserLogged={hasUserLogged}>
+          <NewRecipePage userId={userId} />
         </PrivateRoute>
-        <PrivateRoute hasUserLogged={hasUserLogged} path="/inventory">
-          <InventoryPage userId={userId} />
+        <PrivateRoute path="/myrecipes/edit/:id" hasUserLogged={hasUserLogged}>
+          <EditRecipePage userId={userId} />
         </PrivateRoute>
-        <PrivateRoute hasUserLogged={hasUserLogged} path="/myrecipes">
+        <PrivateRoute path="/myrecipes" hasUserLogged={hasUserLogged}>
           <MyRecipesPage userId={userId} />
         </PrivateRoute>
-        <PrivateRoute hasUserLogged={hasUserLogged} path="/shoplist">
-          <ShoplistPage />
+        <PrivateRoute path="/inventory" hasUserLogged={hasUserLogged}>
+          <InventoryPage userId={userId} />
         </PrivateRoute>
-        <PrivateRoute hasUserLogged={hasUserLogged} path="/menu">
-          <MenuPage />
+        <PrivateRoute path="/shoplist" hasUserLogged={hasUserLogged}>
+          <ShoplistPage userId={userId} />
         </PrivateRoute>
-        <PrivateRoute hasUserLogged={hasUserLogged} path="/profile">
-          <ProfilePage />
+        <PrivateRoute path="/menu" hasUserLogged={hasUserLogged}>
+          <MenuPage userId={userId} />
+        </PrivateRoute>
+        <PrivateRoute path="/profile" hasUserLogged={hasUserLogged}>
+          <ProfilePage userId={userId} />
         </PrivateRoute>
       </Switch>
     </main>

@@ -13,12 +13,12 @@ export default function DynamicFormTags({ ...props }) {
       </label>
       <div className="flexRow alignItemsCenter">
         <input
+          type="text"
+          id={`tag-${index}`}
+          name={`tag-${index}`}
           className="recipe-form--tag-input"
           value={tag.tagname}
           onChange={e => handleTagChange(e, index)}
-          type="text"
-          name={`tag-${index}`}
-          id={`tag-${index}`}
         />
         {
           <img

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import moment from 'moment'
 import 'moment/locale/fr'
 
-import { fetchRecipe, parseFetchedRecipe } from '../lib/recipies'
+import { fetchRecipe, parseFetchedRecipe } from '../lib/recipes'
 import '../sass/pages/_FullRecipe.scss'
 import '../sass/components/_Ingredient.scss'
 import Section from '../components/Section'
@@ -46,7 +47,9 @@ export default function FullRecipePage(props) {
       <div className="full-recipe page">
         <h2>Recette</h2>
         <SectionCTA className={'no-border'}>
-          <CTAButton className={'secondary'}>Modifier</CTAButton>
+          <Link to={{ pathname: `/myrecipes/edit/${recipeId}`, recipe: { ...recipe } }}>
+            <CTAButton className={'secondary'}>Modifier</CTAButton>
+          </Link>
           <CTAButton className={'secondary'}>Supprimer</CTAButton>
           <CTAButton className={''}>
             <img className="icon cta-button--icon" src={favIconFullYellow} alt="add to favorites" />
@@ -67,7 +70,7 @@ export default function FullRecipePage(props) {
             {createdAt !== updatedAt && (
               <p className="recipe-text">Edité le {moment(updatedAt).format('LL')}</p>
             )}
-            <p className="recipe-text">Pour {guests} personnes</p>
+            <p className="recipe-text">Pour {guests} personne(s)</p>
             <p className="recipe-text">Note moy. : 5/10</p>
           </div>
           <div className="recipe-img-container">

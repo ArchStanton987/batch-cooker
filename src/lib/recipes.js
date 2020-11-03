@@ -7,6 +7,7 @@ export const parseFetchedRecipe = data => {
     let newIngredient = {}
     newIngredient.recipeIng = ingredient.RecipeIng.id
     newIngredient.name = ingredient.name
+    newIngredient.category = ingredient.category
     newIngredient.ingredientId = ingredient.RecipeIng.ingredientId
     newIngredient.recipeId = ingredient.RecipeIng.recipeId
     newIngredient.quantity = ingredient.RecipeIng.quantity
@@ -45,20 +46,38 @@ export const fetchSavedRecipes = async userId => {
   return res
 }
 
-export const postNewRecipe = async recipe => {
+export const postRecipeInfo = async recipe => {
   const url = `http://192.168.1.27:8000/api/recipes`
   const res = await axios.post(url, recipe, { withCredentials: true })
   return res
 }
 
-export const postNewIngredient = async (recipeId, ingredient) => {
+export const postIngredients = async (recipeId, ingredients) => {
   const url = `http://192.168.1.27:8000/api/recipes/${recipeId}/ingredients`
-  const res = await axios.post(url, ingredient, { withCredentials: true })
+  const res = await axios.post(url, ingredients, { withCredentials: true })
   return res
 }
 
-export const postNewTag = async (recipeId, tag) => {
+export const postTags = async (recipeId, tags) => {
   const url = `http://192.168.1.27:8000/api/recipes/${recipeId}/tags`
-  const res = await axios.post(url, tag, { withCredentials: true })
+  const res = await axios.post(url, tags, { withCredentials: true })
+  return res
+}
+
+export const updateRecipeInfo = async (recipeId, recipe) => {
+  const url = `http://192.168.1.27:8000/api/recipes/${recipeId}`
+  const res = await axios.put(url, recipe, { withCredentials: true })
+  return res
+}
+
+export const updateIngredients = async (recipeId, ingredients) => {
+  const url = `http://192.168.1.27:8000/api/recipes/${recipeId}/ingredients`
+  const res = await axios.put(url, ingredients, { withCredentials: true })
+  return res
+}
+
+export const updateTags = async (recipeId, tags) => {
+  const url = `http://192.168.1.27:8000/api/recipes/${recipeId}/tags`
+  const res = await axios.put(url, tags, { withCredentials: true })
   return res
 }
