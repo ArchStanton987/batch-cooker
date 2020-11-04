@@ -74,19 +74,6 @@ export default function RecipeForm(props) {
     setTags(tagList)
   }
 
-  // const handleSubmitIngredients = async (recipeId, newIngredients) => {
-  //   postIngredients(recipeId, newIngredients)
-  // }
-  // const handleUpdateIngredients = async (recipeId, newIngredients) => {
-  //   updateIngredients(recipeId, newIngredients)
-  // }
-  // const handleSubmitTags = async (recipeId, newTags) => {
-  //   postTags(recipeId, newTags)
-  // }
-  // const handleUpdateTags = async (recipeId, newTags) => {
-  //   updateTags(recipeId, newTags)
-  // }
-
   // Recipe handlers
   const handleChangeNewRecipeInfo = e => {
     setRecipeInfo({
@@ -96,11 +83,11 @@ export default function RecipeForm(props) {
   }
 
   const handlePostNewRecipe = async () => {
-    const response = await postRecipeInfo(newRecipeInfo)
-    const newRecipeId = response.data.recipeId
+    const res = await postRecipeInfo(newRecipeInfo)
+    const newRecipeId = res.data.recipeId
     postIngredients(newRecipeId, newIngredients)
     postTags(newRecipeId, newTags)
-    return response
+    return res
   }
 
   const handleUpdateRecipe = async () => {
@@ -123,7 +110,7 @@ export default function RecipeForm(props) {
       }
       return setTimeout(() => {
         setSuccess(true)
-        setSuccessMessage('OK')
+        setSuccessMessage(res.data.message)
       }, 500)
     } catch (err) {
       if (err.response) {
