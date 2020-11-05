@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import 'moment/locale/fr'
@@ -24,6 +24,7 @@ export default function FullRecipePage(props) {
   const [isSuccess, setIsSuccess] = useToggle(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
+  const [hasRightsOnRecipe, setRightsOnRecipe] = useState(false)
   const {
     name,
     ingredients,
@@ -38,14 +39,16 @@ export default function FullRecipePage(props) {
   } = recipe
 
   const recipeId = props.match.params.id
+  const userId = props.userId
 
   moment.locale('fr')
 
-  const handleFetchRecipe = async recipeId => {
+  const handleFetchRecipe = useCallback(async () => {
     const result = await fetchRecipe(recipeId)
     const parsedResults = parseFetchedRecipe(result.data)
     setRecipe(parsedResults)
-  }
+    setRightsOnRecipe(checkRightsOnRecipe(recipe.creatorId, userId))
+  }, [recipe.creatorId, userId, recipeId])
 
   const handleDeleteRecipe = async () => {
     try {
@@ -58,9 +61,13 @@ export default function FullRecipePage(props) {
     }
   }
 
+  const checkRightsOnRecipe = (recipe, userId) => {
+    return recipe?.creatorId === userId ? true : false
+  }
+
   useEffect(() => {
-    handleFetchRecipe(recipeId)
-  }, [recipeId])
+    handleFetchRecipe()
+  }, [handleFetchRecipe])
 
   return (
     <>
@@ -101,12 +108,16 @@ export default function FullRecipePage(props) {
         )}
         <h2>Recette</h2>
         <SectionCTA className={'no-border'}>
-          <Link to={{ pathname: `/myrecipes/edit/${recipeId}`, recipe: { ...recipe } }}>
-            <CTAButton className={'secondary'}>Modifier</CTAButton>
-          </Link>
-          <CTAButton action={setConfirmation} className={'secondary'}>
-            Supprimer
-          </CTAButton>
+          {hasRightsOnRecipe && (
+            <>
+              <Link to={{ pathname: `/myrecipes/edit/${recipeId}`, recipe: { ...recipe } }}>
+                <CTAButton className={'secondary'}>Modifier</CTAButton>
+              </Link>
+              <CTAButton action={setConfirmation} className={'secondary'}>
+                Supprimer
+              </CTAButton>
+            </>
+          )}
           <CTAButton className={''}>
             <img className="icon cta-button--icon" src={favIconFullYellow} alt="add to favorites" />
             Ajouter à mon carnet
