@@ -1,24 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
+import { parseFetchedInventory } from '../lib/utils/inventory-utils'
 import {
   addIngredientToInventory,
   deleteIngredientFromInventory,
   fetchUserInventory,
-  parseFetchedInventory,
   updateIngredientFromInventory
-} from '../lib/inventory'
+} from '../lib/api/api-inventory'
 import { ingredientCategories } from '../lib/ingredientCategories'
-import Ingredient from '../containers/Ingredient'
-import '../sass/pages/_Inventory.scss'
-import IngredientForm from '../containers/IngredientForm'
-import Section from '../components/Section'
-import ChevronIcon from '../components/ChevronIcon'
-import plusIcon from '../assets/icons/plus.svg'
-import Search from '../components/Search'
-import SectionCTA from '../components/SectionCTA'
-import CTAButton from '../components/CTAButton'
-import Modal from '../components/Modal'
 import { useToggle } from '../lib/hooks'
+
+import plusIcon from '../assets/icons/plus.svg'
+import Ingredient from '../components/presentational/Ingredient'
+import IngredientForm from '../components/forms/IngredientForm'
+import Section from '../components/page_layout/Section'
+import SectionCTA from '../components/page_layout/SectionCTA'
+import CTAButton from '../components/page_layout/CTAButton'
+import ChevronIcon from '../components/page_layout/ChevronIcon'
+import Search from '../components/forms/Search'
+import Modal from '../components/hoc/Modal'
+
+import '../sass/pages/_Inventory.scss'
 
 export default function InventoryPage(props) {
   const { userId } = props

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import '../sass/components/_DynamicFormIngredient.scss'
-import minusIcon from '../assets/icons/minus.svg'
+import '../../sass/components/_DynamicFormIngredient.scss'
+import minusIcon from '../../assets/icons/minus.svg'
 
 export default function DynamicFormIngredient({ ...props }) {
   const { handleIngredientChange, removeIngredient, ingredient, index } = props

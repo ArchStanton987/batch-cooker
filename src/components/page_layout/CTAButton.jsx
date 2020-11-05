@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../sass/components/_CTAButton.scss'
+import '../../sass/components/_CTAButton.scss'
 
 export default function CTAButton(props) {
   const { action, className } = props

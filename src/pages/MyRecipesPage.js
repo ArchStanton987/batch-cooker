@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 
-import Section from '../components/Section'
-import MyRecipesCard from '../containers/MyRecipesCard'
-import ChevronIcon from '../components/ChevronIcon'
-import plusIcon from '../assets/icons/plus.svg'
-import { fetchSavedRecipes, parseFetchedRecipes } from '../lib/recipes'
 import '../sass/pages/_Recipes.scss'
 import '../sass/pages/_FullRecipe.scss'
-import Search from '../components/Search'
-import SectionCTA from '../components/SectionCTA'
-import CTAButton from '../components/CTAButton'
-import Modal from '../components/Modal'
+import { fetchSavedRecipes } from '../lib/api/api-recipes'
+import { parseFetchedRecipes } from '../lib/utils/recipes-utils'
+import plusIcon from '../assets/icons/plus.svg'
+import MyRecipesCard from '../components/presentational/MyRecipesCard'
+import Search from '../components/forms/Search'
+import Section from '../components/page_layout/Section'
+import ChevronIcon from '../components/page_layout/ChevronIcon'
+import SectionCTA from '../components/page_layout/SectionCTA'
+import CTAButton from '../components/page_layout/CTAButton'
+import Modal from '../components/hoc/Modal'
 
 export default function MyRecipesPage(props) {
   const { userId } = props

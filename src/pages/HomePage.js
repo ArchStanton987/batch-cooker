@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Section from '../components/Section'
+import Section from '../components/page_layout/Section'
 
 export default function HomePage() {
   return (

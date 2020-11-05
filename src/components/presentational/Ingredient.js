@@ -1,5 +1,5 @@
 import React from 'react'
-import '../sass/components/_Ingredient.scss'
+import '../../sass/components/_Ingredient.scss'
 
 export default function Ingredient({ handleEditIngredient, handleDeleteIngredient, ...props }) {
   const { ingredientId, name, quantity, unity } = props

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import '../sass/pages/_NewRecipe.scss'
-import plusIcon from '../assets/icons/plus.svg'
+import '../../sass/pages/_NewRecipe.scss'
+import plusIcon from '../../assets/icons/plus.svg'
 import {
   postRecipeInfo,
   postTags,
@@ -10,13 +10,13 @@ import {
   updateRecipeInfo,
   updateIngredients,
   updateTags
-} from '../lib/recipes'
-import DynamicFormIngredient from '../components/DynamicFormIngredient'
-import DynamicFormTags from '../components/DynamicFormTags'
-import Section from '../components/Section'
-import SectionCTA from '../components/SectionCTA'
-import CTAButton from '../components/CTAButton'
-import Modal from '../components/Modal'
+} from '../../lib/api/api-recipes'
+import DynamicFormIngredient from './DynamicFormIngredient'
+import DynamicFormTags from './DynamicFormTags'
+import Section from '../page_layout/Section'
+import SectionCTA from '../page_layout/SectionCTA'
+import CTAButton from '../page_layout/CTAButton'
+import Modal from '../hoc/Modal'
 
 export default function RecipeForm(props) {
   const { recipeInfo, ingredients, tags, recipeId } = props

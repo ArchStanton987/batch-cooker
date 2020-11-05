@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../sass/components/_Section.scss'
+import '../../sass/components/_Section.scss'
 
 export default function SectionCTA(props) {
   return (

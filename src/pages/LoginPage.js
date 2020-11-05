@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-
-import '../sass/pages/_Login&Register.scss'
-import CTAButton from '../components/CTAButton'
-import { postLogin } from '../lib/account'
 import { useHistory, useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
+
+import '../sass/pages/_Login&Register.scss'
+import CTAButton from '../components/page_layout/CTAButton'
+import { postLogin } from '../lib/api/api-account'
 
 export default function LoginPage(props) {
   let { setUserId, setHasUserLogged, setUserName } = props

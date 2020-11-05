@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router'
 
-import RecipeForm from '../components/RecipeForm.js'
-import { fetchRecipe, parseFetchedRecipe } from '../lib/recipes'
+import RecipeForm from '../components/forms/RecipeForm.js'
+import { fetchRecipe } from '../lib/api/api-recipes'
+import {parseFetchedRecipe} from '../lib/utils/recipes-utils'
 
 export default function EditRecipePage() {
   const [recipe, setRecipe] = useState({})

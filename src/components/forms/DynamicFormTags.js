@@ -1,7 +1,7 @@
 import React from 'react'
 
-import minusIcon from '../assets/icons/minus.svg'
-import '../sass/components/_DynamicFormTags.scss'
+import minusIcon from '../../assets/icons/minus.svg'
+import '../../sass/components/_DynamicFormTags.scss'
 
 export default function DynamicFormTags({ ...props }) {
   const { tag, index, handleTagChange, removeTag } = props

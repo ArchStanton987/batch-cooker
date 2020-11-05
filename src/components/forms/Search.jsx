@@ -1,7 +1,7 @@
 import React from 'react'
-import searchIcon from '../assets/icons/search.svg'
+import searchIcon from '../../assets/icons/search.svg'
 
-import '../sass/components/_Search.scss'
+import '../../sass/components/_Search.scss'
 
 export default function Search(props) {
   const {

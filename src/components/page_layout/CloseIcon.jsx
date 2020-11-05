@@ -1,5 +1,5 @@
 import React from 'react'
-import closeIcon from '../assets/icons/x-white.svg'
+import closeIcon from '../../assets/icons/x-white.svg'
 
 export default function CloseIcon(props) {
   const { onClick, parent, className } = props

@@ -12,7 +12,7 @@ import ShoplistPage from '../pages/ShoplistPage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
 import ProfilePage from '../pages/ProfilePage'
-import PrivateRoute from './PrivateRoute'
+import PrivateRoute from '../components/hoc/PrivateRoute'
 import '../sass/layout/_Main.scss'
 
 export default function Main({ ...props }) {

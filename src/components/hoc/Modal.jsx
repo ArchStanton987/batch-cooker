@@ -1,7 +1,7 @@
 import React from 'react'
 
-import CloseIcon from './CloseIcon'
-import '../sass/components/_Modal.scss'
+import CloseIcon from '../page_layout/CloseIcon'
+import '../../sass/components/_Modal.scss'
 
 export default function Modal(props) {
   const { handleClose, title, parent } = props

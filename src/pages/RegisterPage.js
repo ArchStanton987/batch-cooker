@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import '../sass/pages/_Login&Register.scss'
-import CTAButton from '../components/CTAButton'
-import Modal from '../components/Modal'
-import SectionCTA from '../components/SectionCTA'
-import Section from '../components/Section'
-import Form from '../components/Form'
-import { validate } from '../lib/account'
-
-import { postRegister } from '../lib/account'
+import CTAButton from '../components/page_layout/CTAButton'
+import Modal from '../components/hoc/Modal'
+import SectionCTA from '../components/page_layout/SectionCTA'
+import Section from '../components/page_layout/Section'
+import Form from '../components/forms/Form'
+import { validate } from '../lib/utils/account-utils'
+import { postRegister } from '../lib/api/api-account'
 
 export default function RegisterPage() {
   const initialValues = {
@@ -78,7 +77,7 @@ export default function RegisterPage() {
           return
         }
         if (err.request) {
-          setResponseErrorMessage('Erreur dans la requête')
+          setResponseErrorMessage('Erreur réseau')
           return
         }
         setResponseErrorMessage(err.message)

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import RecipeForm from '../components/RecipeForm'
+import RecipeForm from '../components/forms/RecipeForm'
 
 export default function NewRecipePage(props) {
   const { userId } = props

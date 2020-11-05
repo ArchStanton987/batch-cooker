@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import defaultImg from '../assets/images/defaultRecipe.jpg'
-import '../sass/components/_RecipeCard.scss'
-import '../sass/pages/_FullRecipe.scss'
+import defaultImg from '../../assets/images/defaultRecipe.jpg'
+import '../../sass/components/_RecipeCard.scss'
+import '../../sass/pages/_FullRecipe.scss'
 
 export default function MyRecipesCard({ recipe }) {
   return (

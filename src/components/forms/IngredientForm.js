@@ -1,8 +1,8 @@
 import React from 'react'
-import CTAButton from '../components/CTAButton'
-import SectionCTA from '../components/SectionCTA'
+import CTAButton from '../page_layout/CTAButton'
+import SectionCTA from '../page_layout/SectionCTA'
 
-import '../sass/components/_IngredientForm.scss'
+import '../../sass/components/_IngredientForm.scss'
 
 export default function IngredientForm({
   toggleModal,

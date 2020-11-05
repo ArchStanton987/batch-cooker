@@ -9,7 +9,7 @@ import shoplistIcon from '../assets/icons/shop-listIcon.png'
 import powerIcon from '../assets/icons/power.svg'
 import userIcon from '../assets/icons/user.svg'
 import '../sass/layout/_Sidemenu.scss'
-import CloseIcon from '../components/CloseIcon'
+import CloseIcon from '../components/page_layout/CloseIcon'
 
 export default function Sidemenu({ ...props }) {
   const { setMenu, isSideMenuActive, handleDisconnect, hasUserLogged, userName } = props
