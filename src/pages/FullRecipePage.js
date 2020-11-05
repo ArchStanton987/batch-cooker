@@ -3,19 +3,27 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 import 'moment/locale/fr'
 
+import { useToggle } from '../lib/hooks/index'
 import { parseFetchedRecipe } from '../lib/utils/recipes-utils'
-import { fetchRecipe } from '../lib/api/api-recipes'
+import { fetchRecipe, deleteRecipe } from '../lib/api/api-recipes'
 import '../sass/pages/_FullRecipe.scss'
 import '../sass/components/_Ingredient.scss'
 import Section from '../components/page_layout/Section'
 import SectionCTA from '../components/page_layout/SectionCTA'
+import SectionInfo from '../components/page_layout/SectionInfo'
 import CTAButton from '../components/page_layout/CTAButton'
 import favIconFullYellow from '../assets/icons/star-full-yellow.svg'
 import calendarIcon from '../assets/icons/calendarIcon.png'
 import defaultPic from '../assets/images/chefhat.png'
+import Modal from '../components/hoc/Modal'
 
 export default function FullRecipePage(props) {
   const [recipe, setRecipe] = useState({})
+  const [isConfirmationVisible, setConfirmation] = useToggle(false)
+  const [isError, setIsError] = useToggle(false)
+  const [isSuccess, setIsSuccess] = useToggle(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const {
     name,
     ingredients,
@@ -39,6 +47,17 @@ export default function FullRecipePage(props) {
     setRecipe(parsedResults)
   }
 
+  const handleDeleteRecipe = async () => {
+    try {
+      const res = await deleteRecipe(recipeId)
+      setIsSuccess()
+      setSuccessMessage(res.data.message)
+    } catch (err) {
+      setIsError()
+      setErrorMessage(err.response.data.error)
+    }
+  }
+
   useEffect(() => {
     handleFetchRecipe(recipeId)
   }, [recipeId])
@@ -46,12 +65,48 @@ export default function FullRecipePage(props) {
   return (
     <>
       <div className="full-recipe page">
+        {isSuccess && (
+          <Modal>
+            <p>{successMessage}</p>
+            <SectionInfo className="no-border">
+              <Link to="/myrecipes">
+                <CTAButton action={setIsSuccess}>OK</CTAButton>
+              </Link>
+            </SectionInfo>
+          </Modal>
+        )}
+        {isError && (
+          <Modal>
+            <p>{errorMessage}</p>
+            <SectionInfo className="no-border">
+              <CTAButton action={setIsError}>OK</CTAButton>
+            </SectionInfo>
+          </Modal>
+        )}
+        {isConfirmationVisible && (
+          <Modal>
+            <p>Voulez vous vraiment supprimer cette recette ?</p>
+            <SectionCTA className="no-border">
+              <CTAButton action={setConfirmation}>Annuler</CTAButton>
+              <CTAButton
+                action={() => {
+                  setConfirmation()
+                  handleDeleteRecipe()
+                }}
+              >
+                Supprimer
+              </CTAButton>
+            </SectionCTA>
+          </Modal>
+        )}
         <h2>Recette</h2>
         <SectionCTA className={'no-border'}>
           <Link to={{ pathname: `/myrecipes/edit/${recipeId}`, recipe: { ...recipe } }}>
             <CTAButton className={'secondary'}>Modifier</CTAButton>
           </Link>
-          <CTAButton className={'secondary'}>Supprimer</CTAButton>
+          <CTAButton action={setConfirmation} className={'secondary'}>
+            Supprimer
+          </CTAButton>
           <CTAButton className={''}>
             <img className="icon cta-button--icon" src={favIconFullYellow} alt="add to favorites" />
             Ajouter à mon carnet

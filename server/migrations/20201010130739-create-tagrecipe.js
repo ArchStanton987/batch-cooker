@@ -19,7 +19,8 @@ module.exports = {
         references: {
           model: 'Recipes',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

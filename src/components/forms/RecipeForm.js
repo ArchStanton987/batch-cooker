@@ -14,6 +14,7 @@ import {
 import DynamicFormIngredient from './DynamicFormIngredient'
 import DynamicFormTags from './DynamicFormTags'
 import Section from '../page_layout/Section'
+import SectionInfo from '../page_layout/SectionInfo'
 import SectionCTA from '../page_layout/SectionCTA'
 import CTAButton from '../page_layout/CTAButton'
 import Modal from '../hoc/Modal'
@@ -145,16 +146,15 @@ export default function RecipeForm(props) {
   return (
     <>
       {success && (
-        <Modal title={'Recette créée'} parent={'recipe-form'}>
+        <Modal title={'Recette enregistrée'} parent={'recipe-form'}>
           <Section className="no-border">
-            Votre recette a bien été créée, Vous pouvez la retrouver dans la page "mes recettes".
-            {successMessage}
+            {successMessage} Vous pouvez la retrouver dans la page "mes recettes".
           </Section>
-          <SectionCTA className="no-border">
+          <SectionInfo className="no-border">
             <Link to="/myrecipes">
               <CTAButton action={resetDefault}>OK</CTAButton>
             </Link>
-          </SectionCTA>
+          </SectionInfo>
         </Modal>
       )}
 

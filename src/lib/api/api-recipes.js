@@ -53,3 +53,9 @@ export const updateTags = async (recipeId, tags) => {
   const res = await axios.put(url, tags, { withCredentials: true })
   return res
 }
+
+export const deleteRecipe = async recipeId => {
+  const url = `http://192.168.1.27:8000/api/recipes/${recipeId}`
+  const res = await axios.delete(url, { withCredentials: true })
+  return res
+}

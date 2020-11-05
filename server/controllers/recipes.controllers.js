@@ -34,7 +34,7 @@ module.exports = {
 
     try {
       const createdRecipe = await models.Recipe.create(newRecipe)
-      res.status(201).json({ message: 'Recette créée avec succès', recipeId: createdRecipe.id })
+      res.status(201).json({ message: 'Recette créée avec succès. ', recipeId: createdRecipe.id })
     } catch (err) {
       res.status(500).json({ error: `Erreur lors de la création de la recette ; ${err}` })
     }
@@ -78,7 +78,7 @@ module.exports = {
       recipe.content = content
       recipe.guests = guests
       await recipe.save()
-      res.status(200).json({ message: 'La recette a été mise à jour.' })
+      res.status(200).json({ message: 'La recette a été mise à jour. ' })
     } catch (err) {
       res.status(500).json({ error: `Erreur lors de la mise à jour de la recette :  + ${err}` })
       return
@@ -87,7 +87,9 @@ module.exports = {
   deleteOneRecipe: async (req, res) => {
     const recipeId = req.params.recipeId
     try {
-      const recipeToDelete = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
+      const recipeToDelete = await models.Recipe.findByPk(recipeId, {
+        attributes: ['creatorId', 'id']
+      })
       if (recipeToDelete.creatorId !== req.tokenUser) {
         res.status(403).json({ error: 'Action interdite' })
         return
