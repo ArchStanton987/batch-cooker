@@ -82,11 +82,27 @@ export default function RecipeForm(props) {
     })
   }
 
+  const parseInput = values => {
+    console.log(values)
+    
+    let newValues = values.filter(value => {
+      if (value.tagname === '' || value.tagname.trim() === '') {
+        return false
+      } else {
+        return true
+      }
+    })
+    console.log(newValues)
+    
+    return newValues
+  }
+
   const handlePostNewRecipe = async () => {
+    const trimedTags = await parseInput(newTags)
     const res = await postRecipeInfo(newRecipeInfo)
     const newRecipeId = res.data.recipeId
     postIngredients(newRecipeId, newIngredients)
-    postTags(newRecipeId, newTags)
+    postTags(newRecipeId, trimedTags)
     return res
   }
 
