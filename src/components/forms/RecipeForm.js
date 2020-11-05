@@ -118,20 +118,21 @@ export default function RecipeForm(props) {
       let res
       if (recipeId) {
         res = await handleUpdateRecipe()
+        setSuccess(true)        
+        setSuccessMessage(res[0].data.message)
       } else {
         res = await handlePostNewRecipe()
-      }
-      return setTimeout(() => {
         setSuccess(true)
         setSuccessMessage(res.data.message)
-      }, 500)
+      }
     } catch (err) {
       if (err.response) {
         setIsError(true)
-        setErrorMessage('Raté')
-      } else {
+        setErrorMessage(err.response.data.error)
+      }
+      if (err) {
         setIsError(true)
-        setErrorMessage(err)
+        setErrorMessage("Erreur lors de l'enregistrement de la recette.")
         console.log(err)
       }
     }
