@@ -28,15 +28,15 @@ module.exports = {
 
     const parsedId = parseInt(creatorId, 10)
     if (parsedId !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
       const createdRecipe = await models.Recipe.create(newRecipe)
-      res.status(200).json({ message: 'Recipe successfully created', recipeId: createdRecipe.id })
+      res.status(201).json({ message: 'Recette créée avec succès', recipeId: createdRecipe.id })
     } catch (err) {
-      res.status(500).json({ error: err + ' ; error when creating recipe' })
+      res.status(500).json({ error: `Erreur lors de la création de la recette ; ${err}` })
     }
   },
   getOneRecipeById: async (req, res) => {
@@ -53,7 +53,7 @@ module.exports = {
         ]
       })
       if (!recipe) {
-        res.status(404).json({ message: 'Recipe not found' })
+        res.status(404).json({ error: 'Recette inconnue' })
         return
       }
       res.status(200).json(recipe)
@@ -68,7 +68,7 @@ module.exports = {
     try {
       let recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
       if (recipe.creatorId !== req.tokenUser) {
-        res.status(401).json({ error: 'Forbidden' })
+        res.status(403).json({ error: 'Action interdite' })
         return
       }
       recipe.id = recipeId
@@ -78,9 +78,9 @@ module.exports = {
       recipe.content = content
       recipe.guests = guests
       await recipe.save()
-      res.status(200).json({ message: 'Recipe successfully updated' })
+      res.status(200).json({ message: 'La recette a été mise à jour.' })
     } catch (err) {
-      res.status(500).json({ error: 'error when updating recipe data : ' + err })
+      res.status(500).json({ error: `Erreur lors de la mise à jour de la recette :  + ${err}` })
       return
     }
   },
@@ -89,20 +89,20 @@ module.exports = {
     try {
       const recipeToDelete = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
       if (recipeToDelete.creatorId !== req.tokenUser) {
-        res.status(401).json({ error: 'Forbidden' })
+        res.status(403).json({ error: 'Action interdite' })
         return
       }
       await recipeToDelete.destroy()
-      res.status(200).json({ message: 'Recipe successfully deleted' })
+      res.status(200).json({ message: 'La recette a été supprimée. ' })
     } catch (err) {
-      res.status(500).json({ error: err })
+      res.status(500).json({ error: `Erreur lors de la suppression de la recette : ${err}` })
     }
   },
   getRecipesOfUser: async (req, res) => {
     const userId = parseInt(req.params.userId, 10)
 
     if (userId !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
     try {
@@ -127,7 +127,7 @@ module.exports = {
 
     const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
 
@@ -148,9 +148,9 @@ module.exports = {
         ingredient.recipeId = recipeId
         await models.RecipeIng.create(ingredient)
       })
-      res.status(200).json({ message: 'Ingredients successfully created' })
+      res.status(201).json({ message: 'Les ingrédients ont bien été associés à la recette. ' })
     } catch (err) {
-      res.status(500).json({ error: 'Error when creating ingredients' })
+      res.status(500).json({ error: `Erreur lors de l'ajout de l'ingrédient : ${err}` })
     }
   },
   getIngredientFromRecipe: async (req, res) => {
@@ -161,7 +161,7 @@ module.exports = {
         include: [{ model: models.Ingredient }]
       })
       if (!ingredient) {
-        res.status(404).json({ error: 'Ingredient not found' })
+        res.status(404).json({ error: 'Ingredient inconnu' })
         return
       }
       res.status(200).json(ingredient)
@@ -175,7 +175,7 @@ module.exports = {
 
     const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
 
@@ -198,9 +198,9 @@ module.exports = {
         ingredient.recipeId = recipeId
         await models.RecipeIng.create(ingredient)
       })
-      res.status(200).json({ message: 'Ingredients successfully updated' })
+      res.status(200).json({ message: 'Les ingrédients ont bien été mis à jour.' })
     } catch (err) {
-      res.status(500).json({ error: 'Error when updating ingredients' })
+      res.status(500).json({ error: `Erreur lors de la mise à jour des ingrédients : ${err}` })
     }
   },
   deleteIngredientFromRecipe: async (req, res) => {
@@ -208,7 +208,7 @@ module.exports = {
 
     const recipe = await models.Recipe.findByPk(recipeId)
     if (recipe.creatorId !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
 
@@ -217,11 +217,11 @@ module.exports = {
         where: { recipeId: recipeId, ingredientId: ingredientId }
       })
       if (!ingredient) {
-        res.status(404).json({ error: 'Ingredient not found' })
+        res.status(404).json({ error: 'Ingredient inconnu' })
         return
       }
       await ingredient.destroy()
-      res.status(200).json({ message: 'Ingredient deleted' })
+      res.status(200).json({ message: 'Ingredient supprimé' })
     } catch (err) {
       res.status(500).json(err)
     }
@@ -232,7 +232,7 @@ module.exports = {
 
     const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
 
@@ -252,9 +252,9 @@ module.exports = {
         tag.recipeId = recipeId
         await models.TagRecipe.create(tag)
       })
-      res.status(200).json({ message: 'Tags successfully associated with recipe' })
+      res.status(200).json({ message: 'Les tags ont bien été associés à la recette. ' })
     } catch (err) {
-      res.status(500).json({ error: 'Error associating tags with recipe' })
+      res.status(500).json({ error: `Erreur en associant les tags à la recette : ${err}` })
     }
   },
   getTagFromRecipe: async (req, res) => {},
@@ -264,7 +264,7 @@ module.exports = {
 
     const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
 
@@ -286,9 +286,9 @@ module.exports = {
         tag.recipeId = recipeId
         await models.TagRecipe.create(tag)
       })
-      res.status(200).json({ message: 'Tags successfully associated with recipe' })
+      res.status(200).json({ message: 'Les tags de la recette ont bien été mis à jour. ' })
     } catch (err) {
-      res.status(500).json({ error: 'Error associating tags with recipe' })
+      res.status(500).json({ error: `Erreur lors de l'association des tags : ${err}` })
     }
   },
   deleteTagFromRecipe: async (req, res) => {}

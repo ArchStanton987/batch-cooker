@@ -8,20 +8,20 @@ module.exports = {
     const { email, username, password } = req.body
     const existingEmail = await models.User.findOne({ where: { email: email } })
     if (existingEmail) {
-      res.status(400).json({ error: 'Email already existing' })
+      res.status(400).json({ error: 'Cet email existe déjà' })
       return
     }
     const existingUsername = await models.User.findOne({ where: { username: username } })
     if (existingUsername) {
-      res.status(400).json({ error: 'Username already existing' })
+      res.status(400).json({ error: 'Ce nom existe déjà' })
       return
     }
     if (!validator.isLength(username, { min: 4, max: 20 })) {
-      res.status(400).json({ error: 'Username must contain between 4 and 20 characters' })
+      res.status(400).json({ error: 'Le nom doit contenir entre 4 et 20 caractères' })
       return
     }
     if (!validator.isEmail(email)) {
-      res.status(400).json({ error: 'Email format not valid' })
+      res.status(400).json({ error: "Format de l'email invalide" })
       return
     }
     try {
@@ -33,22 +33,21 @@ module.exports = {
         },
         { fields: ['email', 'username', 'password'] }
       )
-      res.status(200).json(newUser)
+      res.status(201).json(newUser)
     } catch (err) {
-      res.status(400).json({ error: err })
+      res.status(500).json({ error: err })
     }
   },
   login: async (req, res) => {
     const { email, password } = req.body
-    console.log(`email : ${email} ; password : ${password}`)
     
     const user = await models.User.findOne({ where: { email: email } })
     if (!user) {
-      res.status(401).json({ error: 'Wrong email or password' })
+      res.status(401).json({ error: 'Email ou mot de passe invalide' })
     } else {
       const match = await bcrypt.compare(password, user.password)
       if (!match) {
-        res.status(401).json({ error: 'Wrong email or password' })
+        res.status(401).json({ error: 'Email ou mot de passe invalide' })
       } else {
         jwt.sign(
           { sub: user.id, iss: 'batch-cooker', scopes: ['admin', 'user'] },
@@ -56,8 +55,7 @@ module.exports = {
           { algorithm: 'HS256', expiresIn: '1h' },
           (err, token) => {
             if (err) {
-              console.log(err)
-              res.status(500).send({ message: 'Error signing token' })
+              res.status(500).json({ error: err })
             }
             res.cookie('access_token', token, {
               httpOnly: true,
@@ -65,7 +63,7 @@ module.exports = {
             })
             res
               .status(200)
-              .json({ message: 'Login succeeded', userId: user.id, username: user.username })
+              .json({ message: 'Identification réussie', userId: user.id, username: user.username })
           }
         )
       }

@@ -13,9 +13,9 @@ module.exports = {
     const tagname = req.body.tagname.toLowerCase()
     try {
       await models.Tag.create({ tagname: tagname })
-      res.status(200).json({ message: 'Tag successfully created' })
+      res.status(201).json({ message: 'Le tag a bien été créé' })
     } catch (err) {
-      res.status(500).json({ error: 'Error creating tag ; ' + err })
+      res.status(500).json({ error: `Erreur lors de la création du tag : ${err}` })
     }
   },
   getTagById: async (req, res) => {
@@ -35,9 +35,9 @@ module.exports = {
       tag.tagname = tagname
       console.log(tag)
       await tag.save()
-      res.status(200).json({ message: 'Tag successfully updated' })
+      res.status(200).json({ message: 'Le tag a bien été mis à jour.' })
     } catch (err) {
-      res.status(500).json({ error: err })
+      res.status(500).json({ error: `Erreur lors de la mis à jour du tag : ${err}` })
     }
   },
   deleteTag: async (req, res) => {
@@ -45,7 +45,7 @@ module.exports = {
     try {
       let tag = await models.Tag.findByPk(tagId)
       await tag.destroy()
-      res.status(200).json({ message: 'Tag successfully deleted' })
+      res.status(200).json({ message: 'Le tag a bien été supprimé. ' })
     } catch (err) {
       res.status(500).send({ error: err })
     }

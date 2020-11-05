@@ -83,8 +83,6 @@ export default function RecipeForm(props) {
   }
 
   const parseInput = values => {
-    console.log(values)
-    
     let newValues = values.filter(value => {
       if (value.tagname === '' || value.tagname.trim() === '') {
         return false
@@ -92,8 +90,6 @@ export default function RecipeForm(props) {
         return true
       }
     })
-    console.log(newValues)
-    
     return newValues
   }
 

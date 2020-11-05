@@ -3,15 +3,15 @@ const { Op } = require('sequelize')
 
 module.exports = {
   getUserInventory: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)    
+    const userId = parseInt(req.params.userId, 10)
     if (userId !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
     try {
       const user = await models.User.findByPk(userId)
       if (!user) {
-        res.status(404).json({ error: 'Unknown user' })
+        res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       } else {
         const inventory = await models.Inventory.findAll({
@@ -22,7 +22,7 @@ module.exports = {
         res.status(200).json(inventory)
       }
     } catch (err) {
-      res.status(500).json({ error: err })
+      res.status(500).json({ error: `Erreur en récupérant l'inventaire ; ${err}` })
     }
   },
 
@@ -31,14 +31,14 @@ module.exports = {
     let { userId } = req.params
     let newIngredient = { name: ingredientName.toLowerCase(), category: category }
 
-    if (parseInt(userId,10) !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+    if (parseInt(userId, 10) !== req.tokenUser) {
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     const user = await models.User.findByPk(userId)
     if (!user) {
-      res.status(404).json({ error: 'Unknown user' })
+      res.status(404).json({ error: 'Utilisateur inconnu' })
       return
     }
 
@@ -67,13 +67,13 @@ module.exports = {
         await models.Inventory.create(newInvItem, {
           fields: ['userId', 'ingredientId', 'quantity', 'unity']
         })
-        res.status(200).json(newInvItem)
+        res.status(201).json(newInvItem)
       }
       if (ingredientInInventory) {
         ingredientInInventory.quantity =
           parseInt(ingredientInInventory.quantity, 10) + newInvItem.quantity
         await ingredientInInventory.save()
-        res.status(200).json(ingredientInInventory)
+        res.status(201).json(ingredientInInventory)
       }
     } catch (err) {
       res.status(500).send({ error: err })
@@ -81,20 +81,20 @@ module.exports = {
   },
 
   updateFromInventory: async (req, res) => {
-    const userId = req.params.userId    
+    const userId = req.params.userId
     const ingredientId = req.params.ingredientId
     const quantity = parseInt(req.body.quantity, 10)
     const { unity } = req.body
 
-    if (parseInt(userId,10) !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+    if (parseInt(userId, 10) !== req.tokenUser) {
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
       const user = await models.User.findByPk(userId)
       if (!user) {
-        res.status(404).json({ error: 'Unknown user' })
+        res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       }
       const inventory = await models.Inventory.findOne({
@@ -112,15 +112,15 @@ module.exports = {
     const userId = req.params.userId
     const ingredientId = req.params.ingredientId
 
-    if (parseInt(userId,10) !== req.tokenUser) {
-      res.status(401).json({ error: 'Forbidden' })
+    if (parseInt(userId, 10) !== req.tokenUser) {
+      res.status(403).json({ error: 'Action interdite' })
       return
     }
-    
+
     try {
       const user = await models.User.findByPk(userId)
       if (!user) {
-        res.status(404).json({ error: 'Unknown user' })
+        res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       }
       const inventory = await models.Inventory.findOne({
@@ -128,7 +128,7 @@ module.exports = {
       })
 
       await inventory.destroy()
-      res.status(200).json({ message: 'Ingredient deleted from inventory' })
+      res.status(200).json({ message: "Ingrédient supprimé de l'inventaire" })
     } catch (err) {
       res.status(500).send({ error: err })
     }
