@@ -155,22 +155,6 @@ module.exports = {
       res.status(500).json({ error: `Erreur lors de l'ajout de l'ingrédient : ${err}` })
     }
   },
-  getIngredientFromRecipe: async (req, res) => {
-    const { recipeId, ingredientId } = req.params
-    try {
-      const ingredient = await models.RecipeIng.findOne({
-        where: { recipeId: recipeId, ingredientId: ingredientId },
-        include: [{ model: models.Ingredient }]
-      })
-      if (!ingredient) {
-        res.status(404).json({ error: 'Ingredient inconnu' })
-        return
-      }
-      res.status(200).json(ingredient)
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
   updateIngredientsFromRecipe: async (req, res) => {
     const { recipeId } = req.params
     let recipeIngredients = req.body
@@ -205,29 +189,6 @@ module.exports = {
       res.status(500).json({ error: `Erreur lors de la mise à jour des ingrédients : ${err}` })
     }
   },
-  deleteIngredientFromRecipe: async (req, res) => {
-    const { recipeId, ingredientId } = req.params
-
-    const recipe = await models.Recipe.findByPk(recipeId)
-    if (recipe.creatorId !== req.tokenUser) {
-      res.status(403).json({ error: 'Action interdite' })
-      return
-    }
-
-    try {
-      const ingredient = await models.RecipeIng.findOne({
-        where: { recipeId: recipeId, ingredientId: ingredientId }
-      })
-      if (!ingredient) {
-        res.status(404).json({ error: 'Ingredient inconnu' })
-        return
-      }
-      await ingredient.destroy()
-      res.status(200).json({ message: 'Ingredient supprimé' })
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
   addTagsInRecipe: async (req, res) => {
     const { recipeId } = req.params
     let recipeTags = req.body
@@ -259,7 +220,6 @@ module.exports = {
       res.status(500).json({ error: `Erreur en associant les tags à la recette : ${err}` })
     }
   },
-  getTagFromRecipe: async (req, res) => {},
   updateTagsFromRecipe: async (req, res) => {
     const { recipeId } = req.params
     let recipeTags = req.body
@@ -292,6 +252,5 @@ module.exports = {
     } catch (err) {
       res.status(500).json({ error: `Erreur lors de l'association des tags : ${err}` })
     }
-  },
-  deleteTagFromRecipe: async (req, res) => {}
+  }
 }
