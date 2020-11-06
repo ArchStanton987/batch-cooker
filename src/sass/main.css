@@ -1,3 +1,46 @@
+@keyframes list-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Firefox < 16 */
+@-moz-keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Internet Explorer */
+@-ms-keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -77,6 +120,16 @@ ul {
   flex-direction: column;
   flex: 1;
   overflow: auto;
+  -webkit-animation: page-fade-in 2s;
+  /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: page-fade-in 2s;
+  /* Firefox < 16 */
+  -ms-animation: page-fade-in 2s;
+  /* Internet Explorer */
+  -o-animation: page-fade-in 2s;
+  /* Opera < 12.1 */
+  animation: page-fade-in 200ms ease-in-out;
+  animation-fill-mode: both;
 }
 
 @media screen and (min-width: 650px) {

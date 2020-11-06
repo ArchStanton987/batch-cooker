@@ -1,4 +1,5 @@
 @use '../variables' as v;
+@use '../animations';
 
 * {
   margin: 0;
@@ -79,6 +80,12 @@ ul {
   flex-direction: column;
   flex: 1;
   overflow: auto;
+  -webkit-animation: page-fade-in 2s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: page-fade-in 2s; /* Firefox < 16 */
+  -ms-animation: page-fade-in 2s; /* Internet Explorer */
+  -o-animation: page-fade-in 2s; /* Opera < 12.1 */
+  animation: page-fade-in 200ms ease-in-out;
+  animation-fill-mode: both;
 }
 @media screen and (min-width: v.$bp1-min) {
   .page {
