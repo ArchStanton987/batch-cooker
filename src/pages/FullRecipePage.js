@@ -15,7 +15,7 @@ import CTAButton from '../components/page_layout/CTAButton'
 import favIconFullYellow from '../assets/icons/star-full-yellow.svg'
 import calendarIcon from '../assets/icons/calendarIcon.png'
 import defaultPic from '../assets/images/chefhat.png'
-import Modal from '../components/hoc/Modal'
+import Modal from '../components/wrappers/Modal'
 
 export default function FullRecipePage(props) {
   const [recipe, setRecipe] = useState({})

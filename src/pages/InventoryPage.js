@@ -18,7 +18,7 @@ import SectionCTA from '../components/page_layout/SectionCTA'
 import CTAButton from '../components/page_layout/CTAButton'
 import ChevronIcon from '../components/page_layout/ChevronIcon'
 import Search from '../components/forms/Search'
-import Modal from '../components/hoc/Modal'
+import Modal from '../components/wrappers/Modal'
 
 import '../sass/pages/_Inventory.scss'
 

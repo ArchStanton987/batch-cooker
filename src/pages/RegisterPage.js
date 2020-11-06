@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import '../sass/pages/_Login&Register.scss'
 import CTAButton from '../components/page_layout/CTAButton'
-import Modal from '../components/hoc/Modal'
+import Modal from '../components/wrappers/Modal'
 import SectionCTA from '../components/page_layout/SectionCTA'
 import Section from '../components/page_layout/Section'
 import Form from '../components/forms/Form'

@@ -17,7 +17,7 @@ import Section from '../page_layout/Section'
 import SectionInfo from '../page_layout/SectionInfo'
 import SectionCTA from '../page_layout/SectionCTA'
 import CTAButton from '../page_layout/CTAButton'
-import Modal from '../hoc/Modal'
+import Modal from '../wrappers/Modal'
 
 export default function RecipeForm(props) {
   const { recipeInfo, ingredients, tags, recipeId } = props
