@@ -36,28 +36,29 @@ export default function Main({ ...props }) {
           )}
         />
         <Route path="/register" render={() => <RegisterPage />} />
+
+        <PrivateRoute path="/myrecipes/new" hasUserLogged={hasUserLogged}>
+          <NewRecipePage userId={userId} />
+        </PrivateRoute>
+        <PrivateRoute path="/myrecipes/edit/:id" hasUserLogged={hasUserLogged}>
+          <EditRecipePage userId={userId} />
+        </PrivateRoute>
+        <PrivateRoute path="/myrecipes" hasUserLogged={hasUserLogged}>
+          <MyRecipesPage userId={userId} />
+        </PrivateRoute>
+        <PrivateRoute path="/inventory" hasUserLogged={hasUserLogged}>
+          <InventoryPage userId={userId} />
+        </PrivateRoute>
+        <PrivateRoute path="/shoplist" hasUserLogged={hasUserLogged}>
+          <ShoplistPage userId={userId} />
+        </PrivateRoute>
+        <PrivateRoute path="/menu" hasUserLogged={hasUserLogged}>
+          <MenuPage userId={userId} />
+        </PrivateRoute>
+        <PrivateRoute path="/profile" hasUserLogged={hasUserLogged}>
+          <ProfilePage userId={userId} />
+        </PrivateRoute>
       </Switch>
-      <PrivateRoute hasUserLogged={hasUserLogged}>
-        <Switch>
-          <Route
-            path="/myrecipes/new"
-            render={props => <NewRecipePage userId={userId} {...props} />}
-          />
-          <Route
-            path="/myrecipes/edit/:id"
-            render={props => <EditRecipePage userId={userId} {...props} />}
-          />
-          <Route
-            exact
-            path="/myrecipes"
-            render={props => <MyRecipesPage userId={userId} {...props} />}
-          />
-          <Route path="/inventory" render={props => <InventoryPage userId={userId} {...props} />} />
-          <Route path="/shoplist" render={props => <ShoplistPage userId={userId} {...props} />} />
-          <Route path="/menu" render={props => <MenuPage userId={userId} {...props} />} />
-          <Route path="/profile" render={props => <ProfilePage userId={userId} {...props} />} />
-        </Switch>
-      </PrivateRoute>
     </main>
   )
 }

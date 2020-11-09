@@ -1,12 +1,24 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 
 export default function PrivateRoute({ children, ...rest }) {
   const { hasUserLogged } = rest
 
-  if (!hasUserLogged) {
-    return <Redirect to="/login" />
-  } else {
-    return children
-  }
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        hasUserLogged ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  )
 }
