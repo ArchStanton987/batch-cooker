@@ -6,7 +6,6 @@ const users = require('./routes/users')
 const account = require('./routes/account')
 const inventory = require('./routes/inventory')
 const recipes = require('./routes/recipes')
-const tags = require('./routes/tags')
 
 const app = express()
 
@@ -25,6 +24,5 @@ app.use('/api/users', users)
 app.use('/api/account', account)
 app.use('/api/inventory', inventory)
 app.use('/api/recipes', recipes)
-app.use('/api/tags', tags)
 
 module.exports = app
