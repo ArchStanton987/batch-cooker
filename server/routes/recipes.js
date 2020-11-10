@@ -1,9 +1,12 @@
 // routes/recipes.js
 const jwtUtils = require('../utils/jwtUtils')
+const userUtils = require('../utils/usersUtils')
 const express = require('express')
 const recipesCtrl = require('../controllers/recipes.controllers')
 
 const router = express.Router()
+
+router.use(userUtils.addUserIdToReq)
 
 router.route('/').get(recipesCtrl.getAllRecipes)
 router.route('/:recipeId').get(recipesCtrl.getOneRecipeById)
@@ -16,7 +19,10 @@ router.route('/:recipeId').put(recipesCtrl.updateOneRecipe)
 router.route('/:recipeId').delete(recipesCtrl.deleteOneRecipe)
 
 router.route('/users/:userId').get(recipesCtrl.getRecipesOfUser)
-router.route('/saved/users/:userId').get(recipesCtrl.getSavedRecipes)
+
+router.route('/saves/users/:userId').get(recipesCtrl.getSavedRecipes)
+router.route('/saves/:recipeId/users/:userId').put(recipesCtrl.saveARecipe)
+// router.route('/users/:userId/saved').delete(recipesCtrl.saveARecipe)
 
 router.route('/:recipeId/ingredients').post(recipesCtrl.addIngredientsToRecipe)
 router.route('/:recipeId/ingredients').put(recipesCtrl.updateIngredientsFromRecipe)

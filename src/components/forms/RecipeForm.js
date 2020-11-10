@@ -7,10 +7,12 @@ import {
   postRecipeInfo,
   postTags,
   postIngredients,
+  saveRecipe,
   updateRecipeInfo,
   updateIngredients,
   updateTags
 } from '../../lib/api/api-recipes'
+
 import DynamicFormIngredient from './DynamicFormIngredient'
 import DynamicFormTags from './DynamicFormTags'
 import Section from '../page_layout/Section'
@@ -29,6 +31,7 @@ export default function RecipeForm(props) {
   const [successMessage, setSuccessMessage] = useState('')
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [hasCreated, setHasCreated] = useState(false)
 
   const defaultIngredient = { name: '', category: '', quantity: 0, unity: '' }
   const defaultTag = { tagname: '' }
@@ -97,6 +100,7 @@ export default function RecipeForm(props) {
   const handlePostNewRecipe = async () => {
     const trimedTags = await parseInput(newTags)
     const res = await postRecipeInfo(newRecipeInfo)
+    setHasCreated(true)
     const newRecipeId = res.data.recipeId
     postIngredients(newRecipeId, newIngredients)
     postTags(newRecipeId, trimedTags)
@@ -112,16 +116,26 @@ export default function RecipeForm(props) {
     return res
   }
 
+  const handleSaveRecipe = async recipeId => {
+    try {
+      await saveRecipe(recipeId, newRecipeInfo.creatorId)
+    } catch (err) {
+      setIsError()
+      setErrorMessage(err.response.data.error)
+    }
+  }
+
   const handleRecipeSubmit = async e => {
     e.preventDefault()
     try {
       let res
       if (recipeId) {
         res = await handleUpdateRecipe()
-        setSuccess(true)        
+        setSuccess(true)
         setSuccessMessage(res[0].data.message)
       } else {
         res = await handlePostNewRecipe()
+        await handleSaveRecipe(res.data.recipeId)
         setSuccess(true)
         setSuccessMessage(res.data.message)
       }
@@ -149,7 +163,8 @@ export default function RecipeForm(props) {
       {success && (
         <Modal title={'Recette enregistrée'} parent={'recipe-form'}>
           <Section className="no-border">
-            {successMessage} Vous pouvez la retrouver dans la page "mes recettes".
+      {successMessage} {hasCreated && `Elle a été ajoutée automatiquement dans votre carnet de recettes. Vous
+            pouvez la retrouver dans la page "Mes Recettes"`}.
           </Section>
           <SectionInfo className="no-border">
             <Link to="/myrecipes">

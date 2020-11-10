@@ -25,7 +25,9 @@ export default function Main({ ...props }) {
         <Route path="/home" render={() => <HomePage />} />
         <Route
           path="/recipes/:id"
-          render={props => <FullRecipePage userId={userId} {...props} />}
+          render={props => (
+            <FullRecipePage hasUserLogged={hasUserLogged} userId={userId} {...props} />
+          )}
         />
         <Route
           path="/login"

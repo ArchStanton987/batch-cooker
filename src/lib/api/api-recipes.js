@@ -12,12 +12,6 @@ export const fetchRecipe = async recipeId => {
   return res
 }
 
-export const fetchSavedRecipes = async userId => {
-  const url = `http://192.168.1.27:8000/api/recipes/saved/users/${userId}`
-  const res = await axios.get(url, { withCredentials: true })
-  return res
-}
-
 export const postRecipeInfo = async recipe => {
   const url = `http://192.168.1.27:8000/api/recipes`
   const res = await axios.post(url, recipe, { withCredentials: true })
@@ -57,5 +51,17 @@ export const updateTags = async (recipeId, tags) => {
 export const deleteRecipe = async recipeId => {
   const url = `http://192.168.1.27:8000/api/recipes/${recipeId}`
   const res = await axios.delete(url, { withCredentials: true })
+  return res
+}
+
+export const fetchSavedRecipes = async userId => {
+  const url = `http://192.168.1.27:8000/api/recipes/saves/users/${userId}`
+  const res = await axios.get(url, { withCredentials: true })
+  return res
+}
+
+export const saveRecipe = async (recipeId, userId) => {
+  const url = `http://192.168.1.27:8000/api/recipes/saves/${recipeId}/users/${userId}`
+  const res = await axios.put(url, recipeId, { withCredentials: true })
   return res
 }

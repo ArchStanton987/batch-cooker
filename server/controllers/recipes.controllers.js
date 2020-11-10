@@ -38,6 +38,18 @@ module.exports = {
   },
   getOneRecipeById: async (req, res) => {
     const { recipeId } = req.params
+
+    let isSavedByUser = false
+    let userId = req.subId || 0
+    console.log(userId)
+    
+    if (req.isUserIdentified) {
+      let save = await models.RecipeSave.findOne({ where: { recipeId: recipeId, userId: userId } })
+      if (save) {
+        isSavedByUser = true
+      }
+    }
+
     try {
       const recipe = await models.Recipe.findOne({
         where: {
@@ -53,7 +65,7 @@ module.exports = {
         res.status(404).json({ error: 'Recette inconnue' })
         return
       }
-      res.status(200).json(recipe)
+      res.status(200).json({ recipe, isSavedByUser: isSavedByUser })
     } catch (err) {
       res.status(500).json({ error: err })
     }
@@ -273,6 +285,42 @@ module.exports = {
       res.status(200).json(savedRecipes)
     } catch (err) {
       res.status(500).json({ error: err })
+    }
+  },
+  saveARecipe: async (req, res) => {
+    const userId = parseInt(req.params.userId, 10)
+    const recipeId = parseInt(req.params.recipeId, 10)
+
+    if (userId !== req.tokenUser) {
+      res.status(403).json({ error: 'Action interdite' })
+      return
+    }
+
+    try {
+      const existingSave = await models.RecipeSave.findOne({
+        where: { userId: userId, recipeId: recipeId }
+      })
+      if (existingSave) {
+        try {
+          await existingSave.destroy()
+          res.status(200).json({ message: 'Recette supprimée de votre carnet' })
+        } catch (err) {
+          res
+            .status(500)
+            .json({ error: 'Erreur pendant la suppression de la recette de votre carnet ; ' + err })
+        }
+      } else {
+        try {
+          await models.RecipeSave.create({ userId: userId, recipeId: recipeId })
+          res.status(201).json({ message: 'Recette enregistée dans votre carnet' })
+        } catch (err) {
+          res
+            .status(500)
+            .json({ error: "Erreur pendant l'enregistrement de la recette dans votre carnet" })
+        }
+      }
+    } catch (err) {
+      res.status(500).json({ error: "L'action n'a pas pu être réalisée" })
     }
   }
 }

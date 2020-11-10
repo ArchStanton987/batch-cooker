@@ -5,7 +5,7 @@ import 'moment/locale/fr'
 
 import { useToggle } from '../lib/hooks/index'
 import { parseFetchedRecipe } from '../lib/utils/recipes-utils'
-import { fetchRecipe, deleteRecipe } from '../lib/api/api-recipes'
+import { fetchRecipe, deleteRecipe, saveRecipe } from '../lib/api/api-recipes'
 import '../sass/pages/_FullRecipe.scss'
 import '../sass/components/_Ingredient.scss'
 import Section from '../components/page_layout/Section'
@@ -13,15 +13,18 @@ import SectionCTA from '../components/page_layout/SectionCTA'
 import SectionInfo from '../components/page_layout/SectionInfo'
 import CTAButton from '../components/page_layout/CTAButton'
 import favIconFullYellow from '../assets/icons/star-full-yellow.svg'
+import favIconEmpty from '../assets/icons/star-empty-prim.svg'
 import calendarIcon from '../assets/icons/calendarIcon.png'
 import defaultPic from '../assets/images/chefhat.png'
 import Modal from '../components/wrappers/Modal'
 
 export default function FullRecipePage(props) {
   const [recipe, setRecipe] = useState({})
+  const [isRecipeSaved, setIsRecipeSaved] = useState(false)
   const [isConfirmationVisible, setConfirmation] = useToggle(false)
   const [isError, setIsError] = useToggle(false)
   const [isSuccess, setIsSuccess] = useToggle(false)
+  const [hasDeleted, setHasDeleted] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const {
@@ -38,19 +41,33 @@ export default function FullRecipePage(props) {
   } = recipe
 
   const recipeId = props.match.params.id
-  const userId = props.userId
+  const { hasUserLogged, userId } = props
 
   moment.locale('fr')
 
   const handleFetchRecipe = useCallback(async () => {
     const result = await fetchRecipe(recipeId)
-    const parsedResults = parseFetchedRecipe(result.data)
+    setIsRecipeSaved(result.data.isSavedByUser)
+    const parsedResults = parseFetchedRecipe(result.data.recipe)
     setRecipe(parsedResults)
   }, [recipeId])
 
   const handleDeleteRecipe = async () => {
     try {
       const res = await deleteRecipe(recipeId)
+      setIsSuccess()
+      setHasDeleted(true)
+      setSuccessMessage(res.data.message)
+    } catch (err) {
+      setIsError()
+      setErrorMessage(err.response.data.error)
+    }
+  }
+
+  const handleSaveRecipe = async () => {
+    try {
+      let res = await saveRecipe(recipeId, userId)
+      setIsRecipeSaved(prev => !prev)
       setIsSuccess()
       setSuccessMessage(res.data.message)
     } catch (err) {
@@ -70,9 +87,13 @@ export default function FullRecipePage(props) {
           <Modal>
             <p>{successMessage}</p>
             <SectionInfo className="no-border">
-              <Link to="/myrecipes">
+              {hasDeleted ? (
+                <Link to="/myrecipes">
+                  <CTAButton action={setIsSuccess}>OK</CTAButton>
+                </Link>
+              ) : (
                 <CTAButton action={setIsSuccess}>OK</CTAButton>
-              </Link>
+              )}
             </SectionInfo>
           </Modal>
         )}
@@ -102,7 +123,7 @@ export default function FullRecipePage(props) {
         )}
         <h2>Recette</h2>
         <SectionCTA className={'no-border'}>
-          {recipe && recipe.creatorId === userId && (
+          {hasUserLogged && recipe && recipe.creatorId === userId && (
             <>
               <Link to={{ pathname: `/myrecipes/edit/${recipeId}`, recipe: { ...recipe } }}>
                 <CTAButton className={'secondary'}>Modifier</CTAButton>
@@ -112,14 +133,32 @@ export default function FullRecipePage(props) {
               </CTAButton>
             </>
           )}
-          <CTAButton className={''}>
-            <img className="icon cta-button--icon" src={favIconFullYellow} alt="add to favorites" />
-            Ajouter à mon carnet
-          </CTAButton>
-          <CTAButton className={''}>
-            <img className="icon cta-button--icon" src={calendarIcon} alt="add to menu" />
-            Ajouter au menu
-          </CTAButton>
+          {hasUserLogged && recipe && isRecipeSaved && (
+            <CTAButton action={handleSaveRecipe} className={'secondary'}>
+              <img
+                className="icon cta-button--icon"
+                src={favIconEmpty}
+                alt="retirer de mon carnet"
+              />
+              Retirer de mon carnet
+            </CTAButton>
+          )}
+          {hasUserLogged && recipe && !isRecipeSaved && (
+            <CTAButton action={handleSaveRecipe} className={''}>
+              <img
+                className="icon cta-button--icon"
+                src={favIconFullYellow}
+                alt="add to favorites"
+              />
+              Ajouter à mon carnet
+            </CTAButton>
+          )}
+          {hasUserLogged && (
+            <CTAButton className={''}>
+              <img className="icon cta-button--icon" src={calendarIcon} alt="add to menu" />
+              Ajouter au menu
+            </CTAButton>
+          )}
         </SectionCTA>
         <Section className={'recipe-header'}>
           <h3 className="header-title">{name}</h3>

@@ -8,11 +8,15 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/api/users/1
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MDA1MjE3LCJleHAiOjE2MDUwMDg4MTd9.ZvV_0BDCAGWUBf__3PLPZagnOzOAQ-o9yJajQv7oW78
+GET http://localhost:8000/api/recipes/4
+Cookie: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MDI5MzIzLCJleHAiOjE2MDUwMzI5MjN9.s4iesz94uP3YceGV-8xJHooVllz-O5UYVKcxdWU_sec
 
 ###
-GET http://localhost:8000/api/recipes
+GET http://localhost:8000/api/recipes/saves/5/users/1
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MDEzNDE2LCJleHAiOjE2MDUwMTcwMTZ9.E4aGOONTwwbvvCevWPbPLNUg9N4l9HlfVz1cwhSTg6E
+
+###
+POST http://localhost:8000/api/recipes
 Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA0OTMwOTU2LCJleHAiOjE2MDQ5MzQ1NTZ9.M-00aRLYW6NjQ4hN2Q6Q4oDQz05y3fsU_dBp8--2qNM
 Content-Type: application/json
 
@@ -22,74 +26,5 @@ Content-Type: application/json
     "category": "assaisonnements et condiments",
     "unity": "cl"
 }
-
-###
-GET http://localhost:8000/api/recipes/saved/users/1
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAzODA2NTU4LCJleHAiOjE2MDM4MTAxNTh9.4L88HJeiD3TiP82Lgb_awAamJgsSNUN0v1TQr5E8BH4
-
-
-###
-PUT http://localhost:8000/api/tags/1
-Content-Type: application/json
-
-{
-    "tagname": "pouet"
-}
-###
-
-POST http://localhost:8000/api/recipes
-Content-Type: application/json
-
-{
-    "creatorId": 2,
-    "name": "test retour id",
-    "image": null,
-    "url": null,
-    "content": "Recette pour tester le retour id "
-}
-###
-
-DELETE http://localhost:8000/api/recipes/8
-
-###
-
-GET http://localhost:8000/api/recipes/1/ingredients/13
-
-###
-
-POST http://localhost:8000/api/recipes/8/ingredients
-Content-Type: application/json
-
-{
-    "name": "ketchup",
-    "category": "assaisonnements et condiments",
-    "quantity": 200,
-    "unity": "cl"    
-}
-###
-
-POST http://localhost:8000/api/recipes/1/tags
-Content-Type: application/json
-
-{
-    "tagname": "tralala" 
-}
-###
-
-GET http://localhost:8000/api/recipes/8/ingredients/10
-
-###
-
-PUT http://localhost:8000/api/recipes/8/ingredients/10
-Content-Type: application/json
-
-{
-    "quantity": 100,
-    "unity": "cl"    
-}
-
-###
-
-DELETE http://localhost:8000/api/recipes/8/ingredients/10
 
 ###

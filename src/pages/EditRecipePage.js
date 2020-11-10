@@ -12,7 +12,7 @@ export default function EditRecipePage() {
 
   const handleFetchRecipe = useCallback(async () => {
     const result = await fetchRecipe(recipeId)
-    const parsedResults = parseFetchedRecipe(result.data)
+    const parsedResults = parseFetchedRecipe(result.data.recipe)
     setRecipe(parsedResults)
   }, [recipeId])
 

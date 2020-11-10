@@ -71,7 +71,7 @@ export default function MyRecipesPage(props) {
           <Link to={{ pathname: '/myrecipes/new' }}>
             <CTAButton className={'add-recipe'}>
               <img className="icon cta-button--icon" src={plusIcon} alt="add new recipe" />
-              Ajouter
+              Créer
             </CTAButton>
           </Link>
         </SectionCTA>
