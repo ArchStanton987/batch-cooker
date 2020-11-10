@@ -24,7 +24,6 @@ export default function FullRecipePage(props) {
   const [isSuccess, setIsSuccess] = useToggle(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
-  const [hasRightsOnRecipe, setRightsOnRecipe] = useState(false)
   const {
     name,
     ingredients,
@@ -47,8 +46,7 @@ export default function FullRecipePage(props) {
     const result = await fetchRecipe(recipeId)
     const parsedResults = parseFetchedRecipe(result.data)
     setRecipe(parsedResults)
-    setRightsOnRecipe(checkRightsOnRecipe(recipe.creatorId, userId))
-  }, [recipe.creatorId, userId, recipeId])
+  }, [recipeId])
 
   const handleDeleteRecipe = async () => {
     try {
@@ -59,10 +57,6 @@ export default function FullRecipePage(props) {
       setIsError()
       setErrorMessage(err.response.data.error)
     }
-  }
-
-  const checkRightsOnRecipe = (recipe, userId) => {
-    return recipe?.creatorId === userId ? true : false
   }
 
   useEffect(() => {
@@ -108,7 +102,7 @@ export default function FullRecipePage(props) {
         )}
         <h2>Recette</h2>
         <SectionCTA className={'no-border'}>
-          {hasRightsOnRecipe && (
+          {recipe && recipe.creatorId === userId && (
             <>
               <Link to={{ pathname: `/myrecipes/edit/${recipeId}`, recipe: { ...recipe } }}>
                 <CTAButton className={'secondary'}>Modifier</CTAButton>

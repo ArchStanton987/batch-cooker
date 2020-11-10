@@ -23,7 +23,10 @@ export default function Main({ ...props }) {
       <Switch>
         <Route exact path="/" render={() => <HomePage />} />
         <Route path="/home" render={() => <HomePage />} />
-        <Route path="/recipes/:id" render={props => <FullRecipePage {...props} />} />
+        <Route
+          path="/recipes/:id"
+          render={props => <FullRecipePage userId={userId} {...props} />}
+        />
         <Route
           path="/login"
           render={props => (
