@@ -25,3 +25,23 @@ export const parseFetchedRecipes = data => {
     return data
   }
 }
+
+export const parseFetchedSavedRecipe = data => {
+  data.name = data.Recipe.name
+  data.id = data.Recipe.id
+  data.creatorId = data.Recipe.creatorId
+  data.image = data.Recipe.image
+  data.name = data.Recipe.name
+  data.Tags = data.Recipe.Tags
+  delete data.Recipe
+  return data
+}
+
+export const parseFetchedSavedRecipes = data => {
+  if (Array.isArray(data)) {
+    data.forEach(recipe => {
+      parseFetchedSavedRecipe(recipe)
+    })
+    return data
+  }
+}

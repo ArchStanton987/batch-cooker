@@ -13,7 +13,7 @@ export const fetchRecipe = async recipeId => {
 }
 
 export const fetchSavedRecipes = async userId => {
-  const url = `http://192.168.1.27:8000/api/recipes/users/${userId}`
+  const url = `http://192.168.1.27:8000/api/recipes/saved/users/${userId}`
   const res = await axios.get(url, { withCredentials: true })
   return res
 }

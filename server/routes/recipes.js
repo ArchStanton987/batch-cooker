@@ -16,6 +16,7 @@ router.route('/:recipeId').put(recipesCtrl.updateOneRecipe)
 router.route('/:recipeId').delete(recipesCtrl.deleteOneRecipe)
 
 router.route('/users/:userId').get(recipesCtrl.getRecipesOfUser)
+router.route('/saved/users/:userId').get(recipesCtrl.getSavedRecipes)
 
 router.route('/:recipeId/ingredients').post(recipesCtrl.addIngredientsToRecipe)
 router.route('/:recipeId/ingredients').put(recipesCtrl.updateIngredientsFromRecipe)

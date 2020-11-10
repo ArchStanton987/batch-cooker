@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8000/api/users/1
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA0OTMwOTU2LCJleHAiOjE2MDQ5MzQ1NTZ9.M-00aRLYW6NjQ4hN2Q6Q4oDQz05y3fsU_dBp8--2qNM
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MDA1MjE3LCJleHAiOjE2MDUwMDg4MTd9.ZvV_0BDCAGWUBf__3PLPZagnOzOAQ-o9yJajQv7oW78
 
 ###
 GET http://localhost:8000/api/recipes
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/api/recipes/users/1
+GET http://localhost:8000/api/recipes/saved/users/1
 Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjAzODA2NTU4LCJleHAiOjE2MDM4MTAxNTh9.4L88HJeiD3TiP82Lgb_awAamJgsSNUN0v1TQr5E8BH4
 
 

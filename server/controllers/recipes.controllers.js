@@ -246,5 +246,33 @@ module.exports = {
     } catch (err) {
       res.status(500).json({ error: `Erreur lors de l'association des tags : ${err}` })
     }
+  },
+  getSavedRecipes: async (req, res) => {
+    const userId = parseInt(req.params.userId, 10)
+
+    if (userId !== req.tokenUser) {
+      res.status(403).json({ error: 'Action interdite' })
+      return
+    }
+
+    try {
+      const savedRecipes = await models.RecipeSave.findAll({
+        where: {
+          userId: userId
+        },
+        include: [
+          {
+            model: models.Recipe,
+            attributes: ['id', 'creatorId', 'name', 'image'],
+            include: [
+              { model: models.Tag, attributes: ['id', 'tagname'], through: { attributes: [] } }
+            ]
+          }
+        ]
+      })
+      res.status(200).json(savedRecipes)
+    } catch (err) {
+      res.status(500).json({ error: err })
+    }
   }
 }
