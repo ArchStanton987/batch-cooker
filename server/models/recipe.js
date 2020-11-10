@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       Recipe.belongsTo(models.User, { foreignKey: 'creatorId' })
       Recipe.hasMany(models.RecipeIng, { onDelete: 'CASCADE' })
       Recipe.hasMany(models.TagRecipe, { onDelete: 'CASCADE' })
-      Recipe.belongsToMany(models.User, { through: models.RecipeSave, foreignKey: 'recipeId' })
     }
   }
   Recipe.init(
