@@ -4,11 +4,8 @@ module.exports = {
   getAllRecipes: async (req, res) => {
     try {
       const recipes = await models.Recipe.findAll({
-        include: [
-          { model: models.User, attributes: ['username'] },
-          { model: models.Ingredient, attributes: ['name', 'category'] },
-          { model: models.Tag, attributes: ['tagname'] }
-        ]
+        attributes: ['id', 'creatorId', 'name', 'image'],
+        include: [{ model: models.Tag, attributes: ['id', 'tagname'], through: { attributes: [] } }]
       })
       res.status(200).json(recipes)
     } catch (err) {
@@ -112,11 +109,8 @@ module.exports = {
         where: {
           creatorId: userId
         },
-        include: [
-          { model: models.User, attributes: ['username'] },
-          { model: models.Ingredient, attributes: ['name', 'category'] },
-          { model: models.Tag, attributes: ['tagname'] }
-        ]
+        attributes: ['id', 'creatorId', 'name', 'image'],
+        include: [{ model: models.Tag, attributes: ['id', 'tagname'], through: { attributes: [] } }]
       })
       res.status(200).json(recipes)
     } catch (err) {

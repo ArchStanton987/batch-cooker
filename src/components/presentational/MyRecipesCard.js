@@ -18,7 +18,7 @@ export default function MyRecipesCard({ recipe }) {
             <div className="flexRow flex1 alignItemsCenter">
               <ul className="taglist">
                 {recipe.Tags.map(tag => (
-                  <li key={`tagRecipe-${tag.TagRecipe.tagId}-${tag.TagRecipe.recipeId}`}>
+                  <li key={`tagRecipe-${tag.id}-${recipe.id}`}>
                     #{tag.tagname}
                   </li>
                 ))}
