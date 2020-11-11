@@ -51,6 +51,7 @@ export default function FullRecipePage(props) {
   const handleFetchRecipe = useCallback(async () => {
     const result = await fetchRecipe(recipeId)
     setIsRecipeSaved(result.data.isSavedByUser)
+    setIsRecipeInMenu(result.data.isInMenu)
     const parsedResults = parseFetchedFullRecipe(result.data.recipe)
     setRecipe(parsedResults)
   }, [recipeId])
