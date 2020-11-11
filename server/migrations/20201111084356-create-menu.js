@@ -1,16 +1,17 @@
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('TagRecipes', {
+    await queryInterface.createTable('Menus', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tagId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Tags',
+          model: 'Users',
           key: 'id'
         },
         onDelete: 'CASCADE'
@@ -33,9 +34,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('NOW()')
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('TagRecipes');
+    await queryInterface.dropTable('Menus')
   }
-};
+}
