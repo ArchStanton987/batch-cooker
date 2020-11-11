@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const users = require('./routes/users')
 const account = require('./routes/account')
 const inventory = require('./routes/inventory')
+const shoppinglist = require('./routes/shoppinglist')
 const recipes = require('./routes/recipes')
 
 const app = express()
@@ -24,5 +25,6 @@ app.use('/api/users', users)
 app.use('/api/account', account)
 app.use('/api/inventory', inventory)
 app.use('/api/recipes', recipes)
+app.use('/api/shoppinglist', shoppinglist)
 
 module.exports = app
