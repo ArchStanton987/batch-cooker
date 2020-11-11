@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import '../sass/pages/_Recipes.scss'
 import '../sass/pages/_FullRecipe.scss'
 import { fetchSavedRecipes } from '../lib/api/api-recipes'
-import { parseFetchedSavedRecipes } from '../lib/utils/recipes-utils'
+import { parseFetchedPartialRecipes } from '../lib/utils/recipes-utils'
 import plusIcon from '../assets/icons/plus.svg'
 import MyRecipesCard from '../components/presentational/MyRecipesCard'
 import Search from '../components/forms/Search'
@@ -28,7 +28,7 @@ export default function MyRecipesPage(props) {
   const handleFetchSavedRecipes = useCallback(async () => {
     try {
       const results = await fetchSavedRecipes(userId)
-      let parsedResults = parseFetchedSavedRecipes(results.data)
+      let parsedResults = parseFetchedPartialRecipes(results.data)
       setUserRecipes(parsedResults)
     } catch (err) {
       if (err.response) {

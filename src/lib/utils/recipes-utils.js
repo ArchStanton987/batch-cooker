@@ -1,4 +1,4 @@
-export const parseFetchedRecipe = data => {
+export const parseFetchedFullRecipe = data => {
   data.username = data.User.username
   data.ingredients = []
   data.Ingredients.forEach(ingredient => {
@@ -17,16 +17,16 @@ export const parseFetchedRecipe = data => {
   return data
 }
 
-export const parseFetchedRecipes = data => {
+export const parseFetchedFullRecipes = data => {
   if (Array.isArray(data)) {
     data.forEach(recipe => {
-      parseFetchedRecipe(recipe)
+      parseFetchedFullRecipe(recipe)
     })
     return data
   }
 }
 
-export const parseFetchedSavedRecipe = data => {
+export const parseFetchedPartialRecipe = data => {
   data.name = data.Recipe.name
   data.id = data.Recipe.id
   data.creatorId = data.Recipe.creatorId
@@ -37,10 +37,10 @@ export const parseFetchedSavedRecipe = data => {
   return data
 }
 
-export const parseFetchedSavedRecipes = data => {
+export const parseFetchedPartialRecipes = data => {
   if (Array.isArray(data)) {
     data.forEach(recipe => {
-      parseFetchedSavedRecipe(recipe)
+      parseFetchedPartialRecipe(recipe)
     })
     return data
   }

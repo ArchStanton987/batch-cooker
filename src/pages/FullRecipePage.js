@@ -4,8 +4,9 @@ import moment from 'moment'
 import 'moment/locale/fr'
 
 import { useToggle } from '../lib/hooks/index'
-import { parseFetchedRecipe } from '../lib/utils/recipes-utils'
+import { parseFetchedFullRecipe } from '../lib/utils/recipes-utils'
 import { fetchRecipe, deleteRecipe, saveRecipe } from '../lib/api/api-recipes'
+import { putRecipeMenu } from '../lib/api/api-menu'
 import '../sass/pages/_FullRecipe.scss'
 import '../sass/components/_Ingredient.scss'
 import Section from '../components/page_layout/Section'
@@ -14,13 +15,15 @@ import SectionInfo from '../components/page_layout/SectionInfo'
 import CTAButton from '../components/page_layout/CTAButton'
 import favIconFullYellow from '../assets/icons/star-full-yellow.svg'
 import favIconEmpty from '../assets/icons/star-empty-prim.svg'
-import calendarIcon from '../assets/icons/calendarIcon.png'
+import calendarIconPrim from '../assets/icons/calendar.svg'
+import calendarIconSec from '../assets/icons/calendar-sec.svg'
 import defaultPic from '../assets/images/chefhat.png'
 import Modal from '../components/wrappers/Modal'
 
 export default function FullRecipePage(props) {
   const [recipe, setRecipe] = useState({})
   const [isRecipeSaved, setIsRecipeSaved] = useState(false)
+  const [isRecipeInMenu, setIsRecipeInMenu] = useState(false)
   const [isConfirmationVisible, setConfirmation] = useToggle(false)
   const [isError, setIsError] = useToggle(false)
   const [isSuccess, setIsSuccess] = useToggle(false)
@@ -48,7 +51,7 @@ export default function FullRecipePage(props) {
   const handleFetchRecipe = useCallback(async () => {
     const result = await fetchRecipe(recipeId)
     setIsRecipeSaved(result.data.isSavedByUser)
-    const parsedResults = parseFetchedRecipe(result.data.recipe)
+    const parsedResults = parseFetchedFullRecipe(result.data.recipe)
     setRecipe(parsedResults)
   }, [recipeId])
 
@@ -68,6 +71,18 @@ export default function FullRecipePage(props) {
     try {
       let res = await saveRecipe(recipeId, userId)
       setIsRecipeSaved(prev => !prev)
+      setIsSuccess()
+      setSuccessMessage(res.data.message)
+    } catch (err) {
+      setIsError()
+      setErrorMessage(err.response.data.error)
+    }
+  }
+
+  const handlePutToMenu = async () => {
+    try {
+      let res = await putRecipeMenu(recipeId, userId)
+      setIsRecipeInMenu(prev => !prev)
       setIsSuccess()
       setSuccessMessage(res.data.message)
     } catch (err) {
@@ -153,10 +168,16 @@ export default function FullRecipePage(props) {
               Ajouter à mon carnet
             </CTAButton>
           )}
-          {hasUserLogged && (
-            <CTAButton className={''}>
-              <img className="icon cta-button--icon" src={calendarIcon} alt="add to menu" />
+          {hasUserLogged && recipe && !isRecipeInMenu && (
+            <CTAButton action={handlePutToMenu} className={''}>
+              <img className="icon cta-button--icon" src={calendarIconPrim} alt="add to menu" />
               Ajouter au menu
+            </CTAButton>
+          )}
+          {hasUserLogged && recipe && isRecipeInMenu && (
+            <CTAButton action={handlePutToMenu} className={'secondary'}>
+              <img className="icon cta-button--icon" src={calendarIconSec} alt="add to menu" />
+              Retirer du menu
             </CTAButton>
           )}
         </SectionCTA>

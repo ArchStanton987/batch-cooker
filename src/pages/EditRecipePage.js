@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 
 import RecipeForm from '../components/forms/RecipeForm.js'
 import { fetchRecipe } from '../lib/api/api-recipes'
-import {parseFetchedRecipe} from '../lib/utils/recipes-utils'
+import { parseFetchedFullRecipe } from '../lib/utils/recipes-utils'
 
 export default function EditRecipePage() {
   const [recipe, setRecipe] = useState({})
@@ -12,7 +12,7 @@ export default function EditRecipePage() {
 
   const handleFetchRecipe = useCallback(async () => {
     const result = await fetchRecipe(recipeId)
-    const parsedResults = parseFetchedRecipe(result.data.recipe)
+    const parsedResults = parseFetchedFullRecipe(result.data.recipe)
     setRecipe(parsedResults)
   }, [recipeId])
 
