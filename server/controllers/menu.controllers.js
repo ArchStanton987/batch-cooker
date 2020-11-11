@@ -74,8 +74,7 @@ module.exports = {
     }
 
     try {
-      let menuItems = await models.Menu.findAll({ where: { userId: userId } })
-      await menuItems.destroy()
+      await models.Menu.destroy({ where: { userId: userId } })
       res.status(200).json({ message: 'Les recettes ont bien été supprimées de votre menu' })
     } catch (err) {
       res.status(500).json({ error: 'Erreur pendant la suppression du menu' })
