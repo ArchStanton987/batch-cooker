@@ -287,7 +287,7 @@ module.exports = {
       res.status(500).json({ error: err })
     }
   },
-  saveARecipe: async (req, res) => {
+  putRecipeSave: async (req, res) => {
     const userId = parseInt(req.params.userId, 10)
     const recipeId = parseInt(req.params.recipeId, 10)
 

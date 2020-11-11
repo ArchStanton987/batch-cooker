@@ -8,11 +8,11 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/api/recipes/4
-Cookie: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MDI5MzIzLCJleHAiOjE2MDUwMzI5MjN9.s4iesz94uP3YceGV-8xJHooVllz-O5UYVKcxdWU_sec
+GET http://localhost:8000/api/recipes/menu/users/1
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MDg1NDk3LCJleHAiOjE2MDUwODkwOTd9.aS-55TKp8xc4LtiqF1COuiKRVL6Tnu_-vE0GRJKeW10
 
 ###
-GET http://localhost:8000/api/recipes/saves/5/users/1
+PUT http://localhost:8000/api/recipes/menu/1/users/1
 Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MDEzNDE2LCJleHAiOjE2MDUwMTcwMTZ9.E4aGOONTwwbvvCevWPbPLNUg9N4l9HlfVz1cwhSTg6E
 
 ###
