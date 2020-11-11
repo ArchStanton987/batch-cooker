@@ -8,8 +8,8 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/api/shoppinglist/user/1
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MDkzOTA3LCJleHAiOjE2MDUwOTc1MDd9.x9oTRFcls-ZgkMmpW5TJaefxQbWXR0PnSlRIW63VXUY
+DELETE http://localhost:8000/api/shoppinglist/user/1/ingredients/32
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MTA2MjA2LCJleHAiOjE2MDUxMDk4MDZ9.5tNOKN-htim85fNv3AaWc2ZBcB3MRpZ8wYYG6rr-_Dw
 
 ###
 PUT http://localhost:8000/api/recipes/menu/4/users/1

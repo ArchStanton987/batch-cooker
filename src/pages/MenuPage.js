@@ -84,7 +84,11 @@ export default function MenuPage(props) {
             Vider le menu
           </CTAButton>
           <CTAButton>
-            <img className="icon cta-button--icon" src={plusIcon} alt="Tout supprimer" />
+            <img
+              className="icon cta-button--icon"
+              src={plusIcon}
+              alt="Tout ajouter à la liste de courses"
+            />
             Tout ajouter à la liste de course
           </CTAButton>
         </SectionCTA>

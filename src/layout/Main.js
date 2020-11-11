@@ -8,7 +8,7 @@ import NewRecipePage from '../pages/NewRecipePage'
 import EditRecipePage from '../pages/EditRecipePage'
 import MyRecipesPage from '../pages/MyRecipesPage'
 import InventoryPage from '../pages/InventoryPage'
-import ShoplistPage from '../pages/ShoplistPage'
+import ShoppinglistPage from '../pages/ShoppinglistPage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
 import ProfilePage from '../pages/ProfilePage'
@@ -55,7 +55,7 @@ export default function Main({ ...props }) {
           <InventoryPage userId={userId} />
         </PrivateRoute>
         <PrivateRoute path="/shoplist" hasUserLogged={hasUserLogged}>
-          <ShoplistPage userId={userId} />
+          <ShoppinglistPage userId={userId} />
         </PrivateRoute>
         <PrivateRoute path="/menu" hasUserLogged={hasUserLogged}>
           <MenuPage userId={userId} />

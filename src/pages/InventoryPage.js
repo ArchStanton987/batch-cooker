@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
-import { parseFetchedInventory } from '../lib/utils/inventory-utils'
+import { parseFetchedIngredients } from '../lib/utils/ingredients-utils'
 import {
   addIngredientToInventory,
   deleteIngredientFromInventory,
@@ -78,7 +78,7 @@ export default function InventoryPage(props) {
     setIsError(false)
     try {
       const result = await fetchUserInventory(userId)
-      const parsedResult = parseFetchedInventory(result.data)
+      const parsedResult = parseFetchedIngredients(result.data)
       setInventory(parsedResult)
     } catch (err) {
       handleError(err)

@@ -1,5 +1,5 @@
-export const parseFetchedInventory = data => {
-  let inventory = []
+export const parseFetchedIngredients = data => {
+  let ingredientList = []
   data.forEach(item => {
     let newItem = {
       ingredientId: item.ingredientId,
@@ -8,7 +8,7 @@ export const parseFetchedInventory = data => {
       quantity: item.quantity,
       unity: item.unity
     }
-    inventory.push(newItem)
+    ingredientList.push(newItem)
   })
-  return inventory
+  return ingredientList
 }
