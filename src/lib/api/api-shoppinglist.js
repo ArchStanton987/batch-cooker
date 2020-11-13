@@ -29,3 +29,9 @@ export const updateIngredientFromShoppingList = async (newIng, userId) => {
   const result = await axios.put(url, newIng, { withCredentials: true })
   return result
 }
+
+export const addMenuIngredientsToShoppinglist = async (ingredients, userId) => {
+  const url = `http://192.168.1.27:8000/api/shoppinglist/user/${userId}/menu`
+  const result = await axios.post(url, ingredients, { withCredentials: true })
+  return result
+}

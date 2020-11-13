@@ -79,5 +79,25 @@ module.exports = {
     } catch (err) {
       res.status(500).json({ error: 'Erreur pendant la suppression du menu' })
     }
+  },
+  getAllIngredientsFromMenu: async (req, res) => {
+    const userId = parseInt(req.params.userId, 10)
+
+    if (userId !== req.tokenUser) {
+      res.status(403).json({ error: 'Action interdite' })
+      return
+    }
+
+    try {
+      let menuIngredients = await models.Menu.findAll({
+        where: { userId: userId },
+        include: { model: models.Recipe, include: { model: models.RecipeIng } }
+      })
+      res.status(200).json(menuIngredients)
+    } catch (err) {
+      res
+        .status(500)
+        .json({ error: 'Erreur lors de la récupération des ingrédients du menu ; ' + err })
+    }
   }
 }

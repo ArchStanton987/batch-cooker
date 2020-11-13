@@ -10,7 +10,13 @@ router.use(jwtUtils.verifyToken)
 router.route('/user/:userId').get(shoppinglistCtrl.getUserShoppingList)
 router.route('/user/:userId').delete(shoppinglistCtrl.clearUserShoppingList)
 router.route('/user/:userId/ingredients/').post(shoppinglistCtrl.addIngredientToShoppingList)
-router.route('/user/:userId/ingredients/:ingredientId').put(shoppinglistCtrl.updateIngredientFromShoppingList)
-router.route('/user/:userId/ingredients/:ingredientId').delete(shoppinglistCtrl.deleteIngredientFromShoppingList)
+router
+  .route('/user/:userId/ingredients/:ingredientId')
+  .put(shoppinglistCtrl.updateIngredientFromShoppingList)
+router
+  .route('/user/:userId/ingredients/:ingredientId')
+  .delete(shoppinglistCtrl.deleteIngredientFromShoppingList)
+
+router.route('/user/:userId/menu/').post(shoppinglistCtrl.addMenuIngredientsToShoppinglist)
 
 module.exports = router

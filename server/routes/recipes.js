@@ -25,8 +25,9 @@ router.route('/saves/users/:userId').get(recipesCtrl.getSavedRecipes)
 router.route('/saves/:recipeId/users/:userId').put(recipesCtrl.putRecipeSave)
 
 router.route('/menu/users/:userId').get(menuCtrl.getUserMenu)
-router.route('/menu/:recipeId/users/:userId').put(menuCtrl.putRecipeMenu)
 router.route('/menu/users/:userId').delete(menuCtrl.clearUserMenu)
+router.route('/menu/:recipeId/users/:userId').put(menuCtrl.putRecipeMenu)
+router.route('/menu/users/:userId/ingredients').get(menuCtrl.getAllIngredientsFromMenu)
 
 router.route('/:recipeId/ingredients').post(recipesCtrl.addIngredientsToRecipe)
 router.route('/:recipeId/ingredients').put(recipesCtrl.updateIngredientsFromRecipe)

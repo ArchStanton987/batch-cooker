@@ -139,9 +139,31 @@ module.exports = {
       })
 
       await ingredient.destroy()
-      res.status(200).json({ message: "Ingrédient supprimé de la liste de course" })
+      res.status(200).json({ message: 'Ingrédient supprimé de la liste de course' })
     } catch (err) {
       res.status(500).send({ error: err })
+    }
+  },
+  addMenuIngredientsToShoppinglist: async (req, res) => {
+    const { userId } = req.params
+    let ingredients = req.body
+    
+    if (parseInt(userId, 10) !== req.tokenUser) {
+      res.status(403).json({ error: 'Action interdite' })
+      return
+    }
+
+    try {
+      await models.ShoppingList.destroy({ where: { userId: userId } })
+
+      await models.ShoppingList.bulkCreate(ingredients, {
+        fields: ['userId', 'ingredientId', 'quantity', 'unity']
+      })
+      res.status(200).json({ message: 'La liste de course a bien été mise à jour' })
+    } catch (err) {
+      res
+        .status(500)
+        .json({ error: 'Erreur pendant la mise à jour de la liste de course ; ' + err })
     }
   }
 }

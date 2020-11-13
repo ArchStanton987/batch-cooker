@@ -315,12 +315,17 @@ module.exports = {
         }
       } else {
         try {
-          await models.RecipeSave.create({ userId: userId, recipeId: recipeId })
+          await models.RecipeSave.create(
+            { userId: userId, recipeId: recipeId },
+            { fields: ['userId', 'recipeId'] }
+          )
           res.status(201).json({ message: 'Recette enregistée dans votre carnet' })
         } catch (err) {
           res
             .status(500)
-            .json({ error: "Erreur pendant l'enregistrement de la recette dans votre carnet" })
+            .json({
+              error: "Erreur pendant l'enregistrement de la recette dans votre carnet ; " + err
+            })
         }
       }
     } catch (err) {

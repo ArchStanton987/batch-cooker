@@ -2,13 +2,20 @@ import React, { useCallback, useEffect, useState } from 'react'
 import CTAButton from '../components/page_layout/CTAButton'
 import Section from '../components/page_layout/Section'
 import SectionCTA from '../components/page_layout/SectionCTA'
+import SectionInfo from '../components/page_layout/SectionInfo'
 import Modal from '../components/wrappers/Modal'
 import trashIcon from '../assets/icons/trash.svg'
 import plusIcon from '../assets/icons/plus.svg'
 import MyRecipesCard from '../components/presentational/MyRecipesCard'
 import { fetchMenu, clearMenu } from '../lib/api/api-menu'
+import {
+  fetchUserShoppingList,
+  addMenuIngredientsToShoppinglist
+} from '../lib/api/api-shoppinglist'
+import { fetchUserInventory } from '../lib/api/api-inventory'
+import { fetchMenuIngredients } from '../lib/api/api-menu'
 import { parseFetchedPartialRecipes } from '../lib/utils/recipes-utils'
-import SectionInfo from '../components/page_layout/SectionInfo'
+import { parseFetchedIngredients, parseRecipesIngredients } from '../lib/utils/ingredients-utils'
 
 export default function MenuPage(props) {
   const { userId } = props
@@ -19,6 +26,86 @@ export default function MenuPage(props) {
   const resetDefaultPrompt = () => {
     setIsPrompt(false)
     setPromptMessage('')
+  }
+
+  const handlePrompt = (bool, message) => {
+    setIsPrompt(bool)
+    setPromptMessage(message)
+  }
+
+  const handleFetchAllIngredients = async userId => {
+    let res = await Promise.all([
+      fetchUserShoppingList(userId),
+      fetchUserInventory(userId),
+      fetchMenuIngredients(userId)
+    ])
+    return res
+  }
+
+  const handleAddMenuToShoppinglist = async () => {
+    try {
+      let allIngredients = await handleFetchAllIngredients(userId)
+      let entries = await getShoppingListEntries(allIngredients, userId)
+      let res = await addMenuIngredientsToShoppinglist(entries, userId)
+      handlePrompt(true, res.data.message)
+    } catch (err) {
+      handlePrompt(true, 'Erreur')
+    }
+  }
+
+  const getIngredientsSet = ingredients => {
+    let ingredientsSet = new Set()
+    ingredients.forEach(ingredient => {
+      ingredientsSet.add(`ingId${ingredient.ingredientId}`)
+    })
+    return ingredientsSet
+  }
+
+  const getIngredientsObject = (ingredientsSet, ingredients) => {
+    let ingredientsObject = {}
+    ingredientsSet.forEach(ingredient => {
+      ingredientsObject[ingredient] = { quantity: 0, unit: '' }
+    })
+    ingredients.forEach(ingredient => {
+      let key = `ingId${ingredient.ingredientId}`
+      ingredientsObject[key].ingredientId = ingredient.ingredientId
+      ingredientsObject[key].quantity = ingredient.quantity
+    })
+    return ingredientsObject
+  }
+
+  const getShoppingListEntries = async (allIngredients, userId) => {
+    let shopIngredients = allIngredients[0].data
+    let inventoryIngredients = parseFetchedIngredients(allIngredients[1].data)
+    let menuIngredients = parseRecipesIngredients(allIngredients[2].data)
+
+    let shopIngredientsSet = getIngredientsSet(shopIngredients)
+    let inventoryIngredientsSet = getIngredientsSet(inventoryIngredients)
+    let neededIngredientsSet = getIngredientsSet(menuIngredients)
+
+    let shopIngredientsObject = getIngredientsObject(shopIngredientsSet, shopIngredients)
+    let inventoryIngredientsObject = getIngredientsObject(
+      inventoryIngredientsSet,
+      inventoryIngredients
+    )
+    let neededIngredientsObject = getIngredientsObject(neededIngredientsSet, menuIngredients)
+
+    for (let key in neededIngredientsObject) {
+      neededIngredientsObject[key].userId = userId
+      let isInShoppingList = shopIngredientsSet.has(key)
+      let isInInventory = inventoryIngredientsSet.has(key)
+      if (isInShoppingList) {
+        neededIngredientsObject[key].quantity += shopIngredientsObject[key].quantity
+      }
+      if (isInInventory) {
+        neededIngredientsObject[key].quantity -= inventoryIngredientsObject[key].quantity
+      }
+      if (neededIngredientsObject[key].quantity <= 0) {
+        delete neededIngredientsObject[key]
+      }
+    }
+    let newShoppingListEntries = Object.values(neededIngredientsObject)
+    return newShoppingListEntries
   }
 
   const handleFetchMenu = useCallback(async () => {
@@ -83,7 +170,7 @@ export default function MenuPage(props) {
             <img className="icon cta-button--icon" src={trashIcon} alt="Tout supprimer" />
             Vider le menu
           </CTAButton>
-          <CTAButton>
+          <CTAButton action={handleAddMenuToShoppinglist}>
             <img
               className="icon cta-button--icon"
               src={plusIcon}

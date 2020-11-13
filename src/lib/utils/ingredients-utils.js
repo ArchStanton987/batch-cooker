@@ -12,3 +12,17 @@ export const parseFetchedIngredients = data => {
   })
   return ingredientList
 }
+
+export const parseRecipesIngredients = recipes => {
+  let ingredientList = []
+  recipes.forEach(recipe => {
+    recipe.Recipe.RecipeIngs.forEach(ingredient => {
+      ingredientList.push({
+        ingredientId: ingredient.ingredientId,
+        quantity: ingredient.quantity,
+        unity: ingredient.unity
+      })
+    })
+  })
+  return ingredientList
+}

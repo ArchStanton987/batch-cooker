@@ -17,3 +17,9 @@ export const putRecipeMenu = async (recipeId, userId) => {
   const res = await axios.put(url, recipeId, { withCredentials: true })
   return res
 }
+
+export const fetchMenuIngredients = async userId => {
+  const url = `http://192.168.1.27:8000/api/recipes/menu/users/${userId}/ingredients`
+  const res = await axios.get(url, { withCredentials: true })
+  return res
+}
