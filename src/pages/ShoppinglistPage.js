@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+
 import Search from '../components/forms/Search'
 import CTAButton from '../components/page_layout/CTAButton'
 import Section from '../components/page_layout/Section'
@@ -7,6 +9,7 @@ import Modal from '../components/wrappers/Modal'
 import IngredientForm from '../components/forms/IngredientForm'
 import trashIcon from '../assets/icons/trash.svg'
 import plusIcon from '../assets/icons/plus.svg'
+import circlePlusIcon from '../assets/icons/circle-plus-sec.svg'
 import Ingredient from '../components/presentational/Ingredient'
 import {
   fetchUserShoppingList,
@@ -16,6 +19,8 @@ import {
   clearUserShoppingList
 } from '../lib/api/api-shoppinglist'
 import { parseFetchedIngredients } from '../lib/utils/ingredients-utils'
+import { addIngredientToInventory } from '../lib/api/api-inventory'
+import SectionInfo from '../components/page_layout/SectionInfo'
 
 export default function ShoppinglistPage(props) {
   const { userId } = props
@@ -24,8 +29,7 @@ export default function ShoppinglistPage(props) {
   const [newIngredient, setNewIngredient] = useState(null)
   const [isIngredientModalActive, setIngredientModal] = useState(false)
   const [searchInput, setSearchInput] = useState('')
-  const [isPrompt, setIsPrompt] = useState(false)
-  const [promptMessage, setPromptMessage] = useState('')
+  const [prompt, setPrompt] = useState({ visible: false, message: '', action: '' })
 
   const handleSearchInput = e => {
     setSearchInput(e.currentTarget.value)
@@ -37,9 +41,8 @@ export default function ShoppinglistPage(props) {
     })
   }
 
-  const handlePrompt = (bool, message) => {
-    setIsPrompt(bool)
-    setPromptMessage(message)
+  const handlePrompt = (bool, message, action) => {
+    setPrompt({ visible: bool, message: message, action: action })
   }
 
   const toggleModal = () => {
@@ -48,13 +51,15 @@ export default function ShoppinglistPage(props) {
   }
 
   const handleDeleteIngredient = async id => {
-    setIsPrompt(false, '')
     try {
       await deleteIngredientFromShoppingList(id, userId)
       handleFetchShoppingList()
     } catch (err) {
       if (err.response) {
         handlePrompt(true, err.response.data.error)
+      } else {
+        handlePrompt(true, 'Erreur')
+        console.log(err)
       }
     }
   }
@@ -66,7 +71,6 @@ export default function ShoppinglistPage(props) {
   }
 
   const handleAddToShoppingList = async newIng => {
-    handlePrompt(false, '')
     try {
       await addIngredientToShoppingList(newIng, userId)
       toggleModal()
@@ -76,11 +80,11 @@ export default function ShoppinglistPage(props) {
         handlePrompt(true, err.response.data.error)
       } else {
         handlePrompt(true, 'Erreur')
+        console.log(err)
       }
     }
   }
   const handleUpdateFromShoppingList = async newIng => {
-    handlePrompt(false, '')
     try {
       await updateIngredientFromShoppingList(newIng, userId)
       toggleModal()
@@ -115,6 +119,25 @@ export default function ShoppinglistPage(props) {
         handlePrompt(true, err.response.data.message)
       } else {
         handlePrompt(true, 'Erreur')
+        console.log(err)
+      }
+    }
+  }
+
+  const handleUpdateInventory = async () => {
+    let ingredientsToAdd = shoppingList.filter(item => item.quantity > 0)
+    ingredientsToAdd.forEach(item => (item.ingredientName = item.name))
+    try {
+      for (let i = 0; i < ingredientsToAdd.length; i++) {
+        await addIngredientToInventory(ingredientsToAdd[i], userId)
+      }
+      handlePrompt(true, 'Inventaire mis à jour', 'UPDATED')
+    } catch (err) {
+      if (err.response) {
+        handlePrompt(true, err.response.data.message)
+      } else {
+        handlePrompt(true, 'Erreur')
+        console.log(err)
       }
     }
   }
@@ -126,9 +149,10 @@ export default function ShoppinglistPage(props) {
       setShoppingList(parsedResult)
     } catch (err) {
       if (err.response) {
-        handlePrompt(true, err.response.data.error)
+        handlePrompt(true, err.response.data.message)
       } else {
         handlePrompt(true, 'Erreur')
+        console.log(err)
       }
     }
   }, [userId])
@@ -140,21 +164,48 @@ export default function ShoppinglistPage(props) {
   return (
     <>
       <div className="page">
-        {isPrompt && (
+        {prompt.visible && (
           <Modal>
-            {promptMessage}
+            {prompt.message}
+            {prompt.action === 'UPDATED' && (
+              <SectionInfo className={'no-border'}>
+                <Link to="/inventory">
+                  <CTAButton action={() => handlePrompt(false, '', '')}>OK</CTAButton>
+                </Link>
+              </SectionInfo>
+            )}
             <SectionCTA className={'no-border'}>
-              <CTAButton action={() => handlePrompt(false, '')} className={'secondary'}>
-                Annuler
-              </CTAButton>
-              <CTAButton
-                action={() => {
-                  handleclearUserShoppingList()
-                  handlePrompt(false, '')
-                }}
-              >
-                Vider la liste
-              </CTAButton>
+              {prompt.action === 'EMPTYLIST' && (
+                <>
+                  <CTAButton action={() => handlePrompt(false, '')} className={'secondary'}>
+                    Annuler
+                  </CTAButton>
+                  <CTAButton
+                    action={() => {
+                      handleclearUserShoppingList()
+                      handlePrompt(false, '', '')
+                    }}
+                  >
+                    Vider la liste
+                  </CTAButton>
+                </>
+              )}
+              {prompt.action === 'ADDINVENTORY' && (
+                <>
+                  <CTAButton action={() => handlePrompt(false, '')} className={'secondary'}>
+                    Annuler
+                  </CTAButton>
+                  <CTAButton
+                    action={() => {
+                      handleUpdateInventory()
+                      handleclearUserShoppingList()
+                      handlePrompt(false, '', '')
+                    }}
+                  >
+                    Ajouter à l'inventaire
+                  </CTAButton>
+                </>
+              )}
             </SectionCTA>
           </Modal>
         )}
@@ -185,11 +236,29 @@ export default function ShoppinglistPage(props) {
             handleSearchInput={handleSearchInput}
           />
           <CTAButton
-            action={() => handlePrompt(true, 'Êtes vous sûr de vouloir vider la liste ?')}
+            action={() =>
+              handlePrompt(true, 'Êtes vous sûr de vouloir vider la liste ?', 'EMPTYLIST')
+            }
             className={'secondary'}
           >
             <img className="icon cta-button--icon" src={trashIcon} alt="vider la liste" />
             Vider la liste
+          </CTAButton>
+          <CTAButton
+            action={() =>
+              handlePrompt(
+                true,
+                "Êtes vous sûr de vouloir tout ajouter à l'inventaire ? Ceci va également vider la liste de courses.",
+                'ADDINVENTORY'
+              )
+            }
+          >
+            <img
+              className="icon cta-button--icon"
+              src={circlePlusIcon}
+              alt="tout ajouter à l'inventaire"
+            />
+            Tout ajouter à l'inventaire
           </CTAButton>
           <CTAButton action={toggleModal}>
             <img className="icon cta-button--icon" src={plusIcon} alt="ajouter un ingrédient" />
