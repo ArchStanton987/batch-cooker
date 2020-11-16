@@ -6,15 +6,6 @@
   flex-direction: row;
   align-items: center;
 
-  @for $i from 1 through 99 {
-    &:nth-child(#{$i}) {
-      animation: list-fade-in;
-      animation-duration: 50ms + ($i * 50ms);
-      animation-delay: 0s + ($i * 50ms);
-      animation-fill-mode: both;
-    }
-  }
-
   &:nth-child(even) {
     background-color: v.$color7;
   }

@@ -32,8 +32,8 @@ export default function InventoryPage(props) {
   const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
   const [searchInput, setSearchInput] = useState('')
-  const [isError, setIsError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [isPrompt, setIsPrompt] = useState(false)
+  const [promptMessage, setPromptMessage] = useState('')
 
   let categories = Object.entries(activeCategories)
 
@@ -50,13 +50,9 @@ export default function InventoryPage(props) {
     })
   }
 
-  const handleError = err => {
-    setIsError(true)
-    setErrorMessage(err.response.data.error)
-  }
-  const dismissError = () => {
-    setIsError(false)
-    setErrorMessage('')
+  const handlePrompt = (bool, message) => {
+    setIsPrompt(bool)
+    setPromptMessage(message)
   }
 
   const handleNewIngredient = e => {
@@ -75,42 +71,42 @@ export default function InventoryPage(props) {
   }
 
   const handleFetchInventory = useCallback(async () => {
-    setIsError(false)
+    handlePrompt(false, '')
     try {
       const result = await fetchUserInventory(userId)
       const parsedResult = parseFetchedIngredients(result.data)
       setInventory(parsedResult)
     } catch (err) {
-      handleError(err)
+      handlePrompt(true, err)
     }
   }, [userId])
   const handleDeleteIngredient = async id => {
-    setIsError(false)
+    handlePrompt(false, '')
     try {
       await deleteIngredientFromInventory(id, userId)
       handleFetchInventory(userId)
     } catch (err) {
-      handleError(err)
+      handlePrompt(true, err)
     }
   }
   const handleAddToInventory = async newIng => {
-    setIsError(false)
+    handlePrompt(false, '')
     try {
       await addIngredientToInventory(newIng, userId)
       toggleModal()
       handleFetchInventory(userId)
     } catch (err) {
-      handleError(err)
+      handlePrompt(true, err)
     }
   }
   const handleUpdateFromInventory = async newIng => {
-    setIsError(false)
+    setIsPrompt(false, '')
     try {
       await updateIngredientFromInventory(newIng, userId)
       toggleModal()
       handleFetchInventory(userId)
     } catch (err) {
-      handleError(err)
+      handlePrompt(true, err)
     }
   }
   const handleSubmitIngredient = (e, isUpdating) => {
@@ -132,15 +128,15 @@ export default function InventoryPage(props) {
   return (
     <>
       <div className="page">
-        {isError && (
+        {isPrompt && (
           <Modal
             title="Erreur"
             handleClose={() => {
-              dismissError()
+              handlePrompt(false, '')
             }}
             parent="ingredient"
           >
-            {errorMessage}
+            {promptMessage}
           </Modal>
         )}
         {isIngredientModalActive && (

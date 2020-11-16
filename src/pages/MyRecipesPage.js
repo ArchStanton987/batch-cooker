@@ -20,10 +20,15 @@ export default function MyRecipesPage(props) {
   const [userRecipes, setUserRecipes] = useState([])
   const [searchInput, setSearchInput] = useState('')
   const [isExpended, setDrawer] = useState(false)
-  const [isError, setIsError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [isPrompt, setIsPrompt] = useState(false)
+  const [promptMessage, setPromptMessage] = useState('')
 
   const toggleDrawer = () => setDrawer(prevState => !prevState)
+
+  const handlePrompt = (bool, message) => {
+    setIsPrompt(bool)
+    setPromptMessage(message)
+  }
 
   const handleFetchSavedRecipes = useCallback(async () => {
     try {
@@ -32,12 +37,9 @@ export default function MyRecipesPage(props) {
       setUserRecipes(parsedResults)
     } catch (err) {
       if (err.response) {
-        setIsError(true)
-        setErrorMessage(err.response.data.error)
+        handlePrompt(true, err.response.data.error)
       } else {
-        setIsError(true)
-        setErrorMessage(err)
-        console.log(err)
+        handlePrompt(true, err)
       }
     }
   }, [userId])
@@ -53,16 +55,15 @@ export default function MyRecipesPage(props) {
   return (
     <>
       <div className="page">
-        {isError && (
+        {isPrompt && (
           <Modal
             title="Erreur"
             handleClose={() => {
-              setIsError(false)
-              setErrorMessage('')
+              handlePrompt(false, '')
             }}
             parent="ingredient"
           >
-            {errorMessage}
+            {promptMessage}
           </Modal>
         )}
         <h2>Mes recettes</h2>

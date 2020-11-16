@@ -23,11 +23,6 @@ export default function MenuPage(props) {
   const [isPrompt, setIsPrompt] = useState(false)
   const [promptMessage, setPromptMessage] = useState('')
 
-  const resetDefaultPrompt = () => {
-    setIsPrompt(false)
-    setPromptMessage('')
-  }
-
   const handlePrompt = (bool, message) => {
     setIsPrompt(bool)
     setPromptMessage(message)
@@ -155,7 +150,7 @@ export default function MenuPage(props) {
             <SectionInfo className={'no-border'}>
               <CTAButton
                 action={() => {
-                  resetDefaultPrompt()
+                  handlePrompt(false, '')
                   handleFetchMenu()
                 }}
               >
