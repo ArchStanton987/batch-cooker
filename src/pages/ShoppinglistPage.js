@@ -204,6 +204,7 @@ export default function ShoppinglistPage(props) {
                 .filter(item => {
                   return item.name.toLowerCase().includes(searchInput.toLowerCase())
                 })
+                .filter(item => item.quantity > 0)
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map(item =>
                   React.Children.toArray(

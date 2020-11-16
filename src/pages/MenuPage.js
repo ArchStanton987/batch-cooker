@@ -45,6 +45,7 @@ export default function MenuPage(props) {
       handlePrompt(true, res.data.message)
     } catch (err) {
       handlePrompt(true, 'Erreur')
+      console.log(err)
     }
   }
 
@@ -89,14 +90,11 @@ export default function MenuPage(props) {
       neededIngredientsObject[key].userId = userId
       let isInShoppingList = shopIngredientsSet.has(key)
       let isInInventory = inventoryIngredientsSet.has(key)
+
       if (isInShoppingList) {
         neededIngredientsObject[key].quantity += shopIngredientsObject[key].quantity
-      }
-      if (isInInventory) {
+      } else if (!isInShoppingList && isInInventory) {
         neededIngredientsObject[key].quantity -= inventoryIngredientsObject[key].quantity
-      }
-      if (neededIngredientsObject[key].quantity <= 0) {
-        delete neededIngredientsObject[key]
       }
     }
     let newShoppingListEntries = Object.values(neededIngredientsObject)
