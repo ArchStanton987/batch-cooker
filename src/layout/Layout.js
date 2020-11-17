@@ -6,6 +6,7 @@ import Main from './Main'
 import Sidemenu from './Sidemenu'
 import '../sass/layout/_Layout.scss'
 import { useToggle } from '../lib/hooks'
+import { disconnectUser } from '../lib/api/api-account'
 
 export default function Layout() {
   const [isSideMenuActive, setMenu] = useToggle(false)
@@ -20,7 +21,8 @@ export default function Layout() {
     setUserName(storageUsername)
   }
 
-  const handleDisconnect = () => {
+  const handleDisconnect = async () => {
+    await disconnectUser(userId)
     sessionStorage.removeItem('userId')
     sessionStorage.removeItem('username')
     setHasUserLogged(false)

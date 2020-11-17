@@ -40,7 +40,7 @@ module.exports = {
   },
   login: async (req, res) => {
     const { email, password } = req.body
-    
+
     const user = await models.User.findOne({ where: { email: email } })
     if (!user) {
       res.status(401).json({ error: 'Email ou mot de passe invalide' })
@@ -68,5 +68,19 @@ module.exports = {
         )
       }
     }
+  },
+  logout: async (req, res) => {
+    const userId = parseInt(req.body.userId, 10)
+
+    if (parseInt(userId, 10) !== req.tokenUser) {
+      res.status(403).json({ error: 'Action interdite' })
+      return
+    }
+
+    res.cookie('access_token', '', {
+      httpOnly: true,
+      sameSite: 'none'
+    })
+    res.status(200).json({ message: 'Déconnexion réussie' })
   }
 }
