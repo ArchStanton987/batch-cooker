@@ -8,8 +8,8 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/api/recipes/menu/users/1/ingredients
-Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA1MjYyMTAyLCJleHAiOjE2MDUyNjU3MDJ9.ozdNI3ra-d_tjvzYXcfPZIXBres_1QqaqMJJiuXonOU
+GET http://localhost:8000/api/recipes/random?limit=5
+Cookie: 'access_token'=''
 
 
 ###

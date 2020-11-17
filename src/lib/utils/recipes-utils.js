@@ -45,3 +45,18 @@ export const parseFetchedPartialRecipes = data => {
     return data
   }
 }
+
+export const parseRecipeSaves = res => {
+  let recipes = res.data.recipes
+  let saves = res.data.save || []
+  if (saves.length > 0) {
+    let saveSet = new Set()
+    saves.forEach(recipe => saveSet.add(recipe.recipeId))
+    recipes.forEach(recipe => {
+      return saveSet.has(recipe.id) ? (recipe.isSavedByUser = 1) : (recipe.isSavedByUser = 0)
+    })
+  } else {
+    recipes.forEach(recipe => (recipe.isSavedByUser = 0))
+  }
+  return recipes
+}

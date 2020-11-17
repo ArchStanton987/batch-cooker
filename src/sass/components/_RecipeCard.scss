@@ -1,65 +1,74 @@
 @use '../variables' as v;
-@use '../animations';
 
-.recipe-link {
-  text-decoration: none;
-  @for $i from 1 through 99 {
-    &:nth-child(#{$i}) {
-      animation: list-fade-in;
-      animation-duration: 50ms + ($i * 50ms);
-      animation-delay: 0s + ($i * 50ms);
-      animation-fill-mode: both;
-    }
-  }
+.carousel-slider {
+  margin: 0.5rem 0;
+}
+
+.buttons-container {
+  margin-left: auto;
+}
+
+.carousel-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 1rem;
+}
+
+.carousel-icon {
+  height: 1.4rem;
+  padding: 0;
 }
 
 .recipe-card {
   display: flex;
-  justify-content: space-between;
-  margin: 1rem;
+  flex-direction: column;
+  margin: 0.25rem 0.5rem;
+  height: 230px;
+  min-width: 100px;
   border-radius: 8px;
   box-shadow: 2px 2px 2px 2px #b2b2b2;
-  background-color: v.$color6;
-  max-height: 95px;
-  @media screen and (min-width: v.$bp1-min) {
-    max-height: 125px;
-  }
-
-  .info {
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem;
-    overflow: hidden;
-  }
 
   h5 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     font-weight: bolder;
-    font-size: 1.1rem;
-    @media screen and (min-width: v.$bp1-min) {
-      font-size: 1.4rem;
-    }
-  }
-
-  .taglist {
-    justify-content: flex-start;
-    li {
-      padding: 0.1rem 0.3rem;
-      color: v.$color9;
-    }
+    font-size: 17px;
   }
 }
 
-.recipe-image-container {
+.recipe-card--taglist {
   display: flex;
-  // width: 40%;
-  max-height: 100px;
-  max-width: 100px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+  li {
+    p {
+      font-family: v.$h3-font;
+      color: v.$color1;
+      padding: 0 0.2rem;
+      font-weight: lighter;
+      font-size: 14px;
+    }
+  }
 }
-.recipe-card-image {
+
+.recipe-card--image {
   object-fit: cover;
   overflow: hidden;
-  border-radius: 0 8px 8px 0;
+  height: 50%;
+  border-radius: 8px 8px 0 0;
+}
+
+.recipe-card--info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.recipe-card--favicon {
+  height: 19px;
+  margin: 5px 0;
 }

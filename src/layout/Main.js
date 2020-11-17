@@ -16,13 +16,20 @@ import PrivateRoute from '../components/wrappers/PrivateRoute'
 import '../sass/layout/_Main.scss'
 
 export default function Main({ ...props }) {
-  const { setHasUserLogged, setUserId, userId, hasUserLogged, setUserName } = props
+  const { hasUserLogged, setHasUserLogged, setUserId, userId, setUserName } = props
 
   return (
     <main className="main-layout">
       <Switch>
-        <Route exact path="/" render={() => <HomePage />} />
-        <Route path="/home" render={() => <HomePage />} />
+        <Route
+          exact
+          path="/"
+          render={() => <HomePage hasUserLogged={hasUserLogged} userId={userId} />}
+        />
+        <Route
+          path="/home"
+          render={() => <HomePage hasUserLogged={hasUserLogged} userId={userId} />}
+        />
         <Route
           path="/recipes/:id"
           render={props => (

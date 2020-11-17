@@ -1,4 +1,6 @@
 const models = require('../models')
+const { Op } = require('sequelize')
+const { sequelize } = require('../models')
 
 module.exports = {
   getAllRecipes: async (req, res) => {
@@ -321,15 +323,44 @@ module.exports = {
           )
           res.status(201).json({ message: 'Recette enregistée dans votre carnet' })
         } catch (err) {
-          res
-            .status(500)
-            .json({
-              error: "Erreur pendant l'enregistrement de la recette dans votre carnet ; " + err
-            })
+          res.status(500).json({
+            error: "Erreur pendant l'enregistrement de la recette dans votre carnet ; " + err
+          })
         }
       }
     } catch (err) {
       res.status(500).json({ error: "L'action n'a pas pu être réalisée" })
+    }
+  },
+  getRandomRecipes: async (req, res) => {
+    let limit = req.query.limit
+    let userId = req.subId || 0
+    let save
+
+    if (req.isUserIdentified) {
+      save = await models.RecipeSave.findAll({
+        where: { userId: userId },
+        attributes: ['recipeId']
+      })
+    }
+
+    try {
+      let recipesNumber = await models.Recipe.count()
+      let idSet = new Set()
+      while (idSet.size < limit) {
+        idSet.add(Math.floor(Math.random() * recipesNumber) + 1)
+      }
+      let idArray = [...idSet]
+
+      let recipes = await models.Recipe.findAll({
+        where: { id: { [Op.or]: idArray } },
+        order: sequelize.random(),
+        attributes: ['id', 'creatorId', 'name', 'image'],
+        include: [{ model: models.Tag, attributes: ['id', 'tagname'], through: { attributes: [] } }]
+      })
+      res.status(200).json({ recipes, save })
+    } catch (err) {
+      res.status(500).json({ error: 'Erreur en récupérant les recettes ; ' + err })
     }
   }
 }

@@ -1,7 +1,13 @@
 import axios from 'axios'
 
-export const fecthRecipes = async () => {
+export const fetchRecipes = async () => {
   const url = `http://192.168.1.27:8000/api/recipes`
+  const res = await axios.get(url, { withCredentials: true })
+  return res
+}
+
+export const fetchRandomRecipes = async () => {
+  const url = `http://192.168.1.27:8000/api/recipes/random?limit=8`
   const res = await axios.get(url, { withCredentials: true })
   return res
 }

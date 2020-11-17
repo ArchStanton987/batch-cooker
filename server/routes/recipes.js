@@ -10,6 +10,8 @@ const router = express.Router()
 router.use(userUtils.addUserIdToReq)
 
 router.route('/').get(recipesCtrl.getAllRecipes)
+router.route('/random').get(recipesCtrl.getRandomRecipes)
+
 router.route('/:recipeId').get(recipesCtrl.getOneRecipeById)
 
 router.use(jwtUtils.verifyToken)
