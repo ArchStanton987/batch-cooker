@@ -11,7 +11,7 @@ export default function RecipeCard({ recipe }) {
   return (
     <>
       <Link to={{ pathname: `/recipes/${id}`, recipe: { ...recipe } }}>
-        <div className="recipe-card">
+        <li className="recipe-card">
           <img className="recipe-card--image" src={image || defaultImage} alt={name} />
           <div className="recipe-card--info">
             <h5>{name}</h5>
@@ -27,7 +27,7 @@ export default function RecipeCard({ recipe }) {
           {isSavedByUser === 1 && (
             <img className="recipe-card--favicon" src={favIcon} alt="enregistrée" />
           )}
-        </div>
+        </li>
       </Link>
     </>
   )

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 
 import { fetchRandomRecipes } from '../lib/api/api-recipes'
@@ -8,8 +7,6 @@ import Modal from '../components/wrappers/Modal'
 import SectionInfo from '../components/page_layout/SectionInfo'
 import CTAButton from '../components/page_layout/CTAButton'
 import RecipeCard from '../components/presentational/RecipeCard'
-import chevronRight from '../assets/icons/chevron-right.svg'
-import chevronLeft from '../assets/icons/chevron-left.svg'
 import { parseRecipeSaves } from '../lib/utils/recipes-utils'
 
 export default function HomePage(props) {
@@ -53,40 +50,15 @@ export default function HomePage(props) {
         <Section>
           <h3>Page en construction</h3>
         </Section>
-        <CarouselProvider
-          step={2}
-          dragStep={2}
-          visibleSlides={3.25}
-          naturalSlideHeight={200}
-          naturalSlideWidth={140}
-          totalSlides={recipes && recipes.length}
-          className="recipes-carousel"
-          isIntrinsicHeight={true}
-        >
-          <Section>
-            <div className="drawer-container">
-              <h3>Recettes au hasard</h3>
-              <div className="buttons-container">
-                <ButtonBack className="carousel-button">
-                  <img className="carousel-icon" src={chevronLeft} alt="suivant" />
-                </ButtonBack>
-                <ButtonNext className="carousel-button">
-                  <img className="carousel-icon" src={chevronRight} alt="précédent" />
-                </ButtonNext>
-              </div>
-            </div>
-            <Slider className="carousel-slider">
-              {recipes &&
-                recipes.map(recipe => {
-                  return (
-                    <Slide key={`recipe-${recipe.id}`} index={recipe.id}>
-                      <RecipeCard key={`recipe-${recipe.id}`} recipe={recipe} />
-                    </Slide>
-                  )
-                })}
-            </Slider>
-          </Section>
-        </CarouselProvider>
+        <Section>
+          <h3>Recettes au hasard</h3>
+          <ul className='recipe-card-list'>
+            {recipes &&
+              recipes.map(recipe => {
+                return <RecipeCard key={`recipe-${recipe.id}`} recipe={recipe} />
+              })}
+          </ul>
+        </Section>
       </div>
     </>
   )
