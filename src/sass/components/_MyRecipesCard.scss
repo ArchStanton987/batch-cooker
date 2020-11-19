@@ -20,7 +20,7 @@
   border-radius: 8px;
   box-shadow: 2px 2px 2px 2px #b2b2b2;
   background-color: v.$color6;
-  max-height: 95px;
+  max-height: 115px;
   @media screen and (min-width: v.$bp1-min) {
     max-height: 125px;
   }
@@ -48,18 +48,20 @@
     li {
       padding: 0.1rem 0.3rem;
       color: v.$color9;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }
 
 .myrecipes-image-container {
   display: flex;
-  // width: 40%;
-  max-height: 100px;
-  max-width: 100px;
+  width: 95px;
 }
-.myrecipes-card-card-image {
+.myrecipes-card-image {
   object-fit: cover;
   overflow: hidden;
   border-radius: 0 8px 8px 0;
+  width: 95px;
 }
