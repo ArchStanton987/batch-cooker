@@ -258,7 +258,7 @@ module.exports = {
           tag.tagId = tagExists.id
         }
         tag.recipeId = recipeId
-        await models.TagRecipe.create(tag)
+        await models.TagRecipe.create(tag, { fields: ['id', 'tagId', 'recipeId'] })
       })
       res.status(200).json({ message: 'Les tags de la recette ont bien été mis à jour. ' })
     } catch (err) {
