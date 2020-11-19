@@ -9,7 +9,8 @@ const router = express.Router()
 
 router.use(userUtils.addUserIdToReq)
 
-router.route('/').get(recipesCtrl.getAllRecipes)
+// router.route('/').get(recipesCtrl.getAllRecipes)
+router.route('/search?').get(recipesCtrl.searchRecipes)
 router.route('/random').get(recipesCtrl.getRandomRecipes)
 
 router.route('/:recipeId').get(recipesCtrl.getOneRecipeById)

@@ -335,10 +335,10 @@ module.exports = {
   getRandomRecipes: async (req, res) => {
     let limit = req.query.limit
     let userId = req.subId || 0
-    let save
+    let saves
 
     if (req.isUserIdentified) {
-      save = await models.RecipeSave.findAll({
+      saves = await models.RecipeSave.findAll({
         where: { userId: userId },
         attributes: ['recipeId']
       })
@@ -358,9 +358,55 @@ module.exports = {
         attributes: ['id', 'creatorId', 'name', 'image'],
         include: [{ model: models.Tag, attributes: ['id', 'tagname'], through: { attributes: [] } }]
       })
-      res.status(200).json({ recipes, save })
+      res.status(200).json({ recipes, saves })
     } catch (err) {
       res.status(500).json({ error: 'Erreur en récupérant les recettes ; ' + err })
+    }
+  },
+  searchRecipes: async (req, res) => {
+    const { searchfield } = req.query
+
+    let userId = req.subId || 0
+    let saves
+
+    if (req.isUserIdentified) {
+      saves = await models.RecipeSave.findAll({
+        where: { userId: userId },
+        attributes: ['recipeId']
+      })
+    }
+
+    try {
+      const recipes = await models.Recipe.findAll({
+        where: {
+          [Op.or]: [
+            { '$TagRecipes.Tag.tagname$': { [Op.substring]: searchfield } },
+            { name: { [Op.substring]: searchfield } }
+          ]
+        },
+        include: [
+          { model: models.User, attributes: ['username'] },
+          {
+            model: models.TagRecipe,
+            required: false,
+            right: true,
+            include: {
+              model: models.Tag,
+              attributes: ['tagname'],
+              required: false,
+              right: true
+            }
+          },
+          {
+            model: models.Tag,
+            attributes: ['id', 'tagname']
+          }
+        ],
+        attributes: ['id', 'creatorId', 'name', 'image']
+      })
+      res.status(200).json({ recipes, saves })
+    } catch (err) {
+      res.status(500).json({ error: err })
     }
   }
 }

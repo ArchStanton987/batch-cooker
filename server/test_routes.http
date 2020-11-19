@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/api/recipes/random?limit=5
+GET http://localhost:8000/api/recipes/search?searchfield=saison
 Cookie: 'access_token'=''
 
 

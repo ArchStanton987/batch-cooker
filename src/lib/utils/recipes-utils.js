@@ -48,7 +48,7 @@ export const parseFetchedPartialRecipes = data => {
 
 export const parseRecipeSaves = res => {
   let recipes = res.data.recipes
-  let saves = res.data.save || []
+  let saves = res.data.saves || []
   if (saves.length > 0) {
     let saveSet = new Set()
     saves.forEach(recipe => saveSet.add(recipe.recipeId))

@@ -12,6 +12,12 @@ export const fetchRandomRecipes = async () => {
   return res
 }
 
+export const fetchSearchResults = async searchField => {
+  const url = `http://192.168.1.27:8000/api/recipes/search?searchfield=${searchField}`
+  const res = await axios.get(url, { withCredentials: true })
+  return res
+}
+
 export const fetchRecipe = async recipeId => {
   const url = `http://192.168.1.27:8000/api/recipes/${recipeId}`
   const res = await axios.get(url, { withCredentials: true })
