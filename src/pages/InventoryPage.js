@@ -77,7 +77,12 @@ export default function InventoryPage(props) {
       const parsedResult = parseFetchedIngredients(result.data)
       setInventory(parsedResult)
     } catch (err) {
-      handlePrompt(true, err)
+      if (err.response) {
+        handlePrompt(true, err.response.data.error)
+      } else {
+        handlePrompt(true, 'Erreur')
+        console.log(err)
+      }
     }
   }, [userId])
   const handleDeleteIngredient = async id => {
@@ -86,7 +91,12 @@ export default function InventoryPage(props) {
       await deleteIngredientFromInventory(id, userId)
       handleFetchInventory(userId)
     } catch (err) {
-      handlePrompt(true, err)
+      if (err.response) {
+        handlePrompt(true, err.response.data.error)
+      } else {
+        handlePrompt(true, 'Erreur')
+        console.log(err)
+      }
     }
   }
   const handleAddToInventory = async newIng => {
@@ -96,7 +106,12 @@ export default function InventoryPage(props) {
       toggleModal()
       handleFetchInventory(userId)
     } catch (err) {
-      handlePrompt(true, err)
+      if (err.response) {
+        handlePrompt(true, err.response.data.error)
+      } else {
+        handlePrompt(true, 'Erreur')
+        console.log(err)
+      }
     }
   }
   const handleUpdateFromInventory = async newIng => {
@@ -106,7 +121,12 @@ export default function InventoryPage(props) {
       toggleModal()
       handleFetchInventory(userId)
     } catch (err) {
-      handlePrompt(true, err)
+      if (err.response) {
+        handlePrompt(true, err.response.data.error)
+      } else {
+        handlePrompt(true, 'Erreur')
+        console.log(err)
+      }
     }
   }
   const handleSubmitIngredient = (e, isUpdating) => {

@@ -13,9 +13,7 @@ export const postRegister = async credentials => {
 }
 
 export const disconnectUser = async userId => {
-  console.log(userId)
-
   const url = `http://192.168.1.27:8000/api/account/logout`
-  const res = await axios.post(url, { userId: userId }, { withCredentials: true })
+  const res = await axios.post(url, { userId: userId, disconnect: true }, { withCredentials: true })
   return res
 }

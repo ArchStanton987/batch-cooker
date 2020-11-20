@@ -9,7 +9,7 @@ router.route('/register').post(accountsCtrl.register)
 
 router.route('/login').post(accountsCtrl.login)
 
-router.use(jwtUtils.verifyToken)
+router.use(jwtUtils.checkExpired)
 
 router.route('/logout').post(accountsCtrl.logout)
 
