@@ -7,7 +7,7 @@ export const fetchRecipes = async () => {
 }
 
 export const fetchRandomRecipes = async () => {
-  const url = `http://192.168.1.27:8000/api/recipes/random?limit=8`
+  const url = `http://192.168.1.27:8000/api/recipes/random?limit=7`
   const res = await axios.get(url, { withCredentials: true })
   return res
 }

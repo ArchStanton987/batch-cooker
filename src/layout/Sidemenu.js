@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link, useLocation } from 'react-router-dom'
 
 import homeIcon from '../assets/icons/home-icon.png'
 import recipesIcon from '../assets/icons/recipesIcon.png'
@@ -14,6 +14,8 @@ import CloseIcon from '../components/page_layout/CloseIcon'
 export default function Sidemenu({ ...props }) {
   const { setMenu, isSideMenuActive, handleDisconnect, hasUserLogged, userName } = props
 
+  let location = useLocation()
+
   return (
     <div className="sidemenu-container">
       <div className={isSideMenuActive ? 'sidemenu active' : 'sidemenu inactive'}>
@@ -22,7 +24,18 @@ export default function Sidemenu({ ...props }) {
           onClick={() => setMenu()}
           className={'sidemenu--close-icon mobile-only'}
         />
-        <h1 className="sidemenu--title desktop-only">BatchCooker</h1>
+
+        <NavLink
+          onClick={() => {
+            setMenu()
+            if (location.pathname === '/' || location.pathname === '/home') {
+              window.location.reload()
+            }
+          }}
+          to="/home"
+        >
+          <h1>Batch Cooker</h1>
+        </NavLink>
         <hr className="sidemenu--hr desktop-only" />
         <NavLink className="sidemenu--link mobile-only" onClick={() => setMenu()} to="/profile">
           {hasUserLogged && (
