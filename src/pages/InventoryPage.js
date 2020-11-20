@@ -160,6 +160,7 @@ export default function InventoryPage(props) {
         <h2>Inventaire</h2>
         <SectionCTA className={'no-border desktop-only'}>
           <Search
+            value={searchInput}
             isSearchboxActive={true}
             parent={'inventory'}
             handleSearchInput={handleSearchInput}
@@ -232,6 +233,7 @@ export default function InventoryPage(props) {
         </Section>
         <SectionCTA className={'mobile-only no-border'}>
           <Search
+            value={searchInput}
             parent={'inventory'}
             handleSearchInput={handleSearchInput}
             isSearchboxActive={isSearchboxActive}

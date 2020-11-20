@@ -68,7 +68,12 @@ export default function MyRecipesPage(props) {
         )}
         <h2>Mes recettes</h2>
         <SectionCTA className={'desktop-only no-border'}>
-          <Search className={''} handleSearchInput={handleSearchInput} isSearchboxActive={true} />
+          <Search
+            value={searchInput}
+            className={''}
+            handleSearchInput={handleSearchInput}
+            isSearchboxActive={true}
+          />
           <Link to={{ pathname: '/myrecipes/new' }}>
             <CTAButton className={'add-recipe'}>
               <img className="icon cta-button--icon" src={plusIcon} alt="add new recipe" />
@@ -96,6 +101,7 @@ export default function MyRecipesPage(props) {
             className={isExpended ? 'recipes--search-drawer' : 'recipes--search-drawer retracted'}
           >
             <Search
+              value={searchInput}
               className={'justifyCenter'}
               parent="recipes"
               handleSearchInput={handleSearchInput}

@@ -26,6 +26,7 @@ export default function Sidemenu({ ...props }) {
         />
 
         <NavLink
+          className="desktop-only"
           onClick={() => {
             setMenu()
             if (location.pathname === '/' || location.pathname === '/home') {
@@ -131,7 +132,19 @@ export default function Sidemenu({ ...props }) {
             <p>Déconnexion</p>
           </NavLink>
         )}
-        <h1 className="sidemenu--title mobile-only">BatchCooker</h1>
+        <h1 className="sidemenu--title mobile-only">
+          BatchCooker
+          <NavLink
+            className="mobile-only"
+            onClick={() => {
+              setMenu()
+              if (location.pathname === '/' || location.pathname === '/home') {
+                window.location.reload()
+              }
+            }}
+            to="/home"
+          ></NavLink>
+        </h1>
       </div>
     </div>
   )

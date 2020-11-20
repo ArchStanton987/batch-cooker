@@ -230,6 +230,7 @@ export default function ShoppinglistPage(props) {
         <h2>Liste de courses</h2>
         <SectionCTA className={'no-border'}>
           <Search
+            value={searchInput}
             className={''}
             isSearchboxActive={true}
             parent={'shoppinglist'}
