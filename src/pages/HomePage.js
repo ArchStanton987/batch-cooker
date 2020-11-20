@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { debounce } from 'lodash'
 
 import { fetchRandomRecipes, fetchSearchResults } from '../lib/api/api-recipes'
 import Section from '../components/page_layout/Section'
@@ -13,8 +14,9 @@ import { parseRecipeSaves } from '../lib/utils/recipes-utils'
 import plusIcon from '../assets/icons/plus.svg'
 import ChevronIcon from '../components/page_layout/ChevronIcon'
 
-export default function HomePage(props) {
+export default function HomePage() {
   const [recipes, setRecipes] = useState([])
+  const [searchedRecipes, setSearchedRecipes] = useState([])
   const [prompt, setPrompt] = useState({ visible: false, message: '' })
   const [isExpended, setDrawer] = useState(false)
   const [searchInput, setSearchInput] = useState('')
@@ -24,22 +26,38 @@ export default function HomePage(props) {
     setPrompt({ visible: bool, message: message })
   }
 
-  const handleSearchInput = e => {
-    setSearchInput(e.currentTarget.value)
-    searchInput.length > 0 ? setSearchActive(true) : setSearchActive(false)
-    handleFetchSearchResults()
-  }
-
   const toggleDrawer = () => setDrawer(prevState => !prevState)
 
+  const debouncedFetch = useCallback(
+    debounce(nextValue => handleFetchSearchResults(nextValue), 1000),
+    []
+  )
+  const debouncedSearchActive = useCallback(debounce(bool => setSearchActive(bool), 1000))
 
-  const handleFetchSearchResults = async () => {
-    setSearchActive(true)
-    setRecipes([])
+  const handleSearchInput = e => {
+    const { value: nextValue } = e.target
+    if (!nextValue) {
+      setSearchActive(false)
+      setSearchInput('')
+      return
+    }
+    setSearchInput(() => {
+      if (nextValue.length <= 2) {
+        return nextValue
+      }
+      if (nextValue.length > 2) {
+        debouncedFetch(nextValue)
+        debouncedSearchActive(true)
+        return nextValue
+      }
+    })
+  }
+
+  const handleFetchSearchResults = async searchInput => {
     try {
       let res = await fetchSearchResults(searchInput)
       let parsed = await parseRecipeSaves(res)
-      setRecipes(parsed)
+      setSearchedRecipes(parsed)
     } catch (err) {
       if (err.response) {
         handlePrompt(true, err.response.data.error)
@@ -82,11 +100,11 @@ export default function HomePage(props) {
         <h2>Accueil</h2>
         <SectionCTA className={'desktop-only no-border'}>
           <Search
+            value={searchInput}
             className={''}
             handleSearchInput={handleSearchInput}
             isSearchboxActive={true}
           />
-          <CTAButton action={handleFetchSearchResults}>rech</CTAButton>
           <Link to={{ pathname: '/myrecipes/new' }}>
             <CTAButton className={'add-recipe'}>
               <img className="icon cta-button--icon" src={plusIcon} alt="add new recipe" />
@@ -109,8 +127,8 @@ export default function HomePage(props) {
           <Section className={'extended'}>
             <h3>Résultats</h3>
             <ul className="recipe-card-list">
-              {recipes &&
-                recipes.map(recipe => {
+              {searchedRecipes &&
+                searchedRecipes.map(recipe => {
                   return <RecipeCard key={`recipe-${recipe.id}`} recipe={recipe} />
                 })}
             </ul>

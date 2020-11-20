@@ -10,7 +10,8 @@ export default function Search(props) {
     handleSearchInput,
     isSearchboxActive,
     placeholder,
-    toggleSearchbox
+    toggleSearchbox,
+    value
   } = props
 
   return (
@@ -25,6 +26,7 @@ export default function Search(props) {
         <input
           type="search"
           id={`${parent}--search-input`}
+          value={value || ''}
           onChange={e => handleSearchInput(e)}
           className={isSearchboxActive ? 'search-input' : 'search-input inactive'}
           disabled={isSearchboxActive && false}

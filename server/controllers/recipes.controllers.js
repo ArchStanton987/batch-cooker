@@ -366,6 +366,10 @@ module.exports = {
   searchRecipes: async (req, res) => {
     const { searchfield } = req.query
 
+    if (searchfield.length < 2) {
+      return
+    }
+
     let userId = req.subId || 0
     let saves
 
