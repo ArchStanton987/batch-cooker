@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Link, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import homeIcon from '../assets/icons/home-icon.png'
 import recipesIcon from '../assets/icons/recipesIcon.png'

@@ -36,6 +36,10 @@
       padding: 0 0.2rem;
       font-weight: lighter;
       font-size: 14px;
+      max-width: 135px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }

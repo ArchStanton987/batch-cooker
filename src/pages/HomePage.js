@@ -144,10 +144,10 @@ export default function HomePage() {
           >
             <Search
               className={'justifyCenter'}
+              value={searchInput}
               parent="recipes"
               handleSearchInput={handleSearchInput}
               isSearchboxActive={true}
-              placeholder="ex: blanquette de veau"
             />
           </div>
         </Section>
