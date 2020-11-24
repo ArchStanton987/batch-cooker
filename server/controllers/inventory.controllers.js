@@ -1,5 +1,6 @@
 const models = require('../models')
 const { Op } = require('sequelize')
+const ingredientsUtils = require('../utils/ingredientsUtils')
 
 module.exports = {
   getUserInventory: async (req, res) => {
@@ -45,7 +46,7 @@ module.exports = {
     let newInvItem = {
       userId: parseInt(userId, 10),
       quantity: parseInt(quantity, 10) || 0,
-      unit: unit
+      unit: unit.trim().toLowerCase() || ''
     }
 
     const ingredientExists = await models.Ingredient.findOne({
@@ -70,8 +71,29 @@ module.exports = {
         res.status(201).json(newInvItem)
       }
       if (ingredientInInventory) {
-        ingredientInInventory.quantity =
-          parseInt(ingredientInInventory.quantity, 10) + newInvItem.quantity
+        let invQty = ingredientInInventory.quantity
+        let invUnit = ingredientInInventory.unit.trim().toLowerCase() || ''
+        let invUnitType = ingredientsUtils.getUnitType(invUnit)
+
+        let newInvUnitType = ingredientsUtils.getUnitType(newInvItem.unit)
+
+        if (
+          newInvUnitType === invUnitType &&
+          invUnit !== newInvItem.unit &&
+          invUnitType !== 'autres'
+        ) {
+          let convNewInv = ingredientsUtils.convertToCommonUnit(
+            newInvItem.quantity,
+            newInvItem.unit,
+            newInvUnitType
+          )
+          let convInvIng = ingredientsUtils.convertToCommonUnit(invQty, invUnit, invUnitType)
+          ingredientInInventory.quantity = convInvIng.quantity + convNewInv.quantity
+          ingredientInInventory.unit = convInvIng.unit
+        } else {
+          ingredientInInventory.quantity =
+            parseInt(ingredientInInventory.quantity, 10) + newInvItem.quantity
+        }
         await ingredientInInventory.save()
         res.status(201).json(ingredientInInventory)
       }
