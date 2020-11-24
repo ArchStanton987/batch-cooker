@@ -21,9 +21,9 @@ describe('INVENTORY', () => {
   })
 
   beforeAll(async () => {
-    const newInvItem = { userId: 3, ingredientId: 1, quantity: 5, unity: 'g' }
+    const newInvItem = { userId: 3, ingredientId: 1, quantity: 5, unit: 'g' }
     await models.Inventory.create(newInvItem, {
-      fields: ['userId', 'ingredientId', 'quantity', 'unity']
+      fields: ['userId', 'ingredientId', 'quantity', 'unit']
     })
   })
 
@@ -71,13 +71,13 @@ describe('INVENTORY', () => {
         ingredientName: 'melfort',
         category: 'assaisonnements et condiments',
         quantity: 2,
-        unity: 'l'
+        unit: 'l'
       })
       .expect(200)
       .then(res => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.quantity).toEqual(2)
-        expect(res.body.unity).toEqual('l')
+        expect(res.body.unit).toEqual('l')
       })
   })
   it('addToInventory - SUCCESS : existing ingredient, not in inventory', () => {
@@ -88,14 +88,14 @@ describe('INVENTORY', () => {
         ingredientName: 'truite fumée',
         category: 'viandes et poissons',
         quantity: 150,
-        unity: 'g'
+        unit: 'g'
       })
       .expect(200)
       .then(res => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.ingredientId).toEqual(4)
         expect(res.body.quantity).toEqual(150)
-        expect(res.body.unity).toEqual('g')
+        expect(res.body.unit).toEqual('g')
       })
   })
   it('addToInventory - SUCCESS : existing ingredient, in inventory', () => {
@@ -106,14 +106,14 @@ describe('INVENTORY', () => {
         ingredientName: 'truite fumée',
         category: 'viandes et poissons',
         quantity: 150,
-        unity: 'g'
+        unit: 'g'
       })
       .expect(200)
       .then(res => {
         expect(res.body.userId).toEqual(1)
         expect(res.body.ingredientId).toEqual(4)
         expect(res.body.quantity).toEqual(300)
-        expect(res.body.unity).toEqual('g')
+        expect(res.body.unit).toEqual('g')
       })
   })
   it('updateFromInventory - SUCCESS', () => {

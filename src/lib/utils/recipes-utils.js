@@ -9,7 +9,7 @@ export const parseFetchedFullRecipe = data => {
     newIngredient.ingredientId = ingredient.RecipeIng.ingredientId
     newIngredient.recipeId = ingredient.RecipeIng.recipeId
     newIngredient.quantity = ingredient.RecipeIng.quantity
-    newIngredient.unity = ingredient.RecipeIng.unity
+    newIngredient.unit = ingredient.RecipeIng.unit
     data.ingredients.push(newIngredient)
   })
   delete data.Ingredients

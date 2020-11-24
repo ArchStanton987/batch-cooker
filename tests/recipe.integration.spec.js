@@ -44,11 +44,11 @@ describe('RECIPE', () => {
       where: { recipeId: 1, ingredientId: 13 }
     })
     ingredientToReset.quantity = 2
-    ingredientToReset.unity = null
+    ingredientToReset.unit = null
     await ingredientToReset.save()
   })
   afterAll(async () => {
-    let ingredient = { ingredientId: 16, recipeId: 1, quantity: 4, unity: 'g' }
+    let ingredient = { ingredientId: 16, recipeId: 1, quantity: 4, unit: 'g' }
     await models.RecipeIng.create(ingredient)
   })
 
@@ -160,7 +160,7 @@ describe('RECIPE', () => {
       name: 'mayonnaise',
       category: 'assaisonnements et condiments',
       quantity: 50,
-      unity: 'g'
+      unit: 'g'
     }
     return request(app)
       .post('/api/recipes/1/ingredients')
@@ -186,7 +186,7 @@ describe('RECIPE', () => {
         expect(newRecipeIng).toHaveProperty('ingredientId', newIngredientId)
         expect(newRecipeIng).toHaveProperty('recipeId', 1)
         expect(newRecipeIng).toHaveProperty('quantity', 50)
-        expect(newRecipeIng).toHaveProperty('unity', 'g')
+        expect(newRecipeIng).toHaveProperty('unit', 'g')
       })
   })
   it('addIngredientInRecipe - SUCCESS - EXISTING INGREDIENT', () => {
@@ -194,7 +194,7 @@ describe('RECIPE', () => {
       name: 'poivre',
       category: 'assaisonnements et condiments',
       quantity: 5,
-      unity: 'g'
+      unit: 'g'
     }
     return request(app)
       .post('/api/recipes/1/ingredients')
@@ -212,7 +212,7 @@ describe('RECIPE', () => {
         expect(newRecipeIng).toHaveProperty('ingredientId', 1)
         expect(newRecipeIng).toHaveProperty('recipeId', 1)
         expect(newRecipeIng).toHaveProperty('quantity', 5)
-        expect(newRecipeIng).toHaveProperty('unity', 'g')
+        expect(newRecipeIng).toHaveProperty('unit', 'g')
       })
   })
   it('getIngredientFromRecipe - SUCCESS', () => {
@@ -222,13 +222,13 @@ describe('RECIPE', () => {
       .then(res => {
         expect(res.body).toHaveProperty('id')
         expect(res.body).toHaveProperty('quantity')
-        expect(res.body).toHaveProperty('unity')
+        expect(res.body).toHaveProperty('unit')
       })
   })
   it('updateIngredientFromRecipe - SUCCESS', () => {
     const newIngredient = {
       quantity: 5,
-      unity: 'kg'
+      unit: 'kg'
     }
     return request(app)
       .put('/api/recipes/1/ingredients/13')
@@ -236,7 +236,7 @@ describe('RECIPE', () => {
       .expect(200)
       .then(res => {
         expect(res.body).toHaveProperty('quantity', newIngredient.quantity)
-        expect(res.body).toHaveProperty('unity', newIngredient.unity)
+        expect(res.body).toHaveProperty('unit', newIngredient.unit)
       })
   })
   it('deleteIngredientFromRecipe - SUCCESS', () => {

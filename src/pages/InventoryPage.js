@@ -136,7 +136,7 @@ export default function InventoryPage(props) {
       ingredientName: newIngredient.name,
       category: newIngredient.category,
       quantity: newIngredient.quantity,
-      unity: newIngredient.unity
+      unit: newIngredient.unit
     }
     isUpdating ? handleUpdateFromInventory(newIng) : handleAddToInventory(newIng)
   }
@@ -173,7 +173,7 @@ export default function InventoryPage(props) {
               category={newIngredient ? newIngredient.category : ''}
               ingredientId={newIngredient ? newIngredient.ingredientId : ''}
               quantity={newIngredient ? newIngredient.quantity : ''}
-              unity={newIngredient ? newIngredient.unity : ''}
+              unit={newIngredient ? newIngredient.unit : ''}
             />
           </Modal>
         )}
@@ -245,7 +245,7 @@ export default function InventoryPage(props) {
                       name={item.name}
                       quantity={item.quantity}
                       ingredientId={item.ingredientId}
-                      unity={item.unity}
+                      unit={item.unit}
                     />
                   )
                 )}

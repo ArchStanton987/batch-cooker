@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       ingredientId: DataTypes.INTEGER,
       recipeId: DataTypes.INTEGER,
       quantity: DataTypes.INTEGER,
-      unity: DataTypes.INTEGER
+      unit: DataTypes.INTEGER
     },
     {
       sequelize,

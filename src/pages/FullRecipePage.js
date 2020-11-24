@@ -221,7 +221,7 @@ export default function FullRecipePage(props) {
                 <li className="ingredient-item" key={`recipeIng-${ingredient.recipeIng}`}>
                   <p className="name">{ingredient.name}</p>
                   <p className="quantity">{ingredient.quantity}</p>
-                  <p className="unity"> {ingredient.unity}</p>
+                  <p className="unit"> {ingredient.unit}</p>
                 </li>
               ))}
           </ul>

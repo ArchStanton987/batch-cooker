@@ -10,7 +10,7 @@ export default function IngredientForm({
   handleSubmitIngredient,
   ...props
 }) {
-  const { ingredientId, name, category, quantity, unity } = props
+  const { ingredientId, name, category, quantity, unit } = props
   return (
     <>
       <form className="flexColumn" method="post">
@@ -57,16 +57,16 @@ export default function IngredientForm({
             />
           </div>
           <div className="smaller-input-container">
-            <label htmlFor="unity">
+            <label htmlFor="unit">
               <p>Unité</p>
             </label>
             <input
               placeholder="ex : g, kg, cl, l, part"
               onChange={e => handleNewIngredient(e)}
-              id="unity"
-              name="unity"
+              id="unit"
+              name="unit"
               type="text"
-              defaultValue={unity}
+              defaultValue={unit}
             />
           </div>
         </div>

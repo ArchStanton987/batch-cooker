@@ -16,7 +16,7 @@ module.exports = {
       } else {
         const inventory = await models.Inventory.findAll({
           where: { userId: userId },
-          attributes: ['quantity', 'ingredientId', 'unity'],
+          attributes: ['quantity', 'ingredientId', 'unit'],
           include: [{ model: models.Ingredient, attributes: ['name', 'category'] }]
         })
         res.status(200).json(inventory)
@@ -27,7 +27,7 @@ module.exports = {
   },
 
   addToInventory: async (req, res) => {
-    let { ingredientName, category, quantity, unity } = req.body
+    let { ingredientName, category, quantity, unit } = req.body
     let { userId } = req.params
     let newIngredient = { name: ingredientName.toLowerCase(), category: category }
 
@@ -45,7 +45,7 @@ module.exports = {
     let newInvItem = {
       userId: parseInt(userId, 10),
       quantity: parseInt(quantity, 10) || 0,
-      unity: unity
+      unit: unit
     }
 
     const ingredientExists = await models.Ingredient.findOne({
@@ -65,7 +65,7 @@ module.exports = {
     try {
       if (!ingredientInInventory) {
         await models.Inventory.create(newInvItem, {
-          fields: ['userId', 'ingredientId', 'quantity', 'unity']
+          fields: ['userId', 'ingredientId', 'quantity', 'unit']
         })
         res.status(201).json(newInvItem)
       }
@@ -84,7 +84,7 @@ module.exports = {
     const userId = req.params.userId
     const ingredientId = req.params.ingredientId
     const quantity = parseInt(req.body.quantity, 10)
-    const { unity } = req.body
+    const { unit } = req.body
 
     if (parseInt(userId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
@@ -101,7 +101,7 @@ module.exports = {
         where: { [Op.and]: [{ userId: userId }, { ingredientId: ingredientId }] }
       })
       inventory.quantity = quantity
-      inventory.unity = unity
+      inventory.unit = unit
       await inventory.save()
       res.status(200).json(inventory)
     } catch (err) {

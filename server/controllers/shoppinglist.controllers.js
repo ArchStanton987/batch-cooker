@@ -16,7 +16,7 @@ module.exports = {
       } else {
         const shoppingList = await models.ShoppingList.findAll({
           where: { userId: userId },
-          attributes: ['quantity', 'ingredientId', 'unity'],
+          attributes: ['quantity', 'ingredientId', 'unit'],
           include: [{ model: models.Ingredient, attributes: ['name', 'category'] }]
         })
         res.status(200).json(shoppingList)
@@ -39,7 +39,7 @@ module.exports = {
     }
   },
   addIngredientToShoppingList: async (req, res) => {
-    let { ingredientName, category, quantity, unity } = req.body
+    let { ingredientName, category, quantity, unit } = req.body
     let { userId } = req.params
     let newIngredient = { name: ingredientName.toLowerCase(), category: category }
 
@@ -57,7 +57,7 @@ module.exports = {
     let newListItem = {
       userId: parseInt(userId, 10),
       quantity: parseInt(quantity, 10) || 0,
-      unity: unity
+      unit: unit
     }
 
     const ingredientExists = await models.Ingredient.findOne({
@@ -78,7 +78,7 @@ module.exports = {
     try {
       if (!ingredientInList) {
         await models.ShoppingList.create(newListItem, {
-          fields: ['userId', 'ingredientId', 'quantity', 'unity']
+          fields: ['userId', 'ingredientId', 'quantity', 'unit']
         })
         res.status(201).json(newListItem)
       }
@@ -95,7 +95,7 @@ module.exports = {
     const userId = req.params.userId
     const ingredientId = req.params.ingredientId
     const quantity = parseInt(req.body.quantity, 10)
-    const { unity } = req.body
+    const { unit } = req.body
 
     if (parseInt(userId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
@@ -112,7 +112,7 @@ module.exports = {
         where: { [Op.and]: [{ userId: userId }, { ingredientId: ingredientId }] }
       })
       shoppingList.quantity = quantity
-      shoppingList.unity = unity
+      shoppingList.unit = unit
       await shoppingList.save()
       res.status(200).json(shoppingList)
     } catch (err) {
@@ -157,7 +157,7 @@ module.exports = {
       await models.ShoppingList.destroy({ where: { userId: userId } })
 
       await models.ShoppingList.bulkCreate(ingredients, {
-        fields: ['userId', 'ingredientId', 'quantity', 'unity']
+        fields: ['userId', 'ingredientId', 'quantity', 'unit']
       })
       res.status(200).json({ message: 'La liste de course a bien été mise à jour' })
     } catch (err) {

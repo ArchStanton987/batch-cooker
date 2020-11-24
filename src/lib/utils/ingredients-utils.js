@@ -6,7 +6,7 @@ export const parseFetchedIngredients = data => {
       name: item.Ingredient.name,
       category: item.Ingredient.category,
       quantity: item.quantity,
-      unity: item.unity
+      unit: item.unit
     }
     ingredientList.push(newItem)
   })
@@ -20,7 +20,7 @@ export const parseRecipesIngredients = recipes => {
       ingredientList.push({
         ingredientId: ingredient.ingredientId,
         quantity: ingredient.quantity,
-        unity: ingredient.unity
+        unit: ingredient.unit
       })
     })
   })
@@ -42,15 +42,15 @@ export const convertToCommonUnit = (value, unit, unitType) => {
   unit = unit.trim().toLowerCase()
   if (unitType === 'poids' && unit === 'kg') {
     value = value * 1000
-    return { quantity: value, unity: 'g' }
+    return { quantity: value, unit: 'g' }
   } else if (unitType === 'volume' && unit === 'l') {
     value = value * 100
-    return { quantity: value, unity: 'cl' }
+    return { quantity: value, unit: 'cl' }
   } else if (unitType === 'volume' && unit === 'ml') {
     value = value / 10
-    return { quantity: value, unity: 'cl' }
+    return { quantity: value, unit: 'cl' }
   } else {
-    return { quantity: value, unity: unit }
+    return { quantity: value, unit: unit }
   }
 }
 
@@ -65,13 +65,13 @@ export const getIngredientsSet = ingredients => {
 export const getIngredientsObject = (ingredientsSet, ingredients) => {
   let ingredientsObject = {}
   ingredientsSet.forEach(ingredient => {
-    ingredientsObject[ingredient] = { quantity: 0, unity: '' }
+    ingredientsObject[ingredient] = { quantity: 0, unit: '' }
   })
   ingredients.forEach(ingredient => {
     let key = `ingId${ingredient.ingredientId}`
     ingredientsObject[key].ingredientId = ingredient.ingredientId
     ingredientsObject[key].quantity = ingredient.quantity
-    ingredientsObject[key].unity = ingredient.unity || ''
+    ingredientsObject[key].unit = ingredient.unit || ''
   })
   return ingredientsObject
 }
@@ -99,12 +99,12 @@ export const getShoppingListEntries = (allIngredients, userId) => {
     let isInInventory = inventoryIngredientsSet.has(key)
 
     let neededQty = neededIngredientsObject[key].quantity
-    let neededUnit = neededIngredientsObject[key].unity.trim().toLowerCase() || ''
+    let neededUnit = neededIngredientsObject[key].unit.trim().toLowerCase() || ''
     let neededUnitType = getUnitType(neededUnit)
 
     if (isInShoppingList) {
       let shopQty = shopIngredientsObject[key].quantity
-      let shopUnit = shopIngredientsObject[key].unity.trim().toLowerCase() || ''
+      let shopUnit = shopIngredientsObject[key].unit.trim().toLowerCase() || ''
       let shopUnitType = getUnitType(shopUnit)
       if (
         neededUnitType === shopUnitType &&
@@ -114,19 +114,19 @@ export const getShoppingListEntries = (allIngredients, userId) => {
         let convNeeded = convertToCommonUnit(neededQty, neededUnit, neededUnitType)
         let convertedShop = convertToCommonUnit(shopQty, shopUnit, shopUnitType)
         neededIngredientsObject[key].quantity = convNeeded.quantity + convertedShop.quantity
-        neededIngredientsObject[key].unity = convNeeded.unity
+        neededIngredientsObject[key].unit = convNeeded.unit
       } else {
         neededIngredientsObject[key].quantity += shopIngredientsObject[key].quantity
       }
     } else if (!isInShoppingList && isInInventory) {
       let invQty = inventoryIngredientsObject[key].quantity
-      let invUnit = inventoryIngredientsObject[key].unity.trim().toLowerCase() || ''
+      let invUnit = inventoryIngredientsObject[key].unit.trim().toLowerCase() || ''
       let invUnitType = getUnitType(invUnit)
       if (neededUnitType === invUnitType && neededUnit !== invUnit && neededUnitType !== 'autre') {
         let convNeeded = convertToCommonUnit(neededQty, neededUnit, neededUnitType)
         let convInv = convertToCommonUnit(invQty, invUnit, invUnitType)
         neededIngredientsObject[key].quantity = convNeeded.quantity - convInv.quantity
-        neededIngredientsObject[key].unity = convNeeded.unity
+        neededIngredientsObject[key].unit = convNeeded.unit
       } else {
         neededIngredientsObject[key].quantity -= inventoryIngredientsObject[key].quantity
       }

@@ -32,7 +32,7 @@ export default function DynamicFormIngredient({ ...props }) {
       <label className="ingdt-label--quantity" htmlFor={`ingredient-quantity-${index}`}>
         <p>Quantité</p>
       </label>
-      <label className="ingdt-label--unity" htmlFor={`ingredient-unity-${index}`}>
+      <label className="ingdt-label--unit" htmlFor={`ingredient-unit-${index}`}>
         <p>Unité</p>
       </label>
       <input
@@ -55,10 +55,10 @@ export default function DynamicFormIngredient({ ...props }) {
       />
       <input
         type="text"
-        id={`ingredient-unity-${index}`}
-        name="unity"
-        className="ingdt-input--unity"
-        value={ingredient.unity || ''}
+        id={`ingredient-unit-${index}`}
+        name="unit"
+        className="ingdt-input--unit"
+        value={ingredient.unit || ''}
         onChange={e => handleIngredientChange(e, index)}
       />
       {

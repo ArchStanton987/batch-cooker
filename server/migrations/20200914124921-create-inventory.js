@@ -27,7 +27,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0
       },
-      unity: {
+      unit: {
         type: Sequelize.STRING,
         defaultValue: ""
       },

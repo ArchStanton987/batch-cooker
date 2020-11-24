@@ -13,7 +13,7 @@ export default function NewRecipePage(props) {
     content: '',
     guests: ''
   }
-  const defaultIngredient = { name: '', category: '', quantity: 0, unity: '' }
+  const defaultIngredient = { name: '', category: '', quantity: 0, unit: '' }
   const defaultTag = { tagname: '' }
 
   return (
