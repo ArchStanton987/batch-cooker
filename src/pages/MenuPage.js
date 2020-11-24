@@ -15,7 +15,7 @@ import {
 import { fetchUserInventory } from '../lib/api/api-inventory'
 import { fetchMenuIngredients } from '../lib/api/api-menu'
 import { parseFetchedPartialRecipes } from '../lib/utils/recipes-utils'
-import { parseFetchedIngredients, parseRecipesIngredients } from '../lib/utils/ingredients-utils'
+import { getShoppingListEntries } from '../lib/utils/ingredients-utils'
 
 export default function MenuPage(props) {
   const { userId } = props
@@ -44,61 +44,13 @@ export default function MenuPage(props) {
       let res = await addMenuIngredientsToShoppinglist(entries, userId)
       handlePrompt(true, res.data.message)
     } catch (err) {
-      handlePrompt(true, 'Erreur')
-      console.log(err)
-    }
-  }
-
-  const getIngredientsSet = ingredients => {
-    let ingredientsSet = new Set()
-    ingredients.forEach(ingredient => {
-      ingredientsSet.add(`ingId${ingredient.ingredientId}`)
-    })
-    return ingredientsSet
-  }
-
-  const getIngredientsObject = (ingredientsSet, ingredients) => {
-    let ingredientsObject = {}
-    ingredientsSet.forEach(ingredient => {
-      ingredientsObject[ingredient] = { quantity: 0, unit: '' }
-    })
-    ingredients.forEach(ingredient => {
-      let key = `ingId${ingredient.ingredientId}`
-      ingredientsObject[key].ingredientId = ingredient.ingredientId
-      ingredientsObject[key].quantity = ingredient.quantity
-    })
-    return ingredientsObject
-  }
-
-  const getShoppingListEntries = async (allIngredients, userId) => {
-    let shopIngredients = allIngredients[0].data
-    let inventoryIngredients = parseFetchedIngredients(allIngredients[1].data)
-    let menuIngredients = parseRecipesIngredients(allIngredients[2].data)
-
-    let shopIngredientsSet = getIngredientsSet(shopIngredients)
-    let inventoryIngredientsSet = getIngredientsSet(inventoryIngredients)
-    let neededIngredientsSet = getIngredientsSet(menuIngredients)
-
-    let shopIngredientsObject = getIngredientsObject(shopIngredientsSet, shopIngredients)
-    let inventoryIngredientsObject = getIngredientsObject(
-      inventoryIngredientsSet,
-      inventoryIngredients
-    )
-    let neededIngredientsObject = getIngredientsObject(neededIngredientsSet, menuIngredients)
-
-    for (let key in neededIngredientsObject) {
-      neededIngredientsObject[key].userId = userId
-      let isInShoppingList = shopIngredientsSet.has(key)
-      let isInInventory = inventoryIngredientsSet.has(key)
-
-      if (isInShoppingList) {
-        neededIngredientsObject[key].quantity += shopIngredientsObject[key].quantity
-      } else if (!isInShoppingList && isInInventory) {
-        neededIngredientsObject[key].quantity -= inventoryIngredientsObject[key].quantity
+      if (err.response) {
+        handlePrompt(true, err.response.data.error)
+      } else {
+        handlePrompt(true, 'Erreur')
+        console.log(err)
       }
     }
-    let newShoppingListEntries = Object.values(neededIngredientsObject)
-    return newShoppingListEntries
   }
 
   const handleFetchMenu = useCallback(async () => {
@@ -108,11 +60,9 @@ export default function MenuPage(props) {
       setMenuRecipes(parsedResults)
     } catch (err) {
       if (err.response) {
-        setIsPrompt(true)
-        setPromptMessage(err.response.data.error)
+        handlePrompt(true, err.response.data.error)
       } else {
-        setIsPrompt(true)
-        setPromptMessage('Erreur')
+        handlePrompt(true, 'Erreur')
         console.log(err)
       }
     }
@@ -121,15 +71,12 @@ export default function MenuPage(props) {
   const handleClearMenu = async () => {
     try {
       let res = await clearMenu(userId)
-      setIsPrompt(true)
-      setPromptMessage(res.data.message)
+      handlePrompt(true, res.data.message)
     } catch (err) {
       if (err.response) {
-        setIsPrompt(true)
-        setPromptMessage(err.response.data.error)
+        handlePrompt(true, err.response.data.error)
       } else {
-        setIsPrompt(true)
-        setPromptMessage('Erreur')
+        handlePrompt(true, 'Erreur')
         console.log(err)
       }
     }
@@ -158,7 +105,7 @@ export default function MenuPage(props) {
           </Modal>
         )}
         <h2>Menu</h2>
-        <SectionCTA className={'desktop-only no-border'}>
+        <SectionCTA className={'no-border'}>
           <CTAButton action={handleClearMenu} className={'secondary'}>
             <img className="icon cta-button--icon" src={trashIcon} alt="Tout supprimer" />
             Vider le menu

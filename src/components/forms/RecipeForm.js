@@ -163,8 +163,10 @@ export default function RecipeForm(props) {
       {success && (
         <Modal title={'Recette enregistrée'} parent={'recipe-form'}>
           <Section className="no-border">
-      {successMessage} {hasCreated && `Elle a été ajoutée automatiquement dans votre carnet de recettes. Vous
-            pouvez la retrouver dans la page "Mes Recettes"`}.
+            {successMessage}{' '}
+            {hasCreated &&
+              `Elle a été ajoutée automatiquement dans votre carnet de recettes. Vous
+            pouvez la retrouver dans la page "Mes Recettes"`}
           </Section>
           <SectionInfo className="no-border">
             <Link to="/myrecipes">
