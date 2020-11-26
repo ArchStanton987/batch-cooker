@@ -37,7 +37,8 @@
     "test": "NODE_ENV=test jest ./tests",
     "test:watch": "NODE_ENV=test jest ./tests --watchAll",
     "eject": "react-scripts eject",
-    "server": "nodemon ./server/server.js"
+    "server": "nodemon ./server/server.js",
+    "startall": "npm run server & npm start"
   },
   "eslintConfig": {
     "extends": "react-app"
