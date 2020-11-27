@@ -13,7 +13,7 @@ const app = express()
 app.use(
   cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'http://192.168.1.27:3000'],
+    origin: ['http://localhost:3000', 'http://192.168.1.27:3000', 'https://batch-cooker.herokuapp.com/'],
     optionsSuccessStatus: 200
   })
 )
