@@ -8,8 +8,8 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/api/recipes/search?searchfield=magret
-Cookie: 'access_token'=''
+GET https://batch-cooker.herokuapp.com/api/recipes
+Cookie: 'access_token'=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlzcyI6ImJhdGNoLWNvb2tlciIsInNjb3BlcyI6WyJhZG1pbiIsInVzZXIiXSwiaWF0IjoxNjA2NzQyNDgxLCJleHAiOjE2MDY3NDYwODF9.FnIARC3Gmf-A7KRm3m4HAs7BOkz0qTme_X9QqpEn_1k
 
 
 ###

@@ -1,34 +1,20 @@
-'use strict'
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-     */
     await queryInterface.bulkInsert('Tags', [
-      { tagname: 'charcuterie' },
       { tagname: 'saison' },
       { tagname: 'été' },
-      { tagname: 'printemps' },
-      { tagname: 'automne' },
-      { tagname: 'hiver' },
-      { tagname: 'apéro' },
-      { tagname: 'petit déjeuner' },
-      { tagname: 'déjeuner' },
-      { tagname: 'réconfort' },
-      { tagname: 'dinner' },
-      { tagname: 'frais' },
-      { tagname: 'généreux' },
-      { tagname: 'vegan' },
-      { tagname: 'healthy' },
-      { tagname: 'brunch' },
-      { tagname: 'tradition' }
+      { tagname: 'tradition' },
+
+      { tagname: 'risotto' },
+      { tagname: 'gourmand' },
+
+      { tagname: 'Italie' },
+      { tagname: 'facile' },
+
+      { tagname: 'dessert' },
+      { tagname: 'douceur' },
+
+      { tagname: 'généreux' }
     ])
   },
 
