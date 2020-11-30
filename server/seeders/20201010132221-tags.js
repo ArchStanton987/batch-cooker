@@ -2,18 +2,23 @@ const models = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await models.Tag.bulkCreate([
-      { tagname: 'saison' },
-      { tagname: 'été' },
-      { tagname: 'tradition' },
-      { tagname: 'risotto' },
-      { tagname: 'gourmand' },
-      { tagname: 'Italie' },
-      { tagname: 'facile' },
-      { tagname: 'dessert' },
-      { tagname: 'douceur' },
-      { tagname: 'généreux' }
-    ])
+    await models.Tag.bulkCreate(
+      [
+        { id: 1, tagname: 'saison' },
+        { id: 2, tagname: 'été' },
+        { id: 3, tagname: 'tradition' },
+        { id: 4, tagname: 'risotto' },
+        { id: 5, tagname: 'gourmand' },
+        { id: 6, tagname: 'Italie' },
+        { id: 7, tagname: 'facile' },
+        { id: 8, tagname: 'dessert' },
+        { id: 9, tagname: 'douceur' },
+        { id: 10, tagname: 'généreux' }
+      ],
+      {
+        fields: ['id', 'tagname']
+      }
+    )
   },
 
   down: async (queryInterface, Sequelize) => {
