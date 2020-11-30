@@ -13,6 +13,8 @@ const recipes = require('./routes/recipes')
 
 const isDev = process.env.NODE_ENV !== 'production'
 
+const app = express()
+
 if (!isDev && cluster.isMaster) {
   console.error(`Node cluster master ${process.pid} is running`)
   for (let i = 0; i < numCPUs; i++) {
@@ -24,8 +26,6 @@ if (!isDev && cluster.isMaster) {
     )
   })
 } else {
-  const app = express()
-
   app.use(express.static(path.resolve(__dirname, '../build')))
 
   app.use(
@@ -36,7 +36,7 @@ if (!isDev && cluster.isMaster) {
         'http://192.168.1.27:3000',
         'http://localhost:8000',
         'http://192.168.1.27:8000',
-        'https://batch-cooker.herokuapp.com/*'
+        'https://batch-cooker.herokuapp.com/'
       ],
       optionsSuccessStatus: 200
     })
@@ -54,6 +54,6 @@ if (!isDev && cluster.isMaster) {
   app.get('*', function (req, res) {
     res.sendFile(path.resolve(__dirname, '../build', 'index.html'))
   })
-
-  module.exports = app
 }
+
+module.exports = app
