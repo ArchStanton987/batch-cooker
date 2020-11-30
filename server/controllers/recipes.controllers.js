@@ -337,6 +337,13 @@ module.exports = {
     let userId = req.subId || 0
     let saves
 
+    let recipesNumber = await models.Recipe.count()
+
+    if (recipesNumber < 7) {
+      res.status(200)
+      return
+    }
+
     if (req.isUserIdentified) {
       saves = await models.RecipeSave.findAll({
         where: { userId: userId },
@@ -345,7 +352,6 @@ module.exports = {
     }
 
     try {
-      let recipesNumber = await models.Recipe.count()
       let idSet = new Set()
       while (idSet.size < limit) {
         idSet.add(Math.floor(Math.random() * recipesNumber) + 1)

@@ -82,9 +82,9 @@ export default function HomePage() {
     }
   }, [])
 
-  // useEffect(() => {
-  //   handleFetchRandomRecipes()
-  // }, [handleFetchRandomRecipes])
+  useEffect(() => {
+    handleFetchRandomRecipes()
+  }, [handleFetchRandomRecipes])
 
   return (
     <>
