@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   RecipeIng.init(
     {
-      id: { type: DataTypes.INTEGER, primaryKey: true },
       IngredientId: DataTypes.INTEGER,
       RecipeId: DataTypes.INTEGER,
       quantity: DataTypes.INTEGER,

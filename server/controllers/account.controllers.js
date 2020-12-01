@@ -52,7 +52,7 @@ module.exports = {
         jwt.sign(
           { sub: user.id, iss: 'batch-cooker', scopes: ['admin', 'user'] },
           process.env.JWT_SECRET_KEY,
-          { algorithm: 'HS256', expiresIn: '1h' },
+          { algorithm: 'HS256', expiresIn: '2h' },
           (err, token) => {
             if (err) {
               res.status(500).json({ error: err })
