@@ -12,8 +12,8 @@ export const postRegister = async credentials => {
   return res
 }
 
-export const disconnectUser = async userId => {
+export const disconnectUser = async UserId => {
   const url = `https://batch-cooker.herokuapp.com/api/account/logout`
-  const res = await axios.post(url, { userId: userId, disconnect: true }, { withCredentials: true })
+  const res = await axios.post(url, { UserId: UserId, disconnect: true }, { withCredentials: true })
   return res
 }

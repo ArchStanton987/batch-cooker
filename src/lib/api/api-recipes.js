@@ -66,14 +66,14 @@ export const deleteRecipe = async recipeId => {
   return res
 }
 
-export const fetchSavedRecipes = async userId => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/saves/users/${userId}`
+export const fetchSavedRecipes = async UserId => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/saves/users/${UserId}`
   const res = await axios.get(url, { withCredentials: true })
   return res
 }
 
-export const saveRecipe = async (recipeId, userId) => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/saves/${recipeId}/users/${userId}`
+export const saveRecipe = async (recipeId, UserId) => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/saves/${recipeId}/users/${UserId}`
   const res = await axios.put(url, recipeId, { withCredentials: true })
   return res
 }

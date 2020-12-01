@@ -22,15 +22,15 @@ router.route('/').post(recipesCtrl.addNewRecipe)
 router.route('/:recipeId').put(recipesCtrl.updateOneRecipe)
 router.route('/:recipeId').delete(recipesCtrl.deleteOneRecipe)
 
-router.route('/users/:userId').get(recipesCtrl.getRecipesOfUser)
+router.route('/users/:UserId').get(recipesCtrl.getRecipesOfUser)
 
-router.route('/saves/users/:userId').get(recipesCtrl.getSavedRecipes)
-router.route('/saves/:recipeId/users/:userId').put(recipesCtrl.putRecipeSave)
+router.route('/saves/users/:UserId').get(recipesCtrl.getSavedRecipes)
+router.route('/saves/:recipeId/users/:UserId').put(recipesCtrl.putRecipeSave)
 
-router.route('/menu/users/:userId').get(menuCtrl.getUserMenu)
-router.route('/menu/users/:userId').delete(menuCtrl.clearUserMenu)
-router.route('/menu/:recipeId/users/:userId').put(menuCtrl.putRecipeMenu)
-router.route('/menu/users/:userId/ingredients').get(menuCtrl.getAllIngredientsFromMenu)
+router.route('/menu/users/:UserId').get(menuCtrl.getUserMenu)
+router.route('/menu/users/:UserId').delete(menuCtrl.clearUserMenu)
+router.route('/menu/:recipeId/users/:UserId').put(menuCtrl.putRecipeMenu)
+router.route('/menu/users/:UserId/ingredients').get(menuCtrl.getAllIngredientsFromMenu)
 
 router.route('/:recipeId/ingredients').post(recipesCtrl.addIngredientsToRecipe)
 router.route('/:recipeId/ingredients').put(recipesCtrl.updateIngredientsFromRecipe)

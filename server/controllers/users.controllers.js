@@ -10,9 +10,9 @@ module.exports = {
     }
   },
   getOneUserById: async (req, res) => {
-    const userId = req.params.id
+    const UserId = req.params.id
     try {
-      const user = await models.User.findByPk(userId, { attributes: ['id', 'username', 'email'] })
+      const user = await models.User.findByPk(UserId, { attributes: ['id', 'username', 'email'] })
       if (!user) {
         res.status(404).json({ error: 'Utilisateur inconnu' })
       } else {
@@ -23,9 +23,9 @@ module.exports = {
     }
   },
   updateOneUser: async (req, res) => {
-    const userId = req.params.id
+    const UserId = req.params.id
     const { email, username, password } = req.body
-    let user = await models.User.findByPk(userId)
+    let user = await models.User.findByPk(UserId)
 
     // Checks for existing username
     if (user.username !== username) {
@@ -66,8 +66,8 @@ module.exports = {
     }
   },
   deleteOneUser: async (req, res) => {
-    const userId = req.params.id
-    const user = await models.User.findByPk(userId)
+    const UserId = req.params.id
+    const user = await models.User.findByPk(UserId)
     if (!user) {
       res.status(404).json({ error: 'Utilisateur inconnu' })
       return

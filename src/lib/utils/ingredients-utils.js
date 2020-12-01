@@ -3,7 +3,7 @@ export const parseFetchedIngredients = data => {
   let ingredientList = []
   data.forEach(item => {
     let newItem = {
-      ingredientId: item.ingredientId,
+      IngredientId: item.IngredientId,
       name: item.Ingredient.name,
       category: item.Ingredient.category,
       quantity: item.quantity,
@@ -19,7 +19,7 @@ export const parseRecipesIngredients = recipes => {
   recipes.forEach(recipe => {
     recipe.Recipe.RecipeIngs.forEach(ingredient => {
       ingredientList.push({
-        ingredientId: ingredient.ingredientId,
+        IngredientId: ingredient.IngredientId,
         quantity: ingredient.quantity,
         unit: ingredient.unit
       })
@@ -58,7 +58,7 @@ export const convertToCommonUnit = (value, unit, unitType) => {
 export const getIngredientsSet = ingredients => {
   let ingredientsSet = new Set()
   ingredients.forEach(ingredient => {
-    ingredientsSet.add(`ingId${ingredient.ingredientId}`)
+    ingredientsSet.add(`ingId${ingredient.IngredientId}`)
   })
   return ingredientsSet
 }
@@ -69,15 +69,15 @@ export const getIngredientsObject = (ingredientsSet, ingredients) => {
     ingredientsObject[ingredient] = { quantity: 0, unit: '' }
   })
   ingredients.forEach(ingredient => {
-    let key = `ingId${ingredient.ingredientId}`
-    ingredientsObject[key].ingredientId = ingredient.ingredientId
+    let key = `ingId${ingredient.IngredientId}`
+    ingredientsObject[key].IngredientId = ingredient.IngredientId
     ingredientsObject[key].quantity = ingredient.quantity
     ingredientsObject[key].unit = ingredient.unit || ''
   })
   return ingredientsObject
 }
 
-export const getShoppingListEntries = (allIngredients, userId) => {
+export const getShoppingListEntries = (allIngredients, UserId) => {
   let shopIngredients = allIngredients[0].data
   let inventoryIngredients = parseFetchedIngredients(allIngredients[1].data)
   let menuIngredients = parseRecipesIngredients(allIngredients[2].data)
@@ -94,7 +94,7 @@ export const getShoppingListEntries = (allIngredients, userId) => {
   let neededIngredientsObject = getIngredientsObject(neededIngredientsSet, menuIngredients)
 
   for (let key in neededIngredientsObject) {
-    neededIngredientsObject[key].userId = userId
+    neededIngredientsObject[key].UserId = UserId
 
     let isInShoppingList = shopIngredientsSet.has(key)
     let isInInventory = inventoryIngredientsSet.has(key)

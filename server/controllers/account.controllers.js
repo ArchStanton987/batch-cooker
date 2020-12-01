@@ -63,16 +63,16 @@ module.exports = {
             })
             res
               .status(200)
-              .json({ message: 'Identification réussie', userId: user.id, username: user.username })
+              .json({ message: 'Identification réussie', UserId: user.id, username: user.username })
           }
         )
       }
     }
   },
   logout: async (req, res) => {
-    const userId = parseInt(req.body.userId, 10)
+    const UserId = parseInt(req.body.UserId, 10)
 
-    if (parseInt(userId, 10) !== req.tokenUser) {
+    if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }

@@ -44,7 +44,7 @@ export default function FullRecipePage(props) {
   } = recipe
 
   const recipeId = props.match.params.id
-  const { hasUserLogged, userId } = props
+  const { hasUserLogged, UserId } = props
 
   moment.locale('fr')
 
@@ -70,7 +70,7 @@ export default function FullRecipePage(props) {
 
   const handleSaveRecipe = async () => {
     try {
-      let res = await saveRecipe(recipeId, userId)
+      let res = await saveRecipe(recipeId, UserId)
       setIsRecipeSaved(prev => !prev)
       setIsSuccess()
       setSuccessMessage(res.data.message)
@@ -82,7 +82,7 @@ export default function FullRecipePage(props) {
 
   const handlePutToMenu = async () => {
     try {
-      let res = await putRecipeMenu(recipeId, userId)
+      let res = await putRecipeMenu(recipeId, UserId)
       setIsRecipeInMenu(prev => !prev)
       setIsSuccess()
       setSuccessMessage(res.data.message)
@@ -139,7 +139,7 @@ export default function FullRecipePage(props) {
         )}
         <h2>Recette</h2>
         <SectionCTA className={'no-border'}>
-          {hasUserLogged && recipe && recipe.creatorId === userId && (
+          {hasUserLogged && recipe && recipe.creatorId === UserId && (
             <>
               <Link to={{ pathname: `/myrecipes/edit/${recipeId}`, recipe: { ...recipe } }}>
                 <CTAButton className={'secondary'}>Modifier</CTAButton>

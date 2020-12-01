@@ -27,9 +27,9 @@ export default function LoginPage(props) {
     setErrorMessage('')
     try {
       const result = await postLogin(credentials)
-      sessionStorage.setItem('userId', result.data.userId)
+      sessionStorage.setItem('UserId', result.data.UserId)
       sessionStorage.setItem('username', result.data.username)
-      setUserId(result.data.userId)
+      setUserId(result.data.UserId)
       setUserName(result.data.username)
       setHasUserLogged(true)
       return history.replace(from)

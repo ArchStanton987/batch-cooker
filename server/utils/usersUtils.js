@@ -2,8 +2,8 @@ const models = require('../models')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
-  getUserById: async userId => {
-    const user = await models.User.findByPk(parseInt(userId, 10))
+  getUserById: async UserId => {
+    const user = await models.User.findByPk(parseInt(UserId, 10))
     return user
   },
   addUserIdToReq: (req, res, next) => {

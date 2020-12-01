@@ -23,7 +23,7 @@ import { addIngredientToInventory } from '../lib/api/api-inventory'
 import SectionInfo from '../components/page_layout/SectionInfo'
 
 export default function ShoppinglistPage(props) {
-  const { userId } = props
+  const { UserId } = props
 
   const [shoppingList, setShoppingList] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
@@ -52,7 +52,7 @@ export default function ShoppinglistPage(props) {
 
   const handleDeleteIngredient = async id => {
     try {
-      await deleteIngredientFromShoppingList(id, userId)
+      await deleteIngredientFromShoppingList(id, UserId)
       handleFetchShoppingList()
     } catch (err) {
       if (err.response) {
@@ -65,14 +65,14 @@ export default function ShoppinglistPage(props) {
   }
 
   const handleEditIngredient = id => {
-    let ingredientData = shoppingList.filter(ingredient => ingredient.ingredientId === id)
+    let ingredientData = shoppingList.filter(ingredient => ingredient.IngredientId === id)
     setNewIngredient(ingredientData[0])
     toggleModal()
   }
 
   const handleAddToShoppingList = async newIng => {
     try {
-      await addIngredientToShoppingList(newIng, userId)
+      await addIngredientToShoppingList(newIng, UserId)
       toggleModal()
       handleFetchShoppingList()
     } catch (err) {
@@ -86,7 +86,7 @@ export default function ShoppinglistPage(props) {
   }
   const handleUpdateFromShoppingList = async newIng => {
     try {
-      await updateIngredientFromShoppingList(newIng, userId)
+      await updateIngredientFromShoppingList(newIng, UserId)
       toggleModal()
       handleFetchShoppingList()
     } catch (err) {
@@ -101,7 +101,7 @@ export default function ShoppinglistPage(props) {
   const handleSubmitIngredient = (e, isUpdating) => {
     e.preventDefault()
     const newIng = {
-      ingredientId: newIngredient.ingredientId || null,
+      IngredientId: newIngredient.IngredientId || null,
       ingredientName: newIngredient.name,
       category: newIngredient.category,
       quantity: newIngredient.quantity,
@@ -112,7 +112,7 @@ export default function ShoppinglistPage(props) {
 
   const handleclearUserShoppingList = async () => {
     try {
-      await clearUserShoppingList(userId)
+      await clearUserShoppingList(UserId)
       handleFetchShoppingList()
     } catch (err) {
       if (err.response) {
@@ -129,7 +129,7 @@ export default function ShoppinglistPage(props) {
     ingredientsToAdd.forEach(item => (item.ingredientName = item.name))
     try {
       for (let i = 0; i < ingredientsToAdd.length; i++) {
-        await addIngredientToInventory(ingredientsToAdd[i], userId)
+        await addIngredientToInventory(ingredientsToAdd[i], UserId)
       }
       handlePrompt(true, 'Inventaire mis à jour', 'UPDATED')
     } catch (err) {
@@ -144,7 +144,7 @@ export default function ShoppinglistPage(props) {
 
   const handleFetchShoppingList = useCallback(async () => {
     try {
-      const results = await fetchUserShoppingList(userId)
+      const results = await fetchUserShoppingList(UserId)
       const parsedResult = parseFetchedIngredients(results.data)
       setShoppingList(parsedResult)
     } catch (err) {
@@ -155,7 +155,7 @@ export default function ShoppinglistPage(props) {
         console.log(err)
       }
     }
-  }, [userId])
+  }, [UserId])
 
   useEffect(() => {
     handleFetchShoppingList()
@@ -221,7 +221,7 @@ export default function ShoppinglistPage(props) {
               toggleModal={toggleModal}
               name={newIngredient ? newIngredient.name : ''}
               category={newIngredient ? newIngredient.category : ''}
-              ingredientId={newIngredient ? newIngredient.ingredientId : ''}
+              IngredientId={newIngredient ? newIngredient.IngredientId : ''}
               quantity={newIngredient ? newIngredient.quantity : ''}
               unit={newIngredient ? newIngredient.unit : ''}
             />
@@ -281,10 +281,10 @@ export default function ShoppinglistPage(props) {
                     <Ingredient
                       handleEditIngredient={handleEditIngredient}
                       handleDeleteIngredient={handleDeleteIngredient}
-                      key={item.ingredientId}
+                      key={item.IngredientId}
                       name={item.name}
                       quantity={item.quantity}
-                      ingredientId={item.ingredientId}
+                      IngredientId={item.IngredientId}
                       unit={item.unit}
                     />
                   )

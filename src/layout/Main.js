@@ -16,7 +16,7 @@ import PrivateRoute from '../components/wrappers/PrivateRoute'
 import '../sass/layout/_Main.scss'
 
 export default function Main({ ...props }) {
-  const { hasUserLogged, setHasUserLogged, setUserId, userId, setUserName } = props
+  const { hasUserLogged, setHasUserLogged, setUserId, UserId, setUserName } = props
 
   return (
     <main className="main-layout">
@@ -24,16 +24,16 @@ export default function Main({ ...props }) {
         <Route
           exact
           path="/"
-          render={() => <HomePage hasUserLogged={hasUserLogged} userId={userId} />}
+          render={() => <HomePage hasUserLogged={hasUserLogged} UserId={UserId} />}
         />
         <Route
           path="/home"
-          render={() => <HomePage hasUserLogged={hasUserLogged} userId={userId} />}
+          render={() => <HomePage hasUserLogged={hasUserLogged} UserId={UserId} />}
         />
         <Route
           path="/recipes/:id"
           render={props => (
-            <FullRecipePage hasUserLogged={hasUserLogged} userId={userId} {...props} />
+            <FullRecipePage hasUserLogged={hasUserLogged} UserId={UserId} {...props} />
           )}
         />
         <Route
@@ -50,25 +50,25 @@ export default function Main({ ...props }) {
         <Route path="/register" render={() => <RegisterPage />} />
 
         <PrivateRoute path="/myrecipes/new" hasUserLogged={hasUserLogged}>
-          <NewRecipePage userId={userId} />
+          <NewRecipePage UserId={UserId} />
         </PrivateRoute>
         <PrivateRoute path="/myrecipes/edit/:id" hasUserLogged={hasUserLogged}>
-          <EditRecipePage userId={userId} />
+          <EditRecipePage UserId={UserId} />
         </PrivateRoute>
         <PrivateRoute path="/myrecipes" hasUserLogged={hasUserLogged}>
-          <MyRecipesPage userId={userId} />
+          <MyRecipesPage UserId={UserId} />
         </PrivateRoute>
         <PrivateRoute path="/inventory" hasUserLogged={hasUserLogged}>
-          <InventoryPage userId={userId} />
+          <InventoryPage UserId={UserId} />
         </PrivateRoute>
         <PrivateRoute path="/shoplist" hasUserLogged={hasUserLogged}>
-          <ShoppinglistPage userId={userId} />
+          <ShoppinglistPage UserId={UserId} />
         </PrivateRoute>
         <PrivateRoute path="/menu" hasUserLogged={hasUserLogged}>
-          <MenuPage userId={userId} />
+          <MenuPage UserId={UserId} />
         </PrivateRoute>
         <PrivateRoute path="/profile" hasUserLogged={hasUserLogged}>
-          <ProfilePage userId={userId} />
+          <ProfilePage UserId={UserId} />
         </PrivateRoute>
       </Switch>
     </main>

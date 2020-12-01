@@ -43,11 +43,11 @@ module.exports = {
 
     let isSavedByUser = false
     let isInMenu = false
-    let userId = req.subId || 0
+    let UserId = req.subId || 0
 
     if (req.isUserIdentified) {
-      let save = await models.RecipeSave.findOne({ where: { recipeId: recipeId, userId: userId } })
-      let inMenu = await models.Menu.findOne({ where: { recipeId: recipeId, userId: userId } })
+      let save = await models.RecipeSave.findOne({ where: { recipeId: recipeId, UserId: UserId } })
+      let inMenu = await models.Menu.findOne({ where: { recipeId: recipeId, UserId: UserId } })
       if (save) {
         isSavedByUser = true
       }
@@ -116,16 +116,16 @@ module.exports = {
     }
   },
   getRecipesOfUser: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
+    const UserId = parseInt(req.params.UserId, 10)
 
-    if (userId !== req.tokenUser) {
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
     try {
       const recipes = await models.Recipe.findAll({
         where: {
-          creatorId: userId
+          creatorId: UserId
         },
         attributes: ['id', 'creatorId', 'name', 'image'],
         include: [{ model: models.Tag, attributes: ['id', 'tagname'], through: { attributes: [] } }]
@@ -155,9 +155,9 @@ module.exports = {
             name: ingredient.name,
             category: ingredient.category
           })
-          ingredient.ingredientId = createdIng.id
+          ingredient.IngredientId = createdIng.id
         } else {
-          ingredient.ingredientId = ingredientExists.id
+          ingredient.IngredientId = ingredientExists.id
         }
         ingredient.recipeId = recipeId
         await models.RecipeIng.create(ingredient)
@@ -189,9 +189,9 @@ module.exports = {
             name: ingredient.name,
             category: ingredient.category
           })
-          ingredient.ingredientId = createdIng.id
+          ingredient.IngredientId = createdIng.id
         } else {
-          ingredient.ingredientId = ingredientExists.id
+          ingredient.IngredientId = ingredientExists.id
         }
         ingredient.recipeId = recipeId
         await models.RecipeIng.create(ingredient)
@@ -266,9 +266,9 @@ module.exports = {
     }
   },
   getSavedRecipes: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
+    const UserId = parseInt(req.params.UserId, 10)
 
-    if (userId !== req.tokenUser) {
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
@@ -276,7 +276,7 @@ module.exports = {
     try {
       const savedRecipes = await models.RecipeSave.findAll({
         where: {
-          userId: userId
+          UserId: UserId
         },
         include: [
           {
@@ -294,17 +294,17 @@ module.exports = {
     }
   },
   putRecipeSave: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
+    const UserId = parseInt(req.params.UserId, 10)
     const recipeId = parseInt(req.params.recipeId, 10)
 
-    if (userId !== req.tokenUser) {
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
       const existingSave = await models.RecipeSave.findOne({
-        where: { userId: userId, recipeId: recipeId }
+        where: { UserId: UserId, recipeId: recipeId }
       })
       if (existingSave) {
         try {
@@ -318,8 +318,8 @@ module.exports = {
       } else {
         try {
           await models.RecipeSave.create(
-            { userId: userId, recipeId: recipeId },
-            { fields: ['userId', 'recipeId'] }
+            { UserId: UserId, recipeId: recipeId },
+            { fields: ['UserId', 'recipeId'] }
           )
           res.status(201).json({ message: 'Recette enregistée dans votre carnet' })
         } catch (err) {
@@ -334,8 +334,8 @@ module.exports = {
   },
   getRandomRecipes: async (req, res) => {
     let limit = parseInt(req.query.limit, 10)
-    let userId = req.subId || 0
-    userId = parseInt(userId, 10)
+    let UserId = req.subId || 0
+    UserId = parseInt(UserId, 10)
     let saves
 
     let recipesNumber = await models.Recipe.count()
@@ -347,7 +347,7 @@ module.exports = {
 
     if (req.isUserIdentified) {
       saves = await models.RecipeSave.findAll({
-        where: { userId: userId },
+        where: { UserId: UserId },
         attributes: ['recipeId']
       })
     }
@@ -377,12 +377,12 @@ module.exports = {
       return
     }
 
-    let userId = req.subId || 0
+    let UserId = req.subId || 0
     let saves
 
     if (req.isUserIdentified) {
       saves = await models.RecipeSave.findAll({
-        where: { userId: userId },
+        where: { UserId: UserId },
         attributes: ['recipeId']
       })
     }

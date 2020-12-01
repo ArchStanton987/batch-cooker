@@ -18,7 +18,7 @@ import { parseFetchedPartialRecipes } from '../lib/utils/recipes-utils'
 import { getShoppingListEntries } from '../lib/utils/ingredients-utils'
 
 export default function MenuPage(props) {
-  const { userId } = props
+  const { UserId } = props
   const [menuRecipes, setMenuRecipes] = useState([])
   const [isPrompt, setIsPrompt] = useState(false)
   const [promptMessage, setPromptMessage] = useState('')
@@ -28,20 +28,20 @@ export default function MenuPage(props) {
     setPromptMessage(message)
   }
 
-  const handleFetchAllIngredients = async userId => {
+  const handleFetchAllIngredients = async UserId => {
     let res = await Promise.all([
-      fetchUserShoppingList(userId),
-      fetchUserInventory(userId),
-      fetchMenuIngredients(userId)
+      fetchUserShoppingList(UserId),
+      fetchUserInventory(UserId),
+      fetchMenuIngredients(UserId)
     ])
     return res
   }
 
   const handleAddMenuToShoppinglist = async () => {
     try {
-      let allIngredients = await handleFetchAllIngredients(userId)
-      let entries = await getShoppingListEntries(allIngredients, userId)
-      let res = await addMenuIngredientsToShoppinglist(entries, userId)
+      let allIngredients = await handleFetchAllIngredients(UserId)
+      let entries = await getShoppingListEntries(allIngredients, UserId)
+      let res = await addMenuIngredientsToShoppinglist(entries, UserId)
       handlePrompt(true, res.data.message)
     } catch (err) {
       if (err.response) {
@@ -55,7 +55,7 @@ export default function MenuPage(props) {
 
   const handleFetchMenu = useCallback(async () => {
     try {
-      const results = await fetchMenu(userId)
+      const results = await fetchMenu(UserId)
       let parsedResults = parseFetchedPartialRecipes(results.data)
       setMenuRecipes(parsedResults)
     } catch (err) {
@@ -66,11 +66,11 @@ export default function MenuPage(props) {
         console.log(err)
       }
     }
-  }, [userId])
+  }, [UserId])
 
   const handleClearMenu = async () => {
     try {
-      let res = await clearMenu(userId)
+      let res = await clearMenu(UserId)
       handlePrompt(true, res.data.message)
     } catch (err) {
       if (err.response) {

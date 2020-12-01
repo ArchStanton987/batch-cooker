@@ -2,9 +2,9 @@ const models = require('../models')
 
 module.exports = {
   getUserMenu: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
+    const UserId = parseInt(req.params.UserId, 10)
 
-    if (userId !== req.tokenUser) {
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
@@ -12,7 +12,7 @@ module.exports = {
     try {
       const menu = await models.Menu.findAll({
         where: {
-          userId: userId
+          UserId: UserId
         },
         include: [
           {
@@ -30,17 +30,17 @@ module.exports = {
     }
   },
   putRecipeMenu: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
+    const UserId = parseInt(req.params.UserId, 10)
     const recipeId = parseInt(req.params.recipeId, 10)
 
-    if (userId !== req.tokenUser) {
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
       const existingMenu = await models.Menu.findOne({
-        where: { userId: userId, recipeId: recipeId }
+        where: { UserId: UserId, recipeId: recipeId }
       })
       if (existingMenu) {
         try {
@@ -53,7 +53,7 @@ module.exports = {
         }
       } else {
         try {
-          await models.Menu.create({ userId: userId, recipeId: recipeId })
+          await models.Menu.create({ UserId: UserId, recipeId: recipeId })
           res.status(201).json({ message: 'Recette enregistée dans votre menu' })
         } catch (err) {
           res
@@ -66,31 +66,31 @@ module.exports = {
     }
   },
   clearUserMenu: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
+    const UserId = parseInt(req.params.UserId, 10)
 
-    if (userId !== req.tokenUser) {
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
-      await models.Menu.destroy({ where: { userId: userId } })
+      await models.Menu.destroy({ where: { UserId: UserId } })
       res.status(200).json({ message: 'Les recettes ont bien été supprimées de votre menu' })
     } catch (err) {
       res.status(500).json({ error: 'Erreur pendant la suppression du menu' })
     }
   },
   getAllIngredientsFromMenu: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
+    const UserId = parseInt(req.params.UserId, 10)
 
-    if (userId !== req.tokenUser) {
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
       let menuIngredients = await models.Menu.findAll({
-        where: { userId: userId },
+        where: { UserId: UserId },
         include: { model: models.Recipe, include: { model: models.RecipeIng } }
       })
       res.status(200).json(menuIngredients)

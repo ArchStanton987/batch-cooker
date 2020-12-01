@@ -10,11 +10,11 @@ import { disconnectUser } from '../lib/api/api-account'
 
 export default function Layout() {
   const [isSideMenuActive, setMenu] = useToggle(false)
-  const [userId, setUserId] = useState(parseInt(sessionStorage.getItem('userId'), 10) || null)
+  const [userId, setUserId] = useState(parseInt(sessionStorage.getItem('UserId'), 10) || null)
   const [userName, setUserName] = useState('')
   const [hasUserLogged, setHasUserLogged] = useState(false)
 
-  const storageId = sessionStorage.getItem('userId')
+  const storageId = sessionStorage.getItem('UserId')
   const storageUsername = sessionStorage.getItem('username')
   if (!hasUserLogged && storageId !== null) {
     setHasUserLogged(true)
@@ -22,8 +22,8 @@ export default function Layout() {
   }
 
   const handleDisconnect = async () => {
-    await disconnectUser(userId)
-    sessionStorage.removeItem('userId')
+    await disconnectUser(UserId)
+    sessionStorage.removeItem('UserId')
     sessionStorage.removeItem('username')
     window.location.reload()
     setHasUserLogged(false)
@@ -45,7 +45,7 @@ export default function Layout() {
         />
         <Main
           userName={userName}
-          userId={userId}
+          UserId={UserId}
           setUserId={setUserId}
           hasUserLogged={hasUserLogged}
           setHasUserLogged={setHasUserLogged}

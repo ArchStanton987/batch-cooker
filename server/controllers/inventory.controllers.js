@@ -4,20 +4,20 @@ const ingredientsUtils = require('../utils/ingredientsUtils')
 
 module.exports = {
   getUserInventory: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
-    if (userId !== req.tokenUser) {
+    const UserId = parseInt(req.params.UserId, 10)
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
     try {
-      const user = await models.User.findByPk(userId)
+      const user = await models.User.findByPk(UserId)
       if (!user) {
         res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       } else {
         const inventory = await models.Inventory.findAll({
-          where: { userId: userId },
-          attributes: ['quantity', 'ingredientId', 'unit'],
+          where: { UserId: UserId },
+          attributes: ['quantity', 'IngredientId', 'unit'],
           include: [{ model: models.Ingredient, attributes: ['name', 'category'] }]
         })
         res.status(200).json(inventory)
@@ -29,22 +29,22 @@ module.exports = {
 
   addToInventory: async (req, res) => {
     let { ingredientName, category, quantity, unit } = req.body
-    let { userId } = req.params
+    let { UserId } = req.params
     let newIngredient = { name: ingredientName.toLowerCase(), category: category }
 
-    if (parseInt(userId, 10) !== req.tokenUser) {
+    if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
-    const user = await models.User.findByPk(userId)
+    const user = await models.User.findByPk(UserId)
     if (!user) {
       res.status(404).json({ error: 'Utilisateur inconnu' })
       return
     }
 
     let newInvItem = {
-      userId: parseInt(userId, 10),
+      UserId: parseInt(UserId, 10),
       quantity: parseInt(quantity, 10) || 0,
       unit: unit.trim().toLowerCase() || ''
     }
@@ -54,19 +54,19 @@ module.exports = {
     })
     if (!ingredientExists) {
       let createdIngredient = await models.Ingredient.create(newIngredient)
-      newInvItem.ingredientId = createdIngredient.id
+      newInvItem.IngredientId = createdIngredient.id
     }
     if (ingredientExists) {
-      newInvItem.ingredientId = ingredientExists.id
+      newInvItem.IngredientId = ingredientExists.id
     }
 
     let ingredientInInventory = await models.Inventory.findOne({
-      where: { [Op.and]: [{ userId: userId }, { ingredientId: newInvItem.ingredientId }] }
+      where: { [Op.and]: [{ UserId: UserId }, { IngredientId: newInvItem.IngredientId }] }
     })
     try {
       if (!ingredientInInventory) {
         await models.Inventory.create(newInvItem, {
-          fields: ['userId', 'ingredientId', 'quantity', 'unit']
+          fields: ['UserId', 'IngredientId', 'quantity', 'unit']
         })
         res.status(201).json(newInvItem)
       }
@@ -103,24 +103,24 @@ module.exports = {
   },
 
   updateFromInventory: async (req, res) => {
-    const userId = req.params.userId
-    const ingredientId = req.params.ingredientId
+    const UserId = req.params.UserId
+    const IngredientId = req.params.IngredientId
     const quantity = parseInt(req.body.quantity, 10)
     const { unit } = req.body
 
-    if (parseInt(userId, 10) !== req.tokenUser) {
+    if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
-      const user = await models.User.findByPk(userId)
+      const user = await models.User.findByPk(UserId)
       if (!user) {
         res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       }
       const inventory = await models.Inventory.findOne({
-        where: { [Op.and]: [{ userId: userId }, { ingredientId: ingredientId }] }
+        where: { [Op.and]: [{ UserId: UserId }, { IngredientId: IngredientId }] }
       })
       inventory.quantity = quantity
       inventory.unit = unit
@@ -131,22 +131,22 @@ module.exports = {
     }
   },
   deleteFromInventory: async (req, res) => {
-    const userId = req.params.userId
-    const ingredientId = req.params.ingredientId
+    const UserId = req.params.UserId
+    const IngredientId = req.params.IngredientId
 
-    if (parseInt(userId, 10) !== req.tokenUser) {
+    if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
-      const user = await models.User.findByPk(userId)
+      const user = await models.User.findByPk(UserId)
       if (!user) {
         res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       }
       const inventory = await models.Inventory.findOne({
-        where: { [Op.and]: [{ userId: userId }, { ingredientId: ingredientId }] }
+        where: { [Op.and]: [{ UserId: UserId }, { IngredientId: IngredientId }] }
       })
 
       await inventory.destroy()

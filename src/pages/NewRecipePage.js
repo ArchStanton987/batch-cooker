@@ -3,10 +3,10 @@ import React from 'react'
 import RecipeForm from '../components/forms/RecipeForm'
 
 export default function NewRecipePage(props) {
-  const { userId } = props
+  const { UserId } = props
 
   const defaultRecipeInfo = {
-    creatorId: userId,
+    creatorId: UserId,
     name: '',
     image: '',
     url: '',

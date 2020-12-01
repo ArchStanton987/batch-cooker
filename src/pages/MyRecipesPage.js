@@ -15,7 +15,7 @@ import CTAButton from '../components/page_layout/CTAButton'
 import Modal from '../components/wrappers/Modal'
 
 export default function MyRecipesPage(props) {
-  const { userId } = props
+  const { UserId } = props
 
   const [userRecipes, setUserRecipes] = useState([])
   const [searchInput, setSearchInput] = useState('')
@@ -32,7 +32,7 @@ export default function MyRecipesPage(props) {
 
   const handleFetchSavedRecipes = useCallback(async () => {
     try {
-      const results = await fetchSavedRecipes(userId)
+      const results = await fetchSavedRecipes(UserId)
       let parsedResults = parseFetchedPartialRecipes(results.data)
       setUserRecipes(parsedResults)
     } catch (err) {
@@ -42,7 +42,7 @@ export default function MyRecipesPage(props) {
         handlePrompt(true, err)
       }
     }
-  }, [userId])
+  }, [UserId])
 
   const handleSearchInput = e => {
     setSearchInput(e.currentTarget.value)

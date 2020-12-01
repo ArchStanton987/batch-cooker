@@ -3,12 +3,12 @@ module.exports = (sequelize, DataTypes) => {
   class Menu extends Model {
     static associate(models) {
       Menu.belongsTo(models.Recipe, { foreignKey: 'recipeId' })
-      Menu.belongsTo(models.User, { foreignKey: 'userId' })
+      Menu.belongsTo(models.User, { foreignKey: 'UserId' })
     }
   }
   Menu.init(
     {
-      userId: DataTypes.INTEGER,
+      UserId: DataTypes.INTEGER,
       recipeId: DataTypes.INTEGER
     },
     {

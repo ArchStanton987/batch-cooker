@@ -7,9 +7,9 @@ const router = express.Router()
 
 router.use(jwtUtils.verifyToken)
 
-router.route('/user/:userId').get(inventoryCtrl.getUserInventory)
-router.route('/user/:userId/ingredients').post(inventoryCtrl.addToInventory)
-router.route('/user/:userId/ingredients/:ingredientId').put(inventoryCtrl.updateFromInventory)
-router.route('/user/:userId/ingredients/:ingredientId').delete(inventoryCtrl.deleteFromInventory)
+router.route('/user/:UserId').get(inventoryCtrl.getUserInventory)
+router.route('/user/:UserId/ingredients').post(inventoryCtrl.addToInventory)
+router.route('/user/:UserId/ingredients/:ingredientId').put(inventoryCtrl.updateFromInventory)
+router.route('/user/:UserId/ingredients/:ingredientId').delete(inventoryCtrl.deleteFromInventory)
 
 module.exports = router

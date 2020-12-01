@@ -3,19 +3,19 @@ const { Op } = require('sequelize')
 
 module.exports = {
   getUserShoppingList: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
-    if (userId !== req.tokenUser) {
+    const UserId = parseInt(req.params.UserId, 10)
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
     try {
-      const user = await models.User.findByPk(userId)
+      const user = await models.User.findByPk(UserId)
       if (!user) {
         res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       } else {
         const shoppingList = await models.ShoppingList.findAll({
-          where: { userId: userId },
+          where: { UserId: UserId },
           attributes: ['quantity', 'IngredientId', 'unit'],
           include: [{ model: models.Ingredient, attributes: ['name', 'category'] }]
         })
@@ -26,13 +26,13 @@ module.exports = {
     }
   },
   clearUserShoppingList: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10)
-    if (userId !== req.tokenUser) {
+    const UserId = parseInt(req.params.UserId, 10)
+    if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
     try {
-      await models.ShoppingList.destroy({ where: { userId: userId } })
+      await models.ShoppingList.destroy({ where: { UserId: UserId } })
       res.status(200).json({ message: 'La liste de course a été vidée' })
     } catch (err) {
       res.status(500).json({ error: 'Erreur en vidant la liste de course ; ' + err })
@@ -40,22 +40,22 @@ module.exports = {
   },
   addIngredientToShoppingList: async (req, res) => {
     let { ingredientName, category, quantity, unit } = req.body
-    let { userId } = req.params
+    let { UserId } = req.params
     let newIngredient = { name: ingredientName.toLowerCase(), category: category }
 
-    if (parseInt(userId, 10) !== req.tokenUser) {
+    if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
-    const user = await models.User.findByPk(userId)
+    const user = await models.User.findByPk(UserId)
     if (!user) {
       res.status(404).json({ error: 'Utilisateur inconnu' })
       return
     }
 
     let newListItem = {
-      userId: parseInt(userId, 10),
+      UserId: parseInt(UserId, 10),
       quantity: parseInt(quantity, 10) || 0,
       unit: unit
     }
@@ -72,13 +72,13 @@ module.exports = {
     }
 
     let ingredientInList = await models.ShoppingList.findOne({
-      where: { [Op.and]: [{ userId: userId }, { IngredientId: newListItem.IngredientId }] }
+      where: { [Op.and]: [{ UserId: UserId }, { IngredientId: newListItem.IngredientId }] }
     })
 
     try {
       if (!ingredientInList) {
         await models.ShoppingList.create(newListItem, {
-          fields: ['userId', 'IngredientId', 'quantity', 'unit']
+          fields: ['UserId', 'IngredientId', 'quantity', 'unit']
         })
         res.status(201).json(newListItem)
       }
@@ -92,24 +92,24 @@ module.exports = {
     }
   },
   updateIngredientFromShoppingList: async (req, res) => {
-    const userId = req.params.userId
+    const UserId = req.params.UserId
     const IngredientId = req.params.IngredientId
     const quantity = parseInt(req.body.quantity, 10)
     const { unit } = req.body
 
-    if (parseInt(userId, 10) !== req.tokenUser) {
+    if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
-      const user = await models.User.findByPk(userId)
+      const user = await models.User.findByPk(UserId)
       if (!user) {
         res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       }
       const shoppingList = await models.ShoppingList.findOne({
-        where: { [Op.and]: [{ userId: userId }, { IngredientId: IngredientId }] }
+        where: { [Op.and]: [{ UserId: UserId }, { IngredientId: IngredientId }] }
       })
       shoppingList.quantity = quantity
       shoppingList.unit = unit
@@ -120,22 +120,22 @@ module.exports = {
     }
   },
   deleteIngredientFromShoppingList: async (req, res) => {
-    const userId = req.params.userId
+    const UserId = req.params.UserId
     const IngredientId = req.params.IngredientId
 
-    if (parseInt(userId, 10) !== req.tokenUser) {
+    if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
-      const user = await models.User.findByPk(userId)
+      const user = await models.User.findByPk(UserId)
       if (!user) {
         res.status(404).json({ error: 'Utilisateur inconnu' })
         return
       }
       const ingredient = await models.ShoppingList.findOne({
-        where: { [Op.and]: [{ userId: userId }, { IngredientId: IngredientId }] }
+        where: { [Op.and]: [{ UserId: UserId }, { IngredientId: IngredientId }] }
       })
 
       await ingredient.destroy()
@@ -145,19 +145,19 @@ module.exports = {
     }
   },
   addMenuIngredientsToShoppinglist: async (req, res) => {
-    const { userId } = req.params
+    const { UserId } = req.params
     let ingredients = req.body
     
-    if (parseInt(userId, 10) !== req.tokenUser) {
+    if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
     try {
-      await models.ShoppingList.destroy({ where: { userId: userId } })
+      await models.ShoppingList.destroy({ where: { UserId: UserId } })
 
       await models.ShoppingList.bulkCreate(ingredients, {
-        fields: ['userId', 'IngredientId', 'quantity', 'unit']
+        fields: ['UserId', 'IngredientId', 'quantity', 'unit']
       })
       res.status(200).json({ message: 'La liste de course a bien été mise à jour' })
     } catch (err) {

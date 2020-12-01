@@ -23,7 +23,7 @@ import Modal from '../components/wrappers/Modal'
 import '../sass/pages/_Inventory.scss'
 
 export default function InventoryPage(props) {
-  const { userId } = props
+  const { UserId } = props
 
   const [isExpended, setDrawer] = useToggle(false)
   const [isSearchboxActive, setSearchbox] = useToggle(false)
@@ -65,7 +65,7 @@ export default function InventoryPage(props) {
     setSearchInput(e.currentTarget.value)
   }
   const handleEditIngredient = id => {
-    let ingredientData = inventory.filter(ingredient => ingredient.ingredientId === id)
+    let ingredientData = inventory.filter(ingredient => ingredient.IngredientId === id)
     setNewIngredient(ingredientData[0])
     toggleModal()
   }
@@ -73,7 +73,7 @@ export default function InventoryPage(props) {
   const handleFetchInventory = useCallback(async () => {
     handlePrompt(false, '')
     try {
-      const result = await fetchUserInventory(userId)
+      const result = await fetchUserInventory(UserId)
       const parsedResult = parseFetchedIngredients(result.data)
       setInventory(parsedResult)
     } catch (err) {
@@ -84,12 +84,12 @@ export default function InventoryPage(props) {
         console.log(err)
       }
     }
-  }, [userId])
+  }, [UserId])
   const handleDeleteIngredient = async id => {
     handlePrompt(false, '')
     try {
-      await deleteIngredientFromInventory(id, userId)
-      handleFetchInventory(userId)
+      await deleteIngredientFromInventory(id, UserId)
+      handleFetchInventory(UserId)
     } catch (err) {
       if (err.response) {
         handlePrompt(true, err.response.data.error)
@@ -102,9 +102,9 @@ export default function InventoryPage(props) {
   const handleAddToInventory = async newIng => {
     handlePrompt(false, '')
     try {
-      await addIngredientToInventory(newIng, userId)
+      await addIngredientToInventory(newIng, UserId)
       toggleModal()
-      handleFetchInventory(userId)
+      handleFetchInventory(UserId)
     } catch (err) {
       if (err.response) {
         handlePrompt(true, err.response.data.error)
@@ -117,9 +117,9 @@ export default function InventoryPage(props) {
   const handleUpdateFromInventory = async newIng => {
     setIsPrompt(false, '')
     try {
-      await updateIngredientFromInventory(newIng, userId)
+      await updateIngredientFromInventory(newIng, UserId)
       toggleModal()
-      handleFetchInventory(userId)
+      handleFetchInventory(UserId)
     } catch (err) {
       if (err.response) {
         handlePrompt(true, err.response.data.error)
@@ -132,7 +132,7 @@ export default function InventoryPage(props) {
   const handleSubmitIngredient = (e, isUpdating) => {
     e.preventDefault()
     const newIng = {
-      ingredientId: newIngredient.ingredientId || null,
+      IngredientId: newIngredient.IngredientId || null,
       ingredientName: newIngredient.name,
       category: newIngredient.category,
       quantity: newIngredient.quantity,
@@ -171,7 +171,7 @@ export default function InventoryPage(props) {
               toggleModal={toggleModal}
               name={newIngredient ? newIngredient.name : ''}
               category={newIngredient ? newIngredient.category : ''}
-              ingredientId={newIngredient ? newIngredient.ingredientId : ''}
+              IngredientId={newIngredient ? newIngredient.IngredientId : ''}
               quantity={newIngredient ? newIngredient.quantity : ''}
               unit={newIngredient ? newIngredient.unit : ''}
             />
@@ -241,10 +241,10 @@ export default function InventoryPage(props) {
                     <Ingredient
                       handleEditIngredient={handleEditIngredient}
                       handleDeleteIngredient={handleDeleteIngredient}
-                      key={item.ingredientId}
+                      key={item.IngredientId}
                       name={item.name}
                       quantity={item.quantity}
-                      ingredientId={item.ingredientId}
+                      IngredientId={item.IngredientId}
                       unit={item.unit}
                     />
                   )
