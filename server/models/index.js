@@ -7,7 +7,10 @@ const env = process.env.NODE_ENV
 const config = require('../config/sequelize-config')[env]
 const db = {}
 
-const sequelize = new Sequelize(process.env.DATABASE_URL)
+const sequelize =
+  env === 'production'
+    ? new Sequelize(process.env.DATABASE_URL)
+    : new Sequelize(config.database, config.username, config.password, config)
 
 fs.readdirSync(__dirname)
   .filter(file => {
