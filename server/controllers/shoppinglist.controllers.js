@@ -16,7 +16,7 @@ module.exports = {
       } else {
         const shoppingList = await models.ShoppingList.findAll({
           where: { userId: userId },
-          attributes: ['quantity', 'ingredientId', 'unit'],
+          attributes: ['quantity', 'IngredientId', 'unit'],
           include: [{ model: models.Ingredient, attributes: ['name', 'category'] }]
         })
         res.status(200).json(shoppingList)
@@ -65,20 +65,20 @@ module.exports = {
     })
     if (!ingredientExists) {
       let createdIngredient = await models.Ingredient.create(newIngredient)
-      newListItem.ingredientId = createdIngredient.id
+      newListItem.IngredientId = createdIngredient.id
     }
     if (ingredientExists) {
-      newListItem.ingredientId = ingredientExists.id
+      newListItem.IngredientId = ingredientExists.id
     }
 
     let ingredientInList = await models.ShoppingList.findOne({
-      where: { [Op.and]: [{ userId: userId }, { ingredientId: newListItem.ingredientId }] }
+      where: { [Op.and]: [{ userId: userId }, { IngredientId: newListItem.IngredientId }] }
     })
 
     try {
       if (!ingredientInList) {
         await models.ShoppingList.create(newListItem, {
-          fields: ['userId', 'ingredientId', 'quantity', 'unit']
+          fields: ['userId', 'IngredientId', 'quantity', 'unit']
         })
         res.status(201).json(newListItem)
       }
@@ -93,7 +93,7 @@ module.exports = {
   },
   updateIngredientFromShoppingList: async (req, res) => {
     const userId = req.params.userId
-    const ingredientId = req.params.ingredientId
+    const IngredientId = req.params.IngredientId
     const quantity = parseInt(req.body.quantity, 10)
     const { unit } = req.body
 
@@ -109,7 +109,7 @@ module.exports = {
         return
       }
       const shoppingList = await models.ShoppingList.findOne({
-        where: { [Op.and]: [{ userId: userId }, { ingredientId: ingredientId }] }
+        where: { [Op.and]: [{ userId: userId }, { IngredientId: IngredientId }] }
       })
       shoppingList.quantity = quantity
       shoppingList.unit = unit
@@ -121,7 +121,7 @@ module.exports = {
   },
   deleteIngredientFromShoppingList: async (req, res) => {
     const userId = req.params.userId
-    const ingredientId = req.params.ingredientId
+    const IngredientId = req.params.IngredientId
 
     if (parseInt(userId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
@@ -135,7 +135,7 @@ module.exports = {
         return
       }
       const ingredient = await models.ShoppingList.findOne({
-        where: { [Op.and]: [{ userId: userId }, { ingredientId: ingredientId }] }
+        where: { [Op.and]: [{ userId: userId }, { IngredientId: IngredientId }] }
       })
 
       await ingredient.destroy()
@@ -157,7 +157,7 @@ module.exports = {
       await models.ShoppingList.destroy({ where: { userId: userId } })
 
       await models.ShoppingList.bulkCreate(ingredients, {
-        fields: ['userId', 'ingredientId', 'quantity', 'unit']
+        fields: ['userId', 'IngredientId', 'quantity', 'unit']
       })
       res.status(200).json({ message: 'La liste de course a bien été mise à jour' })
     } catch (err) {

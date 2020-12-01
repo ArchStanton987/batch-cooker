@@ -15,7 +15,7 @@ module.exports = {
           key: 'id'
         }
       },
-      ingredientId: {
+      IngredientId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
