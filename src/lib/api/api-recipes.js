@@ -18,8 +18,8 @@ export const fetchSearchResults = async searchField => {
   return res
 }
 
-export const fetchRecipe = async recipeId => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/${recipeId}`
+export const fetchRecipe = async RecipeId => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/${RecipeId}`
   const res = await axios.get(url, { withCredentials: true })
   return res
 }
@@ -30,38 +30,38 @@ export const postRecipeInfo = async recipe => {
   return res
 }
 
-export const postIngredients = async (recipeId, ingredients) => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/${recipeId}/ingredients`
+export const postIngredients = async (RecipeId, ingredients) => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/${RecipeId}/ingredients`
   const res = await axios.post(url, ingredients, { withCredentials: true })
   return res
 }
 
-export const postTags = async (recipeId, tags) => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/${recipeId}/tags`
+export const postTags = async (RecipeId, tags) => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/${RecipeId}/tags`
   const res = await axios.post(url, tags, { withCredentials: true })
   return res
 }
 
-export const updateRecipeInfo = async (recipeId, recipe) => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/${recipeId}`
+export const updateRecipeInfo = async (RecipeId, recipe) => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/${RecipeId}`
   const res = await axios.put(url, recipe, { withCredentials: true })
   return res
 }
 
-export const updateIngredients = async (recipeId, ingredients) => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/${recipeId}/ingredients`
+export const updateIngredients = async (RecipeId, ingredients) => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/${RecipeId}/ingredients`
   const res = await axios.put(url, ingredients, { withCredentials: true })
   return res
 }
 
-export const updateTags = async (recipeId, tags) => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/${recipeId}/tags`
+export const updateTags = async (RecipeId, tags) => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/${RecipeId}/tags`
   const res = await axios.put(url, tags, { withCredentials: true })
   return res
 }
 
-export const deleteRecipe = async recipeId => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/${recipeId}`
+export const deleteRecipe = async RecipeId => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/${RecipeId}`
   const res = await axios.delete(url, { withCredentials: true })
   return res
 }
@@ -72,8 +72,8 @@ export const fetchSavedRecipes = async UserId => {
   return res
 }
 
-export const saveRecipe = async (recipeId, UserId) => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/saves/${recipeId}/users/${UserId}`
-  const res = await axios.put(url, recipeId, { withCredentials: true })
+export const saveRecipe = async (RecipeId, UserId) => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/saves/${RecipeId}/users/${UserId}`
+  const res = await axios.put(url, RecipeId, { withCredentials: true })
   return res
 }

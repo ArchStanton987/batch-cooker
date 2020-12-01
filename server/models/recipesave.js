@@ -2,13 +2,13 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class RecipeSave extends Model {
     static associate(models) {
-      RecipeSave.belongsTo(models.Recipe, { foreignKey: 'recipeId' })
+      RecipeSave.belongsTo(models.Recipe, { foreignKey: 'RecipeId' })
       RecipeSave.belongsTo(models.User, { foreignKey: 'UserId' })
     }
   }
   RecipeSave.init(
     {
-      recipeId: DataTypes.INTEGER,
+      RecipeId: DataTypes.INTEGER,
       UserId: DataTypes.INTEGER
     },
     {

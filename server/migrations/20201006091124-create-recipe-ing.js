@@ -7,14 +7,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ingredientId: {
+      IngredientId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Ingredients',
           key: 'id'
         }
       },
-      recipeId: {
+      RecipeId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Recipes',

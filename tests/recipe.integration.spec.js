@@ -5,8 +5,8 @@ const app = require('../server/app')
 const models = require('../server/models')
 
 describe('RECIPE', () => {
-  let recipeIdToDelete = null
-  let ingredientIdToDelete = null
+  let RecipeIdToDelete = null
+  let IngredientIdToDelete = null
   let recipeIngIdToDelete = null
   let recipeIngIdToDelete2 = null
 
@@ -28,7 +28,7 @@ describe('RECIPE', () => {
     recipeToReset.save()
   })
   afterAll(async () => {
-    let ingredient = await models.Ingredient.findByPk(ingredientIdToDelete)
+    let ingredient = await models.Ingredient.findByPk(IngredientIdToDelete)
     await ingredient.destroy()
   })
   afterAll(async () => {
@@ -41,14 +41,14 @@ describe('RECIPE', () => {
   })
   afterAll(async () => {
     let ingredientToReset = await models.RecipeIng.findOne({
-      where: { recipeId: 1, ingredientId: 13 }
+      where: { RecipeId: 1, IngredientId: 13 }
     })
     ingredientToReset.quantity = 2
     ingredientToReset.unit = null
     await ingredientToReset.save()
   })
   afterAll(async () => {
-    let ingredient = { ingredientId: 16, recipeId: 1, quantity: 4, unit: 'g' }
+    let ingredient = { IngredientId: 16, RecipeId: 1, quantity: 4, unit: 'g' }
     await models.RecipeIng.create(ingredient)
   })
 
@@ -61,7 +61,7 @@ describe('RECIPE', () => {
       content: 'Recette pour tester '
     }
     let recipe = await models.Recipe.create(newRecipe)
-    recipeIdToDelete = recipe.id
+    RecipeIdToDelete = recipe.id
   })
 
   it('getAllRecipe - SUCESS', () => {
@@ -133,7 +133,7 @@ describe('RECIPE', () => {
   })
   it('deleteOneRecipe - SUCCESS', () => {
     return request(app)
-      .delete(`/api/recipes/${recipeIdToDelete}`)
+      .delete(`/api/recipes/${RecipeIdToDelete}`)
       .expect(200)
       .then(res => {
         expect(res.body).toEqual({ message: 'Recipe successfully deleted' })
@@ -171,7 +171,7 @@ describe('RECIPE', () => {
       })
       .then(async () => {
         const newIngredient = await models.Ingredient.findOne({ where: { name: ingredient.name } })
-        ingredientIdToDelete = newIngredient.id
+        IngredientIdToDelete = newIngredient.id
         expect(newIngredient).toHaveProperty('id')
         expect(newIngredient).toHaveProperty('name', ingredient.name)
         expect(newIngredient).toHaveProperty('category', ingredient.category)
@@ -179,12 +179,12 @@ describe('RECIPE', () => {
       })
       .then(async () => {
         const newRecipeIng = await models.RecipeIng.findOne({
-          where: { recipeId: 1, ingredientId: newIngredientId }
+          where: { RecipeId: 1, IngredientId: newIngredientId }
         })
         recipeIngIdToDelete = newRecipeIng.id
         expect(newRecipeIng).toHaveProperty('id')
-        expect(newRecipeIng).toHaveProperty('ingredientId', newIngredientId)
-        expect(newRecipeIng).toHaveProperty('recipeId', 1)
+        expect(newRecipeIng).toHaveProperty('IngredientId', newIngredientId)
+        expect(newRecipeIng).toHaveProperty('RecipeId', 1)
         expect(newRecipeIng).toHaveProperty('quantity', 50)
         expect(newRecipeIng).toHaveProperty('unit', 'g')
       })
@@ -205,12 +205,12 @@ describe('RECIPE', () => {
       })
       .then(async () => {
         const newRecipeIng = await models.RecipeIng.findOne({
-          where: { recipeId: 1, ingredientId: 1 }
+          where: { RecipeId: 1, IngredientId: 1 }
         })
         recipeIngIdToDelete2 = newRecipeIng.id
         expect(newRecipeIng).toHaveProperty('id')
-        expect(newRecipeIng).toHaveProperty('ingredientId', 1)
-        expect(newRecipeIng).toHaveProperty('recipeId', 1)
+        expect(newRecipeIng).toHaveProperty('IngredientId', 1)
+        expect(newRecipeIng).toHaveProperty('RecipeId', 1)
         expect(newRecipeIng).toHaveProperty('quantity', 5)
         expect(newRecipeIng).toHaveProperty('unit', 'g')
       })

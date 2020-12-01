@@ -2,8 +2,8 @@ const models = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await models.Menu.bulkCreate([{ id: 1, UserId: 1, recipeId: 1 }], {
-      fields: ['id', 'UserId', 'recipeId']
+    await models.Menu.bulkCreate([{ id: 1, UserId: 1, RecipeId: 1 }], {
+      fields: ['id', 'UserId', 'RecipeId']
     })
   },
 

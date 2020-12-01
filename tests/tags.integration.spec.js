@@ -5,11 +5,11 @@ const app = require('../server/app')
 const models = require('../server/models')
 
 describe('TAGS', () => {
-  let tagIdToDelete = null
+  let TagIdToDelete = null
 
   beforeAll(async () => {
     let newTag = await models.Tag.create({tagname: "hello"})
-    tagIdToDelete = newTag.id
+    TagIdToDelete = newTag.id
   })
   afterAll(async () => {
     await models.Tag.destroy({ where: { tagname: 'tagtest' } })
@@ -50,7 +50,7 @@ describe('TAGS', () => {
   })
   it('deleteTag - SUCCESS', () => {
     return request(app)
-      .delete(`/api/tags/${tagIdToDelete}`)
+      .delete(`/api/tags/${TagIdToDelete}`)
       .expect(200)
       .then(res => {
         expect(res.body).toEqual({ message: 'Tag successfully deleted' })

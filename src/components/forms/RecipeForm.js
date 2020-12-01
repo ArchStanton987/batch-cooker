@@ -22,7 +22,7 @@ import CTAButton from '../page_layout/CTAButton'
 import Modal from '../wrappers/Modal'
 
 export default function RecipeForm(props) {
-  const { recipeInfo, ingredients, tags, recipeId } = props
+  const { recipeInfo, ingredients, tags, RecipeId } = props
 
   const [newRecipeInfo, setRecipeInfo] = useState(recipeInfo)
   const [newIngredients, setIngredients] = useState(ingredients)
@@ -101,7 +101,7 @@ export default function RecipeForm(props) {
     const trimedTags = await parseInput(newTags)
     const res = await postRecipeInfo(newRecipeInfo)
     setHasCreated(true)
-    const newRecipeId = res.data.recipeId
+    const newRecipeId = res.data.RecipeId
     postIngredients(newRecipeId, newIngredients)
     postTags(newRecipeId, trimedTags)
     return res
@@ -109,16 +109,16 @@ export default function RecipeForm(props) {
 
   const handleUpdateRecipe = async () => {
     const res = await Promise.all([
-      updateRecipeInfo(recipeId, newRecipeInfo),
-      updateIngredients(recipeId, newIngredients),
-      updateTags(recipeId, newTags)
+      updateRecipeInfo(RecipeId, newRecipeInfo),
+      updateIngredients(RecipeId, newIngredients),
+      updateTags(RecipeId, newTags)
     ])
     return res
   }
 
-  const handleSaveRecipe = async recipeId => {
+  const handleSaveRecipe = async RecipeId => {
     try {
-      await saveRecipe(recipeId, newRecipeInfo.creatorId)
+      await saveRecipe(RecipeId, newRecipeInfo.creatorId)
     } catch (err) {
       setIsError()
       setErrorMessage(err.response.data.error)
@@ -129,13 +129,13 @@ export default function RecipeForm(props) {
     e.preventDefault()
     try {
       let res
-      if (recipeId) {
+      if (RecipeId) {
         res = await handleUpdateRecipe()
         setSuccess(true)
         setSuccessMessage(res[0].data.message)
       } else {
         res = await handlePostNewRecipe()
-        await handleSaveRecipe(res.data.recipeId)
+        await handleSaveRecipe(res.data.RecipeId)
         setSuccess(true)
         setSuccessMessage(res.data.message)
       }

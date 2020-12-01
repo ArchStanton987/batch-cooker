@@ -8,13 +8,13 @@ import { parseFetchedFullRecipe } from '../lib/utils/recipes-utils'
 export default function EditRecipePage() {
   const [recipe, setRecipe] = useState({})
   const params = useParams()
-  const recipeId = params.id
+  const RecipeId = params.id
 
   const handleFetchRecipe = useCallback(async () => {
-    const result = await fetchRecipe(recipeId)
+    const result = await fetchRecipe(RecipeId)
     const parsedResults = parseFetchedFullRecipe(result.data.recipe)
     setRecipe(parsedResults)
-  }, [recipeId])
+  }, [RecipeId])
 
   const recipeInfo = {
     creatorId: recipe.creatorId,
@@ -35,7 +35,7 @@ export default function EditRecipePage() {
         <h2>Modifier la recette</h2>
         {recipe && (
           <RecipeForm
-            recipeId={recipeId}
+            RecipeId={RecipeId}
             isNewRecipe={false}
             recipeInfo={recipeInfo}
             ingredients={recipe.ingredients}

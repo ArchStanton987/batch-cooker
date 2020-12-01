@@ -7,7 +7,7 @@ export const parseFetchedFullRecipe = data => {
     newIngredient.name = ingredient.name
     newIngredient.category = ingredient.category
     newIngredient.IngredientId = ingredient.RecipeIng.IngredientId
-    newIngredient.recipeId = ingredient.RecipeIng.recipeId
+    newIngredient.RecipeId = ingredient.RecipeIng.RecipeId
     newIngredient.quantity = ingredient.RecipeIng.quantity
     newIngredient.unit = ingredient.RecipeIng.unit
     data.ingredients.push(newIngredient)
@@ -51,7 +51,7 @@ export const parseRecipeSaves = res => {
   let saves = res.data.saves || []
   if (saves.length > 0) {
     let saveSet = new Set()
-    saves.forEach(recipe => saveSet.add(recipe.recipeId))
+    saves.forEach(recipe => saveSet.add(recipe.RecipeId))
     recipes.forEach(recipe => {
       return saveSet.has(recipe.id) ? (recipe.isSavedByUser = 1) : (recipe.isSavedByUser = 0)
     })

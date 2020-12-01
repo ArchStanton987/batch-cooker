@@ -10,7 +10,7 @@ export default function IngredientForm({
   handleSubmitIngredient,
   ...props
 }) {
-  const { ingredientId, name, category, quantity, unit } = props
+  const { IngredientId, name, category, quantity, unit } = props
   return (
     <>
       <form className="flexColumn" method="post">
@@ -76,7 +76,7 @@ export default function IngredientForm({
           </CTAButton>
           <CTAButton
             action={e => {
-              ingredientId ? handleSubmitIngredient(e, true) : handleSubmitIngredient(e, false)
+              IngredientId ? handleSubmitIngredient(e, true) : handleSubmitIngredient(e, false)
             }}
           >
             Enregistrer

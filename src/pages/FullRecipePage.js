@@ -43,22 +43,22 @@ export default function FullRecipePage(props) {
     Tags
   } = recipe
 
-  const recipeId = props.match.params.id
+  const RecipeId = props.match.params.id
   const { hasUserLogged, UserId } = props
 
   moment.locale('fr')
 
   const handleFetchRecipe = useCallback(async () => {
-    const result = await fetchRecipe(recipeId)
+    const result = await fetchRecipe(RecipeId)
     setIsRecipeSaved(result.data.isSavedByUser)
     setIsRecipeInMenu(result.data.isInMenu)
     const parsedResults = parseFetchedFullRecipe(result.data.recipe)
     setRecipe(parsedResults)
-  }, [recipeId])
+  }, [RecipeId])
 
   const handleDeleteRecipe = async () => {
     try {
-      const res = await deleteRecipe(recipeId)
+      const res = await deleteRecipe(RecipeId)
       setIsSuccess()
       setHasDeleted(true)
       setSuccessMessage(res.data.message)
@@ -70,7 +70,7 @@ export default function FullRecipePage(props) {
 
   const handleSaveRecipe = async () => {
     try {
-      let res = await saveRecipe(recipeId, UserId)
+      let res = await saveRecipe(RecipeId, UserId)
       setIsRecipeSaved(prev => !prev)
       setIsSuccess()
       setSuccessMessage(res.data.message)
@@ -82,7 +82,7 @@ export default function FullRecipePage(props) {
 
   const handlePutToMenu = async () => {
     try {
-      let res = await putRecipeMenu(recipeId, UserId)
+      let res = await putRecipeMenu(RecipeId, UserId)
       setIsRecipeInMenu(prev => !prev)
       setIsSuccess()
       setSuccessMessage(res.data.message)
@@ -141,7 +141,7 @@ export default function FullRecipePage(props) {
         <SectionCTA className={'no-border'}>
           {hasUserLogged && recipe && recipe.creatorId === UserId && (
             <>
-              <Link to={{ pathname: `/myrecipes/edit/${recipeId}`, recipe: { ...recipe } }}>
+              <Link to={{ pathname: `/myrecipes/edit/${RecipeId}`, recipe: { ...recipe } }}>
                 <CTAButton className={'secondary'}>Modifier</CTAButton>
               </Link>
               <CTAButton action={setConfirmation} className={'secondary'}>
@@ -206,7 +206,7 @@ export default function FullRecipePage(props) {
             <ul className="taglist">
               {Tags &&
                 Tags.map(tag => (
-                  <li key={`recipeId-${recipeId}-tagId-${tag.TagRecipe.tagId}`}>
+                  <li key={`RecipeId-${RecipeId}-TagId-${tag.TagRecipe.TagId}`}>
                     <p>{`#${tag.tagname}`}</p>
                   </li>
                 ))}

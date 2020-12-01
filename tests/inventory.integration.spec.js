@@ -21,31 +21,31 @@ describe('INVENTORY', () => {
   })
 
   beforeAll(async () => {
-    const newInvItem = { UserId: 3, ingredientId: 1, quantity: 5, unit: 'g' }
+    const newInvItem = { UserId: 3, IngredientId: 1, quantity: 5, unit: 'g' }
     await models.Inventory.create(newInvItem, {
-      fields: ['UserId', 'ingredientId', 'quantity', 'unit']
+      fields: ['UserId', 'IngredientId', 'quantity', 'unit']
     })
   })
 
   afterAll(async () => {
     const invToDelete = await models.Inventory.findOne({
-      where: { UserId: 1, ingredientId: 4 }
+      where: { UserId: 1, IngredientId: 4 }
     })
     await invToDelete.destroy()
 
     const ingredientToDelete = await models.Ingredient.findOne({ where: { name: 'melfort' } })
     const invToDelete2 = await models.Inventory.findOne({
-      where: { ingredientId: ingredientToDelete.id }
+      where: { IngredientId: ingredientToDelete.id }
     })
     await invToDelete2.destroy()
     await ingredientToDelete.destroy()
 
-    const invToReset = await models.Inventory.findOne({ where: { UserId: 1, ingredientId: 1 } })
+    const invToReset = await models.Inventory.findOne({ where: { UserId: 1, IngredientId: 1 } })
     invToReset.quantity = 1
     await invToReset.save()
 
     const possibleInvToDelete = await models.Inventory.findOne({
-      where: { UserId: 3, ingredientId: 1 }
+      where: { UserId: 3, IngredientId: 1 }
     })
     if (possibleInvToDelete) {
       await possibleInvToDelete.destroy()
@@ -59,7 +59,7 @@ describe('INVENTORY', () => {
       .expect(200)
       .then(res => {
         expect(res.body.length).toEqual(3)
-        expect(res.body[0].ingredientId).toEqual(1)
+        expect(res.body[0].IngredientId).toEqual(1)
       })
   })
 
@@ -93,7 +93,7 @@ describe('INVENTORY', () => {
       .expect(200)
       .then(res => {
         expect(res.body.UserId).toEqual(1)
-        expect(res.body.ingredientId).toEqual(4)
+        expect(res.body.IngredientId).toEqual(4)
         expect(res.body.quantity).toEqual(150)
         expect(res.body.unit).toEqual('g')
       })
@@ -111,7 +111,7 @@ describe('INVENTORY', () => {
       .expect(200)
       .then(res => {
         expect(res.body.UserId).toEqual(1)
-        expect(res.body.ingredientId).toEqual(4)
+        expect(res.body.IngredientId).toEqual(4)
         expect(res.body.quantity).toEqual(300)
         expect(res.body.unit).toEqual('g')
       })
@@ -124,7 +124,7 @@ describe('INVENTORY', () => {
       .expect(200)
       .then(res => {
         expect(res.body.UserId).toEqual(1)
-        expect(res.body.ingredientId).toEqual(1)
+        expect(res.body.IngredientId).toEqual(1)
         expect(res.body.quantity).toEqual(10)
       })
   })

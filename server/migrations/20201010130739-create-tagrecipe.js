@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tagId: {
+      TagId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Tags',
@@ -15,7 +15,7 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      recipeId: {
+      RecipeId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Recipes',

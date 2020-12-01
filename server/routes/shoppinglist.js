@@ -11,10 +11,10 @@ router.route('/user/:UserId').get(shoppinglistCtrl.getUserShoppingList)
 router.route('/user/:UserId').delete(shoppinglistCtrl.clearUserShoppingList)
 router.route('/user/:UserId/ingredients/').post(shoppinglistCtrl.addIngredientToShoppingList)
 router
-  .route('/user/:UserId/ingredients/:ingredientId')
+  .route('/user/:UserId/ingredients/:IngredientId')
   .put(shoppinglistCtrl.updateIngredientFromShoppingList)
 router
-  .route('/user/:UserId/ingredients/:ingredientId')
+  .route('/user/:UserId/ingredients/:IngredientId')
   .delete(shoppinglistCtrl.deleteIngredientFromShoppingList)
 
 router.route('/user/:UserId/menu/').post(shoppinglistCtrl.addMenuIngredientsToShoppinglist)

@@ -12,9 +12,9 @@ export const clearMenu = async UserId => {
   return res
 }
 
-export const putRecipeMenu = async (recipeId, UserId) => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/menu/${recipeId}/users/${UserId}`
-  const res = await axios.put(url, recipeId, { withCredentials: true })
+export const putRecipeMenu = async (RecipeId, UserId) => {
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/menu/${RecipeId}/users/${UserId}`
+  const res = await axios.put(url, RecipeId, { withCredentials: true })
   return res
 }
 

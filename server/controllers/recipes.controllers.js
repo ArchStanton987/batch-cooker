@@ -33,21 +33,21 @@ module.exports = {
 
     try {
       const createdRecipe = await models.Recipe.create(newRecipe)
-      res.status(201).json({ message: 'Recette créée avec succès. ', recipeId: createdRecipe.id })
+      res.status(201).json({ message: 'Recette créée avec succès. ', RecipeId: createdRecipe.id })
     } catch (err) {
       res.status(500).json({ error: `Erreur lors de la création de la recette ; ${err}` })
     }
   },
   getOneRecipeById: async (req, res) => {
-    const { recipeId } = req.params
+    const { RecipeId } = req.params
 
     let isSavedByUser = false
     let isInMenu = false
     let UserId = req.subId || 0
 
     if (req.isUserIdentified) {
-      let save = await models.RecipeSave.findOne({ where: { recipeId: recipeId, UserId: UserId } })
-      let inMenu = await models.Menu.findOne({ where: { recipeId: recipeId, UserId: UserId } })
+      let save = await models.RecipeSave.findOne({ where: { RecipeId: RecipeId, UserId: UserId } })
+      let inMenu = await models.Menu.findOne({ where: { RecipeId: RecipeId, UserId: UserId } })
       if (save) {
         isSavedByUser = true
       }
@@ -59,7 +59,7 @@ module.exports = {
     try {
       const recipe = await models.Recipe.findOne({
         where: {
-          id: recipeId
+          id: RecipeId
         },
         include: [
           { model: models.User, attributes: ['username'] },
@@ -77,16 +77,16 @@ module.exports = {
     }
   },
   updateOneRecipe: async (req, res) => {
-    const { recipeId } = req.params
+    const { RecipeId } = req.params
     const { name, image, url, content, guests } = req.body
 
     try {
-      let recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
+      let recipe = await models.Recipe.findByPk(RecipeId, { attributes: ['creatorId'] })
       if (recipe.creatorId !== req.tokenUser) {
         res.status(403).json({ error: 'Action interdite' })
         return
       }
-      recipe.id = recipeId
+      recipe.id = RecipeId
       recipe.name = name
       recipe.image = image
       recipe.url = url
@@ -100,9 +100,9 @@ module.exports = {
     }
   },
   deleteOneRecipe: async (req, res) => {
-    const recipeId = req.params.recipeId
+    const RecipeId = req.params.RecipeId
     try {
-      const recipeToDelete = await models.Recipe.findByPk(recipeId, {
+      const recipeToDelete = await models.Recipe.findByPk(RecipeId, {
         attributes: ['creatorId', 'id']
       })
       if (recipeToDelete.creatorId !== req.tokenUser) {
@@ -136,10 +136,10 @@ module.exports = {
     }
   },
   addIngredientsToRecipe: async (req, res) => {
-    const { recipeId } = req.params
+    const { RecipeId } = req.params
     let recipeIngredients = req.body
 
-    const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
+    const recipe = await models.Recipe.findByPk(RecipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
@@ -159,7 +159,7 @@ module.exports = {
         } else {
           ingredient.IngredientId = ingredientExists.id
         }
-        ingredient.recipeId = recipeId
+        ingredient.RecipeId = RecipeId
         await models.RecipeIng.create(ingredient)
       })
       res.status(201).json({ message: 'Les ingrédients ont bien été associés à la recette. ' })
@@ -168,16 +168,16 @@ module.exports = {
     }
   },
   updateIngredientsFromRecipe: async (req, res) => {
-    const { recipeId } = req.params
+    const { RecipeId } = req.params
     let recipeIngredients = req.body
 
-    const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
+    const recipe = await models.Recipe.findByPk(RecipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
-    await models.RecipeIng.destroy({ where: { recipeId: recipeId } })
+    await models.RecipeIng.destroy({ where: { RecipeId: RecipeId } })
 
     try {
       await recipeIngredients.forEach(async ingredient => {
@@ -193,7 +193,7 @@ module.exports = {
         } else {
           ingredient.IngredientId = ingredientExists.id
         }
-        ingredient.recipeId = recipeId
+        ingredient.RecipeId = RecipeId
         await models.RecipeIng.create(ingredient)
       })
       res.status(200).json({ message: 'Les ingrédients ont bien été mis à jour.' })
@@ -202,10 +202,10 @@ module.exports = {
     }
   },
   addTagsInRecipe: async (req, res) => {
-    const { recipeId } = req.params
+    const { RecipeId } = req.params
     let recipeTags = req.body
 
-    const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
+    const recipe = await models.Recipe.findByPk(RecipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
@@ -220,11 +220,11 @@ module.exports = {
           let createdTag = await models.Tag.create({
             tagname: tag.tagname
           })
-          tag.tagId = createdTag.id
+          tag.TagId = createdTag.id
         } else {
-          tag.tagId = tagExists.id
+          tag.TagId = tagExists.id
         }
-        tag.recipeId = recipeId
+        tag.RecipeId = RecipeId
         await models.TagRecipe.create(tag)
       })
       res.status(200).json({ message: 'Les tags ont bien été associés à la recette. ' })
@@ -233,16 +233,16 @@ module.exports = {
     }
   },
   updateTagsFromRecipe: async (req, res) => {
-    const { recipeId } = req.params
+    const { RecipeId } = req.params
     let recipeTags = req.body
 
-    const recipe = await models.Recipe.findByPk(recipeId, { attributes: ['creatorId'] })
+    const recipe = await models.Recipe.findByPk(RecipeId, { attributes: ['creatorId'] })
     if (recipe.creatorId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
       return
     }
 
-    await models.TagRecipe.destroy({ where: { recipeId: recipeId } })
+    await models.TagRecipe.destroy({ where: { RecipeId: RecipeId } })
 
     try {
       await recipeTags.forEach(async tag => {
@@ -253,12 +253,12 @@ module.exports = {
           let createdTag = await models.Tag.create({
             tagname: tag.tagname
           })
-          tag.tagId = createdTag.id
+          tag.TagId = createdTag.id
         } else {
-          tag.tagId = tagExists.id
+          tag.TagId = tagExists.id
         }
-        tag.recipeId = recipeId
-        await models.TagRecipe.create(tag, { fields: ['id', 'tagId', 'recipeId'] })
+        tag.RecipeId = RecipeId
+        await models.TagRecipe.create(tag, { fields: ['id', 'TagId', 'RecipeId'] })
       })
       res.status(200).json({ message: 'Les tags de la recette ont bien été mis à jour. ' })
     } catch (err) {
@@ -295,7 +295,7 @@ module.exports = {
   },
   putRecipeSave: async (req, res) => {
     const UserId = parseInt(req.params.UserId, 10)
-    const recipeId = parseInt(req.params.recipeId, 10)
+    const RecipeId = parseInt(req.params.RecipeId, 10)
 
     if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
@@ -304,7 +304,7 @@ module.exports = {
 
     try {
       const existingSave = await models.RecipeSave.findOne({
-        where: { UserId: UserId, recipeId: recipeId }
+        where: { UserId: UserId, RecipeId: RecipeId }
       })
       if (existingSave) {
         try {
@@ -318,8 +318,8 @@ module.exports = {
       } else {
         try {
           await models.RecipeSave.create(
-            { UserId: UserId, recipeId: recipeId },
-            { fields: ['UserId', 'recipeId'] }
+            { UserId: UserId, RecipeId: RecipeId },
+            { fields: ['UserId', 'RecipeId'] }
           )
           res.status(201).json({ message: 'Recette enregistée dans votre carnet' })
         } catch (err) {
@@ -348,7 +348,7 @@ module.exports = {
     if (req.isUserIdentified) {
       saves = await models.RecipeSave.findAll({
         where: { UserId: UserId },
-        attributes: ['recipeId']
+        attributes: ['RecipeId']
       })
     }
 
@@ -383,7 +383,7 @@ module.exports = {
     if (req.isUserIdentified) {
       saves = await models.RecipeSave.findAll({
         where: { UserId: UserId },
-        attributes: ['recipeId']
+        attributes: ['RecipeId']
       })
     }
 

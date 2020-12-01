@@ -31,7 +31,7 @@ module.exports = {
   },
   putRecipeMenu: async (req, res) => {
     const UserId = parseInt(req.params.UserId, 10)
-    const recipeId = parseInt(req.params.recipeId, 10)
+    const RecipeId = parseInt(req.params.RecipeId, 10)
 
     if (UserId !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
@@ -40,7 +40,7 @@ module.exports = {
 
     try {
       const existingMenu = await models.Menu.findOne({
-        where: { UserId: UserId, recipeId: recipeId }
+        where: { UserId: UserId, RecipeId: RecipeId }
       })
       if (existingMenu) {
         try {
@@ -53,7 +53,7 @@ module.exports = {
         }
       } else {
         try {
-          await models.Menu.create({ UserId: UserId, recipeId: recipeId })
+          await models.Menu.create({ UserId: UserId, RecipeId: RecipeId })
           res.status(201).json({ message: 'Recette enregistée dans votre menu' })
         } catch (err) {
           res
