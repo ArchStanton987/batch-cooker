@@ -333,8 +333,9 @@ module.exports = {
     }
   },
   getRandomRecipes: async (req, res) => {
-    let limit = req.query.limit
+    let limit = parseInt(req.query.limit, 10)
     let userId = req.subId || 0
+    userId = parseInt(userId, 10)
     let saves
 
     let recipesNumber = await models.Recipe.count()
