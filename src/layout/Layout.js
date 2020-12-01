@@ -10,7 +10,7 @@ import { disconnectUser } from '../lib/api/api-account'
 
 export default function Layout() {
   const [isSideMenuActive, setMenu] = useToggle(false)
-  const [userId, setUserId] = useState(parseInt(sessionStorage.getItem('UserId'), 10) || null)
+  const [UserId, setUserId] = useState(parseInt(sessionStorage.getItem('UserId'), 10) || null)
   const [userName, setUserName] = useState('')
   const [hasUserLogged, setHasUserLogged] = useState(false)
 
