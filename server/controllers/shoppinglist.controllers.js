@@ -159,7 +159,7 @@ module.exports = {
       await models.ShoppingList.bulkCreate(ingredients, {
         fields: ['UserId', 'IngredientId', 'quantity', 'unit']
       })
-      res.status(200).json({ message: 'La liste de course a bien été mise à jour' })
+      res.status(200).json({ message: 'La liste de course a bien été mise à jour. Pensez à vérifier les quantités / unités de vos ingrédients pour la liste de courses, certaines unités ne peuvent être converties. ' })
     } catch (err) {
       res
         .status(500)

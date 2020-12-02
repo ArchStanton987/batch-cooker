@@ -26,9 +26,6 @@
     flex-direction: column;
     justify-content: space-evenly;
   }
-  .recipe-text {
-    text-align: left;
-  }
   .recipe-img-container {
     display: flex;
     max-height: 200px;
@@ -54,6 +51,8 @@
   margin: 0.5rem;
   text-align: justify;
   line-height: 1.2rem;
+  white-space: pre-line;
+  text-align: left;
 
   span {
     font-size: 1.1rem;
