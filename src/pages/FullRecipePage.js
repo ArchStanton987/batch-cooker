@@ -239,7 +239,7 @@ export default function FullRecipePage(props) {
         )}
         <div className="section-container">
           <h3>Avis</h3>
-          <p className="recipe-text">Il n'y a aucun avis sur cette recette pour le moment.</p>
+          <p className="recipe-text">Cette fonctionnalité n'est pas encore implémentée.</p>
         </div>
       </div>
     </>
