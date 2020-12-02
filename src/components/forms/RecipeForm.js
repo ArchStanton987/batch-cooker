@@ -285,8 +285,8 @@ export default function RecipeForm(props) {
           <img className="new-recipe--add-icon" src={plusIcon} alt="add tag" onClick={addTag} />
         </Section>
         <SectionCTA className={'no-border'}>
-          <Link to="/recipes">
-            <CTAButton className={'secondary'}>Retour</CTAButton>
+          <Link to="/home">
+            <CTAButton className={'secondary'}>Annuler</CTAButton>
           </Link>
           <button type="submit">Enregistrer</button>
         </SectionCTA>
