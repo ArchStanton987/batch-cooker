@@ -51,7 +51,7 @@ export default function DynamicFormIngredient({ ...props }) {
         className="ingdt-input--quantity"
         value={ingredient.quantity}
         onChange={e => handleIngredientChange(e, index)}
-        required
+        min="0"
       />
       <input
         type="text"
