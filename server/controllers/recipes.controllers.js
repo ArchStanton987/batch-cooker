@@ -309,11 +309,11 @@ module.exports = {
       if (existingSave) {
         try {
           await existingSave.destroy()
-          res.status(200).json({ message: 'Recette supprimée de votre carnet' })
+          res.status(200).json({ message: 'Recette supprimée de vos favoris' })
         } catch (err) {
           res
             .status(500)
-            .json({ error: 'Erreur pendant la suppression de la recette de votre carnet ; ' + err })
+            .json({ error: 'Erreur pendant la suppression de la recette de vos favoris ; ' + err })
         }
       } else {
         try {
@@ -321,10 +321,10 @@ module.exports = {
             { UserId: UserId, RecipeId: RecipeId },
             { fields: ['UserId', 'RecipeId'] }
           )
-          res.status(201).json({ message: 'Recette enregistée dans votre carnet' })
+          res.status(201).json({ message: 'Recette enregistée dans vos favoris' })
         } catch (err) {
           res.status(500).json({
-            error: "Erreur pendant l'enregistrement de la recette dans votre carnet ; " + err
+            error: "Erreur pendant l'enregistrement de la recette dans vos favoris ; " + err
           })
         }
       }

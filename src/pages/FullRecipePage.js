@@ -154,9 +154,9 @@ export default function FullRecipePage(props) {
               <img
                 className="icon cta-button--icon"
                 src={favIconEmpty}
-                alt="retirer de mon carnet"
+                alt="retirer de mes favoris"
               />
-              Retirer de mon carnet
+              Retirer de mes favoris
             </CTAButton>
           )}
           {hasUserLogged && recipe && !isRecipeSaved && (
@@ -166,7 +166,7 @@ export default function FullRecipePage(props) {
                 src={favIconFullYellow}
                 alt="add to favorites"
               />
-              Ajouter à mon carnet
+              Ajouter à mes favoris
             </CTAButton>
           )}
           {hasUserLogged && recipe && !isRecipeInMenu && (

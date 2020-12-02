@@ -66,7 +66,7 @@ export default function MyRecipesPage(props) {
             {promptMessage}
           </Modal>
         )}
-        <h2>Mes recettes</h2>
+        <h2>Mes recettes favorites</h2>
         <SectionCTA className={'desktop-only no-border'}>
           <Search
             value={searchInput}

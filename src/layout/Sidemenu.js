@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import homeIcon from '../assets/icons/home-icon.png'
-import recipesIcon from '../assets/icons/recipesIcon.png'
+import favIcon from '../assets/icons/star-full-yellow2.svg'
 import calendarIcon from '../assets/icons/calendarIcon.png'
 import inventoryIcon from '../assets/icons/shelf.png'
 import shoplistIcon from '../assets/icons/shop-listIcon.png'
@@ -89,8 +89,8 @@ export default function Sidemenu({ ...props }) {
                 </NavLink>
                 <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/myrecipes">
                   <li>
-                    <img className="sidemenu--icon icon" src={recipesIcon} alt="recipes" />
-                    <h2>Mes recettes</h2>
+                    <img className="sidemenu--icon icon" src={favIcon} alt="favoris" />
+                    <h2>Recettes favorites</h2>
                   </li>
                 </NavLink>
                 <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/inventory">
