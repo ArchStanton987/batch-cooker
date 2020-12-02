@@ -338,21 +338,32 @@ module.exports = {
     UserId = parseInt(UserId, 10)
     let saves
 
-    let recipesNumber = await models.Recipe.count()
-
-    if (recipesNumber < 7) {
-      res.status(200)
-      return
-    }
-
-    if (req.isUserIdentified) {
-      saves = await models.RecipeSave.findAll({
-        where: { UserId: UserId },
-        attributes: ['RecipeId']
-      })
-    }
-
     try {
+      let recipesNumber = await models.Recipe.count()
+
+      if (recipesNumber === 0) {
+        res.status(200)
+        return
+      }
+
+      if (req.isUserIdentified) {
+        saves = await models.RecipeSave.findAll({
+          where: { UserId: UserId },
+          attributes: ['RecipeId']
+        })
+      }
+
+      if (recipesNumber <= 7) {
+        let recipes = await models.Recipes.findAll({
+          order: sequelize.random(),
+          attributes: ['id', 'creatorId', 'name', 'image'],
+          include: [
+            { model: models.Tag, attributes: ['id', 'tagname'], through: { attributes: [] } }
+          ]
+        })
+        res.status(200).json({ recipes, saves })
+      }
+
       let idSet = new Set()
       while (idSet.size < limit) {
         idSet.add(Math.floor(Math.random() * recipesNumber) + 1)
