@@ -193,7 +193,6 @@ export default function FullRecipePage(props) {
               <p className="recipe-text">Edité le {moment(updatedAt).format('LL')}</p>
             )}
             <p className="recipe-text">Pour {guests} personne(s)</p>
-            <p className="recipe-text">Note moy. : 5/10</p>
           </div>
           <div className="recipe-img-container">
             <img
