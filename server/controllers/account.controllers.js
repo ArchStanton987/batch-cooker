@@ -59,7 +59,7 @@ module.exports = {
             }
             res.cookie('access_token', token, {
               httpOnly: true,
-              sameSite: 'none'
+              sameSite: 'Strict'
             })
             res
               .status(200)
