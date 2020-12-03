@@ -108,13 +108,6 @@ Au delà de des fonctionnalités de cette application, elle a été créée pour
 
 ## Futur
 
-Other features might be implemented in the future, including, but not limited to :
-- Possibility for a user to comment recipes
-- Rating system of recipes
-- A calendar to schedule recipes
-- Possibility to save a full menu, a 'batch cooking'
-- Various UI improvements
-
 D'autres fonctionnalitées pourraient être ajoutées à l'avenir. Celles-ci incluent :
 - Possibilité pour un utilisateur de commenter une recette
 - Système de notation des recettes
