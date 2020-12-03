@@ -76,7 +76,7 @@ Batch Cooker est une application web qui vise à stocker vos recettes de cuisine
 
 ## Objectifs
 
-Au delà de des fonctionnalités de cette application, elle a été créée pour à la fois pour me permettre de valoriser et continuer de développer mes compétences en tant que jeune développeur web. 
+Au delà de des fonctionnalités de cette application, elle a été créée pour me permettre de valoriser et de continuer à développer mes compétences en tant que jeune développeur web. 
 
 ***
 
