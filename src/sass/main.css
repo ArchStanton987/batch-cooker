@@ -350,4 +350,19 @@ header {
   overflow: auto;
 }
 
+.informations h4 {
+  margin: 0.5rem 1.5rem;
+}
+.informations p {
+  margin: 1rem;
+  text-align: justify;
+}
+.informations strong {
+  color: red;
+}
+.informations hr {
+  border: 0.5px #bacdeb solid;
+  margin: 0.5rem 1.5rem;
+}
+
 /*# sourceMappingURL=main.css.map */

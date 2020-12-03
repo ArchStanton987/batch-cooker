@@ -12,6 +12,7 @@ import ShoppinglistPage from '../pages/ShoppinglistPage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
 import ProfilePage from '../pages/ProfilePage'
+import InformationsPages from '../pages/InformationsPage'
 import PrivateRoute from '../components/wrappers/PrivateRoute'
 import '../sass/layout/_Main.scss'
 
@@ -29,6 +30,10 @@ export default function Main({ ...props }) {
         <Route
           path="/home"
           render={() => <HomePage hasUserLogged={hasUserLogged} UserId={UserId} />}
+        />
+        <Route
+          path="/informations"
+          render={() => <InformationsPages hasUserLogged={hasUserLogged} UserId={UserId} />}
         />
         <Route
           path="/recipes/:id"

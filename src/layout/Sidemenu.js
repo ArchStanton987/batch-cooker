@@ -8,6 +8,7 @@ import inventoryIcon from '../assets/icons/shelf.png'
 import shoplistIcon from '../assets/icons/shop-listIcon.png'
 import powerIcon from '../assets/icons/power.svg'
 import userIcon from '../assets/icons/user.svg'
+import infoIcon from '../assets/icons/info.svg'
 import '../sass/layout/_Sidemenu.scss'
 import CloseIcon from '../components/page_layout/CloseIcon'
 
@@ -59,6 +60,12 @@ export default function Sidemenu({ ...props }) {
                   <h2>Créer un compte</h2>
                 </li>
               </NavLink>
+              <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/informations">
+                <li>
+                  <img className="sidemenu--icon icon" src={infoIcon} alt="informations" />
+                  <h2>Informations</h2>
+                </li>
+              </NavLink>
             </ul>
           </nav>
         )}
@@ -105,6 +112,12 @@ export default function Sidemenu({ ...props }) {
                     <h2>Liste de courses</h2>
                   </li>
                 </NavLink>
+                <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/informations">
+                  <li>
+                    <img className="sidemenu--icon icon" src={infoIcon} alt="informations" />
+                    <h2>Informations</h2>
+                  </li>
+                </NavLink>
               </ul>
             </nav>
             <hr className="sidemenu--hr" />
@@ -121,6 +134,12 @@ export default function Sidemenu({ ...props }) {
               <NavLink onClick={() => setMenu()} to="/register">
                 <li>
                   <h2>Créer un compte</h2>
+                </li>
+              </NavLink>
+              <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/informations">
+                <li>
+                  <img className="sidemenu--icon icon" src={infoIcon} alt="informations" />
+                  <h2>Informations</h2>
                 </li>
               </NavLink>
             </ul>
