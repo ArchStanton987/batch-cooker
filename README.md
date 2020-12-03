@@ -119,7 +119,7 @@ D'autres fonctionnalitées pourraient être ajoutées à l'avenir. Celles-ci inc
 
 ## Donnez votre avis sur le code, ou l'interface utilisateur !
 
-* En tant que jeune développeur toujours prêt à apprendre et m'améliorer, tout les avis, retours ou suggestions concernant l'appli sont les bienvenus !
+* En tant que jeune développeur toujours prêt à apprendre et m'améliorer, tous les avis, retours ou suggestions concernant l'appli sont les bienvenus !
 * Dans sa version actuelle, il y a encore beaucoup de place pour améliorer et refactoriser le code. Ceci est réalisé de manière périodique.
 * Actuellement, les tests ne sont plus fonctionnels. L'appli et l'API ont beaucoup évolués. A un certain moment, la priorité a été mise sur l'avancement et le déploiement de l'application, plutôt que sur le test systématique de l'API. Il est toutefois prévu de récupérer ce retard.
 
