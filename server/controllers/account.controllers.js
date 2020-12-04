@@ -3,6 +3,8 @@ const validator = require('validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+const env = process.env.NODE_ENV
+
 module.exports = {
   register: async (req, res) => {
     const { email, username, password } = req.body
@@ -57,10 +59,17 @@ module.exports = {
             if (err) {
               res.status(500).json({ error: err })
             }
-            res.cookie('access_token', token, {
-              httpOnly: true,
-              sameSite: 'Strict'
-            })
+            if (env === 'production') {
+              res.cookie('access_token', token, {
+                httpOnly: true,
+                sameSite: 'Strict'
+              })
+            } else {
+              res.cookie('access_token', token, {
+                httpOnly: true,
+                sameSite: 'none'
+              })
+            }
             res
               .status(200)
               .json({ message: 'Identification réussie', UserId: user.id, username: user.username })
