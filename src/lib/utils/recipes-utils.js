@@ -3,7 +3,6 @@ export const parseFetchedFullRecipe = data => {
   data.ingredients = []
   data.Ingredients.forEach(ingredient => {
     let newIngredient = {}
-    newIngredient.recipeIng = ingredient.RecipeIng.id
     newIngredient.name = ingredient.name
     newIngredient.category = ingredient.category
     newIngredient.IngredientId = ingredient.RecipeIng.IngredientId

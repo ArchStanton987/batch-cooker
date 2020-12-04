@@ -217,7 +217,7 @@ export default function FullRecipePage(props) {
           <ul className="recipe-ingredient-list">
             {ingredients &&
               ingredients.map(ingredient => (
-                <li className="ingredient-item" key={`recipeIng-${ingredient.recipeIng}`}>
+                <li className="ingredient-item" key={`IngredientId-${ingredient.IngredientId}-RecipeId-${ingredient.RecipeId}`}>
                   <p className="name">{ingredient.name}</p>
                   <p className="quantity">{ingredient.quantity}</p>
                   <p className="unit"> {ingredient.unit}</p>
