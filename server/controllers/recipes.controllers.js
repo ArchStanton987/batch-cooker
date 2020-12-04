@@ -354,7 +354,7 @@ module.exports = {
       }
 
       if (recipesNumber <= 7) {
-        let recipes = await models.Recipes.findAll({
+        let recipes = await models.Recipe.findAll({
           order: sequelize.random(),
           attributes: ['id', 'creatorId', 'name', 'image'],
           include: [
@@ -362,6 +362,7 @@ module.exports = {
           ]
         })
         res.status(200).json({ recipes, saves })
+        return
       }
 
       let idSet = new Set()

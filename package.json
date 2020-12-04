@@ -13,19 +13,16 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
-    "nodemon": "^2.0.6",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "react": "^16.13.1",
     "react-div-100vh": "^0.5.6",
     "react-dom": "^16.13.1",
-    "react-loader-spinner": "^3.1.14",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
@@ -45,7 +42,9 @@
     "test:watch": "NODE_ENV=test jest ./tests --watchAll",
     "eject": "react-scripts eject",
     "server": "node ./server/server.js",
-    "startall": "npm run server & npm start"
+    "localdev": "REACT_APP_API=LOCAL NODE_ENV=development nodemon ./server/server.js",
+    "localprod": "REACT_APP_API=LOCAL NODE_ENV=production npm run server",
+    "launch": "REACT_APP_API=REMOTE NODE_ENV=production npm run server"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -66,6 +65,7 @@
     "dotenv": "^8.2.0",
     "eslint-config-prettier": "^6.11.0",
     "prettier": "^2.1.1",
+    "nodemon": "^2.0.6",
     "supertest": "^4.0.2"
   },
   "jest": {

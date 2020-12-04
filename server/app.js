@@ -9,8 +9,13 @@ const inventory = require('./routes/inventory')
 const shoppinglist = require('./routes/shoppinglist')
 const recipes = require('./routes/recipes')
 
+const env = process.env.NODE_ENV
+
 const app = express()
-app.use(express.static(path.resolve(__dirname, '../build')))
+
+if (env === 'production') {
+  app.use(express.static(path.resolve(__dirname, '../build')))
+}
 
 app.use(
   cors({
@@ -20,6 +25,8 @@ app.use(
       'http://192.168.1.27:3000',
       'http://localhost:8000',
       'http://192.168.1.27:8000',
+      'http://localhost:8001',
+      'http://192.168.1.27:8001',
       'https://batch-cooker.herokuapp.com/'
     ],
     optionsSuccessStatus: 200
@@ -35,8 +42,10 @@ app.use('/api/inventory', inventory)
 app.use('/api/recipes', recipes)
 app.use('/api/shoppinglist', shoppinglist)
 
-app.get('*', function (req, res) {
-  res.sendFile(path.resolve(__dirname, '../build', 'index.html'))
-})
+if (env === 'production') {
+  app.get('*', function (req, res) {
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'))
+  })
+}
 
 module.exports = app
