@@ -3,6 +3,7 @@ const path = require('path')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const compression = require('compression');
 const users = require('./routes/users')
 const account = require('./routes/account')
 const inventory = require('./routes/inventory')
@@ -12,6 +13,8 @@ const recipes = require('./routes/recipes')
 const env = process.env.NODE_ENV
 
 const app = express()
+
+app.use(compression())
 
 if (env === 'production') {
   app.use(express.static(path.resolve(__dirname, '../build')))
