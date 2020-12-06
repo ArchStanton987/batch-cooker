@@ -2,6 +2,7 @@ import axios from 'axios'
 import { apiUrl } from '../utils/url-utils'
 
 export const postLogin = async credentials => {
+  console.log(apiUrl)  
   const url = `${apiUrl}account/login`
   const res = await axios.post(url, credentials, { withCredentials: true })
   return res
