@@ -17,7 +17,7 @@ module.exports = {
         const shoppingList = await models.ShoppingList.findAll({
           where: { UserId: UserId },
           attributes: ['quantity', 'IngredientId', 'unit'],
-          include: [{ model: models.Ingredient, attributes: ['name', 'category'] }]
+          include: [{ model: models.Ingredient, attributes: ['name' ] }]
         })
         res.status(200).json(shoppingList)
       }
@@ -39,9 +39,9 @@ module.exports = {
     }
   },
   addIngredientToShoppingList: async (req, res) => {
-    let { ingredientName, category, quantity, unit } = req.body
+    let { ingredientName, quantity, unit } = req.body
     let { UserId } = req.params
-    let newIngredient = { name: ingredientName.toLowerCase(), category: category }
+    let newIngredient = { name: ingredientName.toLowerCase() }
 
     if (parseInt(UserId, 10) !== req.tokenUser) {
       res.status(403).json({ error: 'Action interdite' })
@@ -61,7 +61,7 @@ module.exports = {
     }
 
     const ingredientExists = await models.Ingredient.findOne({
-      where: { name: ingredientName, category: category }
+      where: { name: ingredientName }
     })
     if (!ingredientExists) {
       let createdIngredient = await models.Ingredient.create(newIngredient)

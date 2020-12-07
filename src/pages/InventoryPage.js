@@ -7,7 +7,6 @@ import {
   fetchUserInventory,
   updateIngredientFromInventory
 } from '../lib/api/api-inventory'
-import { ingredientCategories } from '../lib/ingredientCategories'
 import { useToggle } from '../lib/hooks'
 
 import plusIcon from '../assets/icons/plus.svg'
@@ -16,7 +15,6 @@ import IngredientForm from '../components/forms/IngredientForm'
 import Section from '../components/page_layout/Section'
 import SectionCTA from '../components/page_layout/SectionCTA'
 import CTAButton from '../components/page_layout/CTAButton'
-import ChevronIcon from '../components/page_layout/ChevronIcon'
 import Search from '../components/forms/Search'
 import Modal from '../components/wrappers/Modal'
 
@@ -25,29 +23,18 @@ import '../sass/pages/_Inventory.scss'
 export default function InventoryPage(props) {
   const { UserId } = props
 
-  const [isExpended, setDrawer] = useToggle(false)
   const [isSearchboxActive, setSearchbox] = useToggle(false)
   const [isIngredientModalActive, setIngredientModal] = useState(false)
-  const [activeCategories, setActiveCategories] = useState(ingredientCategories)
   const [inventory, setInventory] = useState([])
   const [newIngredient, setNewIngredient] = useState(null)
   const [searchInput, setSearchInput] = useState('')
   const [isPrompt, setIsPrompt] = useState(false)
   const [promptMessage, setPromptMessage] = useState('')
 
-  let categories = Object.entries(activeCategories)
 
   const toggleModal = () => {
     setIngredientModal(prevState => !prevState)
     isIngredientModalActive && setNewIngredient(null)
-  }
-  const toggleCategoryFilter = e => {
-    let categoryName = e.target.name
-    activeCategories[categoryName].active = !activeCategories[categoryName].active
-    let updatedValues = activeCategories.categoryName
-    setActiveCategories(prevState => {
-      return { ...prevState, ...updatedValues }
-    })
   }
 
   const handlePrompt = (bool, message) => {
@@ -134,7 +121,6 @@ export default function InventoryPage(props) {
     const newIng = {
       IngredientId: newIngredient.IngredientId || null,
       ingredientName: newIngredient.name,
-      category: newIngredient.category,
       quantity: newIngredient.quantity,
       unit: newIngredient.unit
     }
@@ -170,7 +156,6 @@ export default function InventoryPage(props) {
               handleNewIngredient={handleNewIngredient}
               toggleModal={toggleModal}
               name={newIngredient ? newIngredient.name : ''}
-              category={newIngredient ? newIngredient.category : ''}
               IngredientId={newIngredient ? newIngredient.IngredientId : ''}
               quantity={newIngredient ? newIngredient.quantity : ''}
               unit={newIngredient ? newIngredient.unit : ''}
@@ -191,31 +176,6 @@ export default function InventoryPage(props) {
             Ajouter
           </CTAButton>
         </SectionCTA>
-        <Section className={''}>
-          <div onClick={setDrawer} className="drawer-container">
-            <h3>Catégories</h3>
-            <ChevronIcon isExpended={isExpended} />
-          </div>
-          <ul
-            className={
-              isExpended ? 'inventory-category--list' : 'inventory-category--list retracted'
-            }
-          >
-            {categories.map(category => {
-              return (
-                <li key={`category-${category[0]}`}>
-                  <button
-                    name={category[0]}
-                    onClick={toggleCategoryFilter}
-                    className={!category[1].active ? 'secondary' : ''}
-                  >
-                    {category[1].fullname}
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-        </Section>
         <Section className={'extended'}>
           <h3>Ingrédients</h3>
           <ul className="inventory-ingredients--list">
@@ -223,17 +183,6 @@ export default function InventoryPage(props) {
               inventory
                 .filter(item => {
                   return item.name.toLowerCase().includes(searchInput.toLowerCase())
-                })
-                .filter(item => {
-                  const keys = Object.keys(activeCategories)
-                  let match = keys.some(key => {
-                    return (
-                      activeCategories[key].fullname === item.category &&
-                      activeCategories[key].active &&
-                      true
-                    )
-                  })
-                  return match
                 })
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map(item =>

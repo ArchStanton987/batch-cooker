@@ -10,8 +10,8 @@ module.exports = {
       ],
       { fields: ['id', 'UserId', 'IngredientId', 'quantity', 'unit'] }
     )
-    // const existingRows = await models.Inventory.count();
-    // await queryInterface.sequelize.query(`ALTER SEQUENCE "Inventories_id_seq" RESTART WITH ${existingRows + 1}`)
+    const existingRows = await models.Inventory.count();
+    await queryInterface.sequelize.query(`ALTER SEQUENCE "Inventories_id_seq" RESTART WITH ${existingRows + 1}`)
   },
 
   down: async (queryInterface, Sequelize) => {

@@ -10,7 +10,7 @@ export default function IngredientForm({
   handleSubmitIngredient,
   ...props
 }) {
-  const { IngredientId, name, category, quantity, unit } = props
+  const { IngredientId, name, quantity, unit } = props
   return (
     <>
       <form className="flexColumn" method="post">
@@ -26,23 +26,6 @@ export default function IngredientForm({
             required
           />
         </label>
-        <label htmlFor="category"><p>Catégorie</p></label>
-        <select
-          defaultValue={category}
-          onChange={e => handleNewIngredient(e)}
-          id="category"
-          name="category"
-          required
-        >
-          <option value="">Choisissez la catégorie</option>
-          <option value="fruits et légumes">fruits et légumes</option>
-          <option value="viandes et poissons">viandes et poissons</option>
-          <option value="produits laitiers">produits laitiers</option>
-          <option value="assaisonnements et condiments">assaisonnements et condiments</option>
-          <option value="céréales et féculents">céréales et féculents</option>
-          <option value="sucrés">sucrés</option>
-          <option value="autres">autres</option>
-        </select>
         <div className="flexRow spaceBetween">
           <div className="smaller-input-container">
             <label htmlFor="quantity">

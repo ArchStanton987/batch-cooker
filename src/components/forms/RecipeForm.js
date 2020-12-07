@@ -33,7 +33,7 @@ export default function RecipeForm(props) {
   const [errorMessage, setErrorMessage] = useState('')
   const [hasCreated, setHasCreated] = useState(false)
 
-  const defaultIngredient = { name: '', category: '', quantity: 0, unit: '' }
+  const defaultIngredient = { name: '', quantity: 0, unit: '' }
   const defaultTag = { tagname: '' }
 
   const resetDefault = () => {

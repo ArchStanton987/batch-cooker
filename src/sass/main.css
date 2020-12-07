@@ -326,19 +326,6 @@ header {
   z-index: 2;
 }
 
-.inventory-category--list {
-  display: flex;
-  flex-wrap: wrap;
-  overflow: hidden;
-  justify-content: space-evenly;
-  list-style: none;
-  max-height: 200px;
-  transition: max-height 0.4s ease-in-out;
-}
-.inventory-category--list.retracted {
-  max-height: 0;
-}
-
 .inventory-ingredients {
   flex: 1;
   overflow: auto;

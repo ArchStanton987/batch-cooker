@@ -5,7 +5,6 @@ export const parseFetchedIngredients = data => {
     let newItem = {
       IngredientId: item.IngredientId,
       name: item.Ingredient.name,
-      category: item.Ingredient.category,
       quantity: item.quantity,
       unit: item.unit
     }

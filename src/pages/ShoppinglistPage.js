@@ -103,7 +103,6 @@ export default function ShoppinglistPage(props) {
     const newIng = {
       IngredientId: newIngredient.IngredientId || null,
       ingredientName: newIngredient.name,
-      category: newIngredient.category,
       quantity: newIngredient.quantity,
       unit: newIngredient.unit
     }
@@ -220,7 +219,6 @@ export default function ShoppinglistPage(props) {
               handleNewIngredient={handleNewIngredient}
               toggleModal={toggleModal}
               name={newIngredient ? newIngredient.name : ''}
-              category={newIngredient ? newIngredient.category : ''}
               IngredientId={newIngredient ? newIngredient.IngredientId : ''}
               quantity={newIngredient ? newIngredient.quantity : ''}
               unit={newIngredient ? newIngredient.unit : ''}

@@ -63,7 +63,7 @@ module.exports = {
         },
         include: [
           { model: models.User, attributes: ['username'] },
-          { model: models.Ingredient, attributes: ['name', 'category'] },
+          { model: models.Ingredient, attributes: ['name'] },
           { model: models.Tag, attributes: ['tagname'] }
         ]
       })
@@ -148,13 +148,10 @@ module.exports = {
     try {
       await recipeIngredients.forEach(async ingredient => {
         let ingredientExists = await models.Ingredient.findOne({
-          where: { name: ingredient.name, category: ingredient.category }
+          where: { name: ingredient.name }
         })
         if (!ingredientExists) {
-          let createdIng = await models.Ingredient.create({
-            name: ingredient.name,
-            category: ingredient.category
-          })
+          let createdIng = await models.Ingredient.create({ name: ingredient.name })
           ingredient.IngredientId = createdIng.id
         } else {
           ingredient.IngredientId = ingredientExists.id
@@ -182,12 +179,11 @@ module.exports = {
     try {
       await recipeIngredients.forEach(async ingredient => {
         let ingredientExists = await models.Ingredient.findOne({
-          where: { name: ingredient.name, category: ingredient.category }
+          where: { name: ingredient.name }
         })
         if (!ingredientExists) {
           let createdIng = await models.Ingredient.create({
-            name: ingredient.name,
-            category: ingredient.category
+            name: ingredient.name
           })
           ingredient.IngredientId = createdIng.id
         } else {

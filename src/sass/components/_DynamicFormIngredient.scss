@@ -4,29 +4,20 @@
   margin: 0.5rem 0.5rem;
   display: grid;
   grid-template-columns: 6fr 2fr 2fr 1fr;
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: auto auto auto;
   gap: 0 8px;
   grid-template-areas:
-    'ingredient-number ingdt-label--category ingdt-label--category ingdt-label--category'
-    'ingredient-number ingdt-input--category ingdt-input--category ingdt-input--category'
+    'ingredient-number . . .'
     'ingdt-label--name ingdt-label--quantity ingdt-label--unit .'
     'ingdt-input--name ingdt-input--quantity ingdt-input--unit remove-element-btn';
-  border-top: solid 2px v.$color4;
-    label {
-    margin-top: 0.5rem;
-  }
+  margin-top: 0.5rem;
 }
+
 .ingredient-number {
   grid-area: ingredient-number;
   align-self: center;
   font-weight: bolder;
   color: v.$color1;
-}
-.ingdt-label--category {
-  grid-area: ingdt-label--category;
-}
-.ingdt-input--category {
-  grid-area: ingdt-input--category;
 }
 .ingdt-label--name {
   grid-area: ingdt-label--name;

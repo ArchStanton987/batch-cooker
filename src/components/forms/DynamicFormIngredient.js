@@ -8,24 +8,6 @@ export default function DynamicFormIngredient({ ...props }) {
   return (
     <li className="dynform--ingdt-container">
       <p className="ingredient-number">{`Ingredient #${index + 1}`}</p>
-      <label className="ingdt-label--category" htmlFor="recipe-form-category"><p>Catégorie</p></label>
-      <select
-        className="ingdt-input--category"
-        onChange={e => handleIngredientChange(e, index)}
-        id="recipe-form-category"
-        name="category"
-        value={ingredient.category}
-        required
-      >
-        <option value="">Catégorie</option>
-        <option value="fruits et légumes">fruits et légumes</option>
-        <option value="viandes et poissons">viandes et poissons</option>
-        <option value="produits laitiers">produits laitiers</option>
-        <option value="assaisonnements et condiments">assaisonnements et condiments</option>
-        <option value="céréales et féculents">céréales et féculents</option>
-        <option value="sucrés">sucrés</option>
-        <option value="autres">autres</option>
-      </select>
       <label className="ingdt-label--name" htmlFor={`ingredient-name-${index}`}>
         <p>Nom</p>
       </label>

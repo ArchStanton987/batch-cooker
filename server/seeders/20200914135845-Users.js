@@ -17,8 +17,8 @@ module.exports = {
         individualHooks: true
       }
     )
-    // const existingRows = await models.User.count()
-    // await queryInterface.sequelize.query(`ALTER SEQUENCE "Users_id_seq" RESTART WITH ${existingRows + 1}`)
+    const existingRows = await models.User.count()
+    await queryInterface.sequelize.query(`ALTER SEQUENCE "Users_id_seq" RESTART WITH ${existingRows + 1}`)
   },
 
   down: async (queryInterface, Sequelize) => {
