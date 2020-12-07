@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Inventory.init(
     {
+      UserId: DataTypes.INTEGER,
+      IngredientId: DataTypes.INTEGER,
       quantity: DataTypes.INTEGER,
       unit: DataTypes.STRING
     },

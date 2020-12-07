@@ -38,6 +38,8 @@ module.exports = {
       { name: 'moutarde', category: 'assaisonnements et condiments' },
       { name: 'maroilles', category: 'produits laitiers' }
     ])
+    const existingRows = await models.Ingredient.count();
+    await queryInterface.sequelize.query(`ALTER SEQUENCE "Ingredients_id_seq" RESTART WITH ${existingRows + 1}`)
   },
 
   down: async (queryInterface, Sequelize) => {

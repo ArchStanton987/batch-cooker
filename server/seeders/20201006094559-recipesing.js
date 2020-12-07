@@ -56,6 +56,8 @@ module.exports = {
         fields: ['id', 'RecipeId', 'IngredientId', 'quantity', 'unit']
       }
     )
+    const existingRows = await models.User.count();
+    await queryInterface.sequelize.query(`ALTER SEQUENCE "RecipeIngs_id_seq" RESTART WITH ${existingRows + 1}`)
   },
 
   down: async (queryInterface, Sequelize) => {

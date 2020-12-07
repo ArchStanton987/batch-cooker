@@ -19,6 +19,8 @@ module.exports = {
         fields: ['id', 'tagname']
       }
     )
+    const existingRows = await models.Tag.count();
+    await queryInterface.sequelize.query(`ALTER SEQUENCE "Tags_id_seq" RESTART WITH ${existingRows + 1}`)
   },
 
   down: async (queryInterface, Sequelize) => {
