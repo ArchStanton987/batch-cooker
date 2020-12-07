@@ -19,8 +19,8 @@ module.exports = {
       ],
       { fields: ['id', 'TagId', 'RecipeId'] }
     )
-    const existingRows = await models.TagRecipe.count();
-    await queryInterface.sequelize.query(`ALTER SEQUENCE "TagRecipes_id_seq" RESTART WITH ${existingRows + 1}`)
+    // const existingRows = await models.TagRecipe.count();
+    // await queryInterface.sequelize.query(`ALTER SEQUENCE "TagRecipes_id_seq" RESTART WITH ${existingRows + 1}`)
   },
 
   down: async (queryInterface, Sequelize) => {}
