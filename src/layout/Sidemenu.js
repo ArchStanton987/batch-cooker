@@ -88,12 +88,6 @@ export default function Sidemenu({ ...props }) {
                     <h2>Accueil</h2>
                   </li>
                 </NavLink>
-                <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/menu">
-                  <li>
-                    <img className="sidemenu--icon icon" src={calendarIcon} alt="menu" />
-                    <h2>Menu</h2>
-                  </li>
-                </NavLink>
                 <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/myrecipes">
                   <li>
                     <img className="sidemenu--icon icon" src={favIcon} alt="favoris" />
@@ -104,6 +98,12 @@ export default function Sidemenu({ ...props }) {
                   <li>
                     <img className="sidemenu--icon icon" src={inventoryIcon} alt="inventory" />
                     <h2>Inventaire</h2>
+                  </li>
+                </NavLink>
+                <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/menu">
+                  <li>
+                    <img className="sidemenu--icon icon" src={calendarIcon} alt="menu" />
+                    <h2>Menu</h2>
                   </li>
                 </NavLink>
                 <NavLink activeClassName="active-link" onClick={() => setMenu()} to="/shoplist">
