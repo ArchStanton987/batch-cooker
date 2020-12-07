@@ -19,13 +19,6 @@ export default function InformationsPage() {
             déjà en inventaire.
           </p>
           <hr />
-          <h4>Objectifs</h4>
-          <p>
-            Au delà de des fonctionnalités de cette application, elle a été créée pour me permettre
-            de valoriser et de continuer à développer mes compétences en tant que jeune développeur
-            web.
-          </p>
-          <hr />
           <h4>Notes</h4>
           <ul>
             <li>
