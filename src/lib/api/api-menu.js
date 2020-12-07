@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { apiUrl } from '../utils/url-utils'
 
 export const fetchMenu = async UserId => {
   const url = `https://batch-cooker.herokuapp.com/api/recipes/menu/users/${UserId}`
