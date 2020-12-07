@@ -46,7 +46,7 @@ module.exports = {
     let newInvItem = {
       UserId: parseInt(UserId, 10),
       quantity: parseInt(quantity, 10) || 0,
-      unit: unit.trim().toLowerCase() || ''
+      unit: unit ? unit.trim().toLowerCase() : ''
     }
 
     const ingredientExists = await models.Ingredient.findOne({
