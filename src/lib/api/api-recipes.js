@@ -7,7 +7,7 @@ export const fetchRecipes = async () => {
 }
 
 export const fetchRandomRecipes = async () => {
-  const url = `https://batch-cooker.herokuapp.com/api/recipes/random?limit=7`
+  const url = `https://batch-cooker.herokuapp.com/api/recipes/random?limit=6`
   const res = await axios.get(url, { withCredentials: true })
   return res
 }
