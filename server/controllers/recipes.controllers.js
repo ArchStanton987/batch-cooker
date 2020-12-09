@@ -407,13 +407,9 @@ module.exports = {
           { model: models.User, attributes: ['username'] },
           {
             model: models.TagRecipe,
-            required: false,
-            right: true,
             include: {
               model: models.Tag,
               attributes: ['tagname'],
-              required: false,
-              right: true
             }
           },
           {
