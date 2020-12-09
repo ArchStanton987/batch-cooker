@@ -28,31 +28,6 @@ export default function HomePage() {
 
   const toggleDrawer = () => setDrawer(prevState => !prevState)
 
-  const debouncedFetch = useCallback(
-    debounce(nextValue => handleFetchSearchResults(nextValue), 1000),
-    []
-  )
-  const debouncedSearchActive = useCallback(debounce(bool => setSearchActive(bool), 1000))
-
-  const handleSearchInput = e => {
-    const { value: nextValue } = e.target
-    if (!nextValue) {
-      setSearchActive(false)
-      setSearchInput('')
-      return
-    }
-    setSearchInput(() => {
-      if (nextValue.length <= 2) {
-        return nextValue
-      }
-      if (nextValue.length > 2) {
-        debouncedFetch(nextValue)
-        debouncedSearchActive(true)
-        return nextValue
-      }
-    })
-  }
-
   const handleFetchSearchResults = async searchInput => {
     try {
       let res = await fetchSearchResults(searchInput)
@@ -66,6 +41,24 @@ export default function HomePage() {
       }
       console.log(err)
     }
+  }
+
+  const debouncedFetch = debounce(input => handleFetchSearchResults(input), 1000)
+
+  const handleSearch = searchField => {
+    if (searchField.length <= 2) {
+      setSearchActive(false)
+      setSearchedRecipes([])
+      return
+    }
+    setSearchActive(true)
+    debouncedFetch(searchField)
+  }
+
+  const handleSearchInput = e => {
+    const searchField = e.target.value
+    setSearchInput(searchField)
+    handleSearch(searchField)
   }
 
   const handleFetchRandomRecipes = useCallback(async () => {
