@@ -15,7 +15,7 @@ export default function InformationsPage() {
             Batch Cooker est une application web qui vise à stocker vos recettes de cuisine, gérer
             votre inventaire d'ingrédients et générer des listes de courses. <br />
             L'objectif est de pouvoir générer rapidement et facilement des listes de courses, en
-            fonction de des recettes que vous envisagez de préparer et des ingrédients que vous avez
+            fonction des recettes que vous envisagez de préparer et des ingrédients que vous avez
             déjà en inventaire.
           </p>
           <hr />
